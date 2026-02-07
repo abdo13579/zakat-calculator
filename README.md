@@ -1,4 +1,4 @@
-# ZakaCalc
+# ZakatCalc
 
 A modern, bilingual web application that helps Muslims calculate **Zakat Al-Mal** (wealth Zakat) and **Zakat Al-Fitr** (charity of breaking the fast) accurately using real-time gold prices and currency exchange rates.
 
