@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'about-api-title': 'API Usage',
             'about-api-intro': 'ZakatCalc uses two public APIs to fetch real-time financial data:',
             'about-api-currency': 'Currency Exchange Rates: https://open.er-api.com/v6/latest/USD - Provides up-to-date exchange rates for various currencies based on USD.',
-            'about-api-gold': 'Gold Price: https://data-asg.goldprice.org/dbXRates/USD - Provides the current market price of gold per ounce, which is converted to per gram for calculations.',
+            'about-api-gold': 'Gold Price: https://mintedmetal.com/api/prices.json - Provides the current market price of gold per ounce, which is converted to per gram for calculations.',
             'about-api-note': 'These APIs are called automatically when you use the calculators. No API keys are required as we use free public endpoints.',
             'about-calc-fitr-title': 'How We Calculate Zakat Al-Fitr',
             'about-calc-fitr-intro': 'Zakat Al-Fitr is calculated based on the amount of staple food required per person:',
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'about-api-title': 'استخدام واجهة برمجة التطبيقات',
             'about-api-intro': 'تستخدم حاسبة الزكاة واجهتين برمجيتين عامتين لجلب البيانات المالية في الوقت الفعلي:',
             'about-api-currency': 'أسعار صرف العملات: https://open.er-api.com/v6/latest/USD - يوفر أسعار صرف محدثة للعملات المختلفة بناءً على الدولار الأمريكي.',
-            'about-api-gold': 'سعر الذهب: https://data-asg.goldprice.org/dbXRates/USD - يوفر سعر الذهب الحالي في السوق للأونصة، والذي يتم تحويله إلى الجرام للحسابات.',
+            'about-api-gold': 'سعر الذهب: https://mintedmetal.com/api/prices.json - يوفر سعر الذهب الحالي في السوق للأونصة، والذي يتم تحويله إلى الجرام للحسابات.',
             'about-api-note': 'يتم استدعاء هذه الواجهات البرمجية تلقائياً عند استخدام الحاسبات. لا حاجة لمفاتيح واجهة برمجة التطبيقات حيث نستخدم نقاط نهاية عامة مجانية.',
             'about-calc-fitr-title': 'كيف نحسب زكاة الفطر',
             'about-calc-fitr-intro': 'يتم حساب زكاة الفطر بناءً على كمية الطعام الأساسي المطلوبة لكل شخص:',
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setupNavigation();
         try {
             const ratesResult = await API.getCurrencyRates();
-            appState.rates = ratesResult?.rates || ratesResult || null;
+            appState.rates = ratesResult?.rates || null;
             appState.lastUpdated.rates = ratesResult?.timestamp || null;
             if (appState.rates) {
                 populateCurrencyDropdowns();
@@ -358,10 +358,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function showPage(pageId) {
         pages.forEach(page => {
             page.classList.add('hidden');
-            // Clear results when switching pages
             const results = page.querySelector('.results-container');
             if (results) {
-                results.style.display = 'none';
                 results.classList.remove('show');
             }
         });
@@ -430,6 +428,11 @@ document.addEventListener('DOMContentLoaded', () => {
         globalMessage.classList.add(
             type === 'error' ? 'global-message--error' : 'global-message--info'
         );
+
+        clearTimeout(globalMessage._dismissTimer);
+        globalMessage._dismissTimer = setTimeout(() => {
+            globalMessage.classList.add('hidden');
+        }, 8000);
     }
 
     function clearGlobalMessage() {
@@ -450,21 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function copyToClipboard(text) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(() => {
-                showSuccessMessage(t('copied-success'));
-            }).catch(() => {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showSuccessMessage(t('copied-success'));
-            });
-        } else {
-            // Fallback for older browsers
+        const fallbackCopy = () => {
             const textArea = document.createElement('textarea');
             textArea.value = text;
             document.body.appendChild(textArea);
@@ -472,6 +461,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.execCommand('copy');
             document.body.removeChild(textArea);
             showSuccessMessage(t('copied-success'));
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showSuccessMessage(t('copied-success'));
+            }).catch(fallbackCopy);
+        } else {
+            fallbackCopy();
         }
     }
 
@@ -510,11 +507,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const foodPrice = parseFloat(foodPriceInput.value);
             const individuals = parseInt(individualsInput.value);
             const currency = document.getElementById('currency').value;
-            const foodWeight = parseFloat(document.getElementById('food-type').value);
+            const foodWeight = parseFloat(document.getElementById('food-type').selectedOptions[0].dataset.weight);
 
             if (isNaN(foodPrice) || foodPrice <= 0 || isNaN(individuals) || individuals <= 0) {
                 fitrResults.innerHTML = `<p class="error">${t('error-invalid-input')}</p>`;
-                fitrResults.style.display = 'block';
                 fitrResults.classList.add('show');
                 return;
             }
@@ -531,9 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const resultText = `${t('fitr-result-title')}\n${t('fitr-result-weight')} ${formatNumber(totalWeight)} kg\n${t('fitr-result-value')} ${formatNumber(totalValue)} ${currency}`;
 
             fitrResults.innerHTML = resultHTML;
-            fitrResults.style.display = 'block';
             fitrResults.classList.add('show');
-            
             addResultActions(fitrResults, resultText, resultHTML, t('fitr-result-title'));
             scrollToResults(fitrResults);
         });
@@ -543,10 +537,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupMalForm() {
         malForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            const submitBtn = malForm.querySelector('.cta-button');
             const wealth = parseFloat(document.getElementById('wealth').value);
             const currency = document.getElementById('mal-currency').value;
 
-            malResults.style.display = 'block';
             malResults.classList.add('show');
             malResults.innerHTML = `<div class="loader"></div><p>${t('calculating')}</p>`;
             scrollToResults(malResults);
@@ -556,12 +550,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const goldPricePerGramUSD = await API.getGoldPrice();
+            submitBtn.disabled = true;
+            const goldResult = await API.getGoldPrice();
+            submitBtn.disabled = false;
 
-            if (!goldPricePerGramUSD || !appState.rates) {
+            if (!goldResult || !appState.rates) {
                 malResults.innerHTML = `<p class="error">${t('error-api-failed')}</p>`;
                 return;
             }
+
+            appState.lastUpdated.gold = goldResult.timestamp;
+            const goldPricePerGramUSD = goldResult.price;
 
             const nisaabInUsd = 85 * goldPricePerGramUSD;
             const conversionRate = appState.rates[currency];

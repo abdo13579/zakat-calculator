@@ -71,7 +71,7 @@
             <form id="fitr-form" novalidate>
                 <div class="form-group">
                     <label for="food-price" data-i18n="fitr-food-price-label">Food Price per Kilogram</label>
-                    <input type="number" id="food-price" step="0.01" data-i18n-placeholder="fitr-food-price-placeholder" placeholder="e.g., 2.50">
+                    <input type="number" id="food-price" step="0.01" min="0" data-i18n-placeholder="fitr-food-price-placeholder" placeholder="e.g., 2.50">
                 </div>
                 <div class="form-group">
                     <label for="currency" data-i18n="fitr-currency-label">Currency</label>
@@ -88,11 +88,11 @@
                 <div class="form-group">
                     <label for="food-type" data-i18n="fitr-food-type-label">Food Type</label>
                     <select id="food-type">
-                        <option value="2.0" data-i18n="food-rice">Rice (2.0 kg)</option>
-                        <option value="2.5" data-i18n="food-wheat">Wheat (2.5 kg)</option>
-                        <option value="3.0" data-i18n="food-dates">Dates (3.0 kg)</option>
-                        <option value="1.625" data-i18n="food-raisins">Raisins (1.625 kg)</option>
-                        <option value="2.0" data-i18n="food-corn">Corn (2.0 kg)</option>
+                        <option value="rice" data-weight="2.0" data-i18n="food-rice">Rice (2.0 kg)</option>
+                        <option value="wheat" data-weight="2.5" data-i18n="food-wheat">Wheat (2.5 kg)</option>
+                        <option value="dates" data-weight="3.0" data-i18n="food-dates">Dates (3.0 kg)</option>
+                        <option value="raisins" data-weight="1.625" data-i18n="food-raisins">Raisins (1.625 kg)</option>
+                        <option value="corn" data-weight="2.0" data-i18n="food-corn">Corn (2.0 kg)</option>
                     </select>
                 </div>
                 <button type="submit" class="cta-button" data-i18n="button-calculate">Calculate</button>
@@ -120,7 +120,6 @@
             </form>
             <div id="mal-results" class="results-container"></div>
         </section>
-        </section>
 
         <section id="about" class="page hidden">
             <h2 data-i18n="about-title">About ZakatCalc</h2>
@@ -132,7 +131,7 @@
                 <p data-i18n="about-api-intro">ZakatCalc uses two public APIs to fetch real-time financial data:</p>
                 <ul>
                     <li data-i18n="about-api-currency"><strong>Currency Exchange Rates:</strong> <code>https://open.er-api.com/v6/latest/USD</code> - Provides up-to-date exchange rates for various currencies based on USD.</li>
-                    <li data-i18n="about-api-gold"><strong>Gold Price:</strong> <code>https://data-asg.goldprice.org/dbXRates/USD</code> - Provides the current market price of gold per ounce, which is converted to per gram for calculations.</li>
+                    <li data-i18n="about-api-gold"><strong>Gold Price:</strong> <code>https://mintedmetal.com/api/prices.json</code> - Provides the current market price of gold per ounce, which is converted to per gram for calculations.</li>
                 </ul>
                 <p data-i18n="about-api-note">These APIs are called automatically when you use the calculators. No API keys are required as we use free public endpoints.</p>
 
