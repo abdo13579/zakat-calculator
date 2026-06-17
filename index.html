@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +22,7 @@
                 <a href="#" class="nav-link" data-page="landing-page"><i class="fas fa-home"></i> <span data-i18n="nav-home">Home</span></a>
                 <a href="#" class="nav-link" data-page="zakat-al-fitr"><i class="fas fa-calculator"></i> <span data-i18n="nav-zakat-fitr">Zakat Al-Fitr</span></a>
                 <a href="#" class="nav-link" data-page="zakat-al-mal"><i class="fas fa-money-bill-wave"></i> <span data-i18n="nav-zakat-mal">Zakat Al-Mal</span></a>
+                <a href="#" class="nav-link" data-page="zakat-al-zuru"><i class="fas fa-seedling"></i> <span data-i18n="nav-zakat-zuru">Zakat Al-Zuru</span></a>
                 <a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> <span data-i18n="nav-about">About</span></a>
             </nav>
             <div class="header-actions">
@@ -42,6 +43,7 @@
         <a href="#" class="nav-link" data-page="landing-page"><i class="fas fa-home"></i> <span data-i18n="nav-home">Home</span></a>
         <a href="#" class="nav-link" data-page="zakat-al-fitr"><i class="fas fa-calculator"></i> <span data-i18n="nav-zakat-fitr-full">Calculate Zakat Al-Fitr</span></a>
         <a href="#" class="nav-link" data-page="zakat-al-mal"><i class="fas fa-money-bill-wave"></i> <span data-i18n="nav-zakat-mal-full">Calculate Zakat Al-Mal</span></a>
+        <a href="#" class="nav-link" data-page="zakat-al-zuru"><i class="fas fa-seedling"></i> <span data-i18n="nav-zakat-zuru-full">Calculate Zakat Al-Zuru</span></a>
         <a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> <span data-i18n="nav-about">About</span></a>
     </nav>
 
@@ -64,10 +66,18 @@
                     <p data-i18n="mal-description">Check if your wealth has reached the Nisaab and how much Zakat is due.</p>
                     <button class="cta-button nav-link" data-page="zakat-al-mal"><span data-i18n="mal-button">Go to Zakat Al-Mal</span></button>
                 </article>
+
+                <article class="feature-card">
+                    <h2><i class="fas fa-seedling"></i> <span data-i18n="zuru-title">Zakat Al-Zuru</span></h2>
+                    <p data-i18n="zuru-description">Calculate Zakat on agricultural produce based on irrigation type and harvest weight.</p>
+                    <button class="cta-button nav-link" data-page="zakat-al-zuru"><span data-i18n="zuru-button">Go to Zakat Al-Zuru</span></button>
+                </article>
             </div>
         </section>
 
         <section id="zakat-al-fitr" class="page hidden">
+            <h2 data-i18n="fitr-calculator-title">Zakat Al-Fitr Calculator</h2>
+            <p class="section-helper-text" data-i18n="fitr-helper-text">Calculate the amount of Zakat Al-Fitr due based on food prices and family size.</p>
             <form id="fitr-form" novalidate>
                 <div class="form-group">
                     <label for="food-price" data-i18n="fitr-food-price-label">Food Price per Kilogram</label>
@@ -84,16 +94,6 @@
                 <div class="form-group">
                     <label for="individuals" data-i18n="fitr-individuals-label">Number of Individuals</label>
                     <input type="number" id="individuals" min="1" step="1" data-i18n-placeholder="fitr-individuals-placeholder" placeholder="e.g., 4">
-                </div>
-                <div class="form-group">
-                    <label for="food-type" data-i18n="fitr-food-type-label">Food Type</label>
-                    <select id="food-type">
-                        <option value="rice" data-weight="2.0" data-i18n="food-rice">Rice (2.0 kg)</option>
-                        <option value="wheat" data-weight="2.5" data-i18n="food-wheat">Wheat (2.5 kg)</option>
-                        <option value="dates" data-weight="3.0" data-i18n="food-dates">Dates (3.0 kg)</option>
-                        <option value="raisins" data-weight="1.625" data-i18n="food-raisins">Raisins (1.625 kg)</option>
-                        <option value="corn" data-weight="2.0" data-i18n="food-corn">Corn (2.0 kg)</option>
-                    </select>
                 </div>
                 <button type="submit" class="cta-button" data-i18n="button-calculate">Calculate</button>
             </form>
@@ -121,50 +121,54 @@
             <div id="mal-results" class="results-container"></div>
         </section>
 
+        <section id="zakat-al-zuru" class="page hidden">
+            <h2 data-i18n="zuru-calculator-title">Zakat Al-Zuru Calculator</h2>
+            <p class="section-helper-text" data-i18n="zuru-helper-text">Calculate Zakat on agricultural crops based on total harvest weight and irrigation method.</p>
+            <form id="zuru-form" novalidate>
+                <div class="form-group">
+                    <label for="harvest-weight" data-i18n="zuru-weight-label">Total Harvest Weight (kg)</label>
+                    <input type="number" id="harvest-weight" step="any" min="0" data-i18n-placeholder="zuru-weight-placeholder" placeholder="e.g., 1000">
+                </div>
+                <div class="form-group">
+                    <label for="irrigation-type" data-i18n="zuru-irrigation-label">Irrigation Type</label>
+                    <select id="irrigation-type">
+                        <option value="rainfed" data-rate="0.10" data-i18n="zuru-rainfed">Rainfed (10%)</option>
+                        <option value="irrigated" data-rate="0.05" data-i18n="zuru-irrigated">Irrigated (5%)</option>
+                        <option value="mixed" data-rate="0.075" data-i18n="zuru-mixed">Mixed (7.5%)</option>
+                    </select>
+                </div>
+                <button type="submit" class="cta-button" data-i18n="button-calculate">Calculate</button>
+            </form>
+            <div id="zuru-results" class="results-container"></div>
+        </section>
+
         <section id="about" class="page hidden">
             <h2 data-i18n="about-title">About ZakatCalc</h2>
             <div class="about-content">
-                <p data-i18n="about-description-1">ZakatCalc is a modern, easy-to-use web application designed to help Muslims around the world calculate their Zakat accurately and with confidence. Our goal is to provide a reliable tool that simplifies the process of fulfilling this important pillar of Islam.</p>
-                <p data-i18n="about-description-2">The application uses real-time financial data for currency exchange rates and the market price of gold to ensure that the calculations for both Zakat Al-Fitr and Zakat Al-Mal are as precise as possible.</p>
-                
+                <p data-i18n="about-description">ZakatCalc is a bilingual web application that helps Muslims calculate Zakat Al-Fitr, Zakat Al-Mal, and Zakat Al-Zuru accurately using real-time gold prices, currency exchange rates, and Islamic jurisprudence.</p>
+
+                <h3 data-i18n="about-calc-fitr-title">Zakat Al-Fitr</h3>
+                <p data-i18n="about-calc-fitr-text">Calculated as 3 kg of staple food per person, multiplied by the local food price per kilogram. No API needed.</p>
+
+                <h3 data-i18n="about-calc-mal-title">Zakat Al-Mal</h3>
+                <p data-i18n="about-calc-mal-text">Wealth Zakat is due when your liquid wealth exceeds the Nisaab (85 grams of gold). The Nisaab is calculated using live gold prices and exchange rates. Zakat due is 2.5% of total liquid wealth.</p>
+
+                <h3 data-i18n="about-calc-zuru-title">Zakat Al-Zuru</h3>
+                <p data-i18n="about-calc-zuru-text">Agricultural Zakat is due when the harvest weight reaches the Nisaab of 600 kg. The rate depends on irrigation: rainfed (10%), irrigated (5%), or mixed (7.5%).</p>
+
                 <h3 data-i18n="about-api-title">API Usage</h3>
-                <p data-i18n="about-api-intro">ZakatCalc uses two public APIs to fetch real-time financial data:</p>
                 <ul>
-                    <li data-i18n="about-api-currency"><strong>Currency Exchange Rates:</strong> <code>https://open.er-api.com/v6/latest/USD</code> - Provides up-to-date exchange rates for various currencies based on USD.</li>
-                    <li data-i18n="about-api-gold"><strong>Gold Price:</strong> <code>https://mintedmetal.com/api/prices.json</code> - Provides the current market price of gold per ounce, which is converted to per gram for calculations.</li>
+                    <li data-i18n="about-api-currency"><strong>Currency Rates:</strong> <code>open.er-api.com/v6/latest/USD</code> — Free public endpoint, no key required.</li>
+                    <li data-i18n="about-api-gold"><strong>Gold Price:</strong> <code>mintedmetal.com/api/prices.json</code> — Free public endpoint, no key required. Price per ounce is converted to grams (÷ 31.1035).</li>
                 </ul>
-                <p data-i18n="about-api-note">These APIs are called automatically when you use the calculators. No API keys are required as we use free public endpoints.</p>
 
-                <h3 data-i18n="about-calc-fitr-title">How We Calculate Zakat Al-Fitr</h3>
-                <p data-i18n="about-calc-fitr-intro">Zakat Al-Fitr is calculated based on the amount of staple food required per person:</p>
-                <ul>
-                    <li data-i18n="about-calc-fitr-rice"><strong>Rice:</strong> 2.0 kg per person</li>
-                    <li data-i18n="about-calc-fitr-wheat"><strong>Wheat:</strong> 2.5 kg per person</li>
-                    <li data-i18n="about-calc-fitr-dates"><strong>Dates:</strong> 3.0 kg per person</li>
-                    <li data-i18n="about-calc-fitr-raisins"><strong>Raisins:</strong> 1.625 kg per person</li>
-                    <li data-i18n="about-calc-fitr-corn"><strong>Corn:</strong> 2.0 kg per person</li>
-                </ul>
-                <p data-i18n="about-calc-fitr-formula"><strong>Formula:</strong></p>
-                <ul>
-                    <li data-i18n="about-calc-fitr-step1">Total Weight = Number of Individuals × Food Weight per Person</li>
-                    <li data-i18n="about-calc-fitr-step2">Total Monetary Value = Total Weight × Food Price per Kilogram</li>
-                </ul>
-                <p data-i18n="about-calc-fitr-example"><strong>Example:</strong> For a family of 4 using rice at 2.50 per kg: Total Weight = 4 × 2.0 = 8.0 kg, Total Value = 8.0 × 2.50 = 20.00</p>
-
-                <h3 data-i18n="about-calc-mal-title">How We Calculate Zakat Al-Mal</h3>
-                <p data-i18n="about-calc-mal-intro">Zakat Al-Mal is calculated based on the Nisaab (minimum threshold) which is equivalent to 85 grams of gold:</p>
-                <ul>
-                    <li data-i18n="about-calc-mal-step1"><strong>Nisaab Calculation:</strong> We fetch the current gold price per gram in USD, then calculate: Nisaab in USD = 85 grams × Gold Price per Gram</li>
-                    <li data-i18n="about-calc-mal-step2"><strong>Currency Conversion:</strong> The Nisaab is then converted to your selected currency using real-time exchange rates.</li>
-                    <li data-i18n="about-calc-mal-step3"><strong>Zakat Calculation:</strong> If your total liquid wealth is equal to or exceeds the Nisaab, you owe Zakat of 2.5% (0.025) of your total wealth.</li>
-                </ul>
-                <p data-i18n="about-calc-mal-formula"><strong>Formula:</strong></p>
-                <ul>
-                    <li data-i18n="about-calc-mal-formula1">Nisaab (in selected currency) = 85 × Gold Price per Gram (USD) × Exchange Rate</li>
-                    <li data-i18n="about-calc-mal-formula2">If Wealth ≥ Nisaab: Zakat Due = Wealth × 0.025 (2.5%)</li>
-                    <li data-i18n="about-calc-mal-formula3">If Wealth < Nisaab: No Zakat is due</li>
-                </ul>
-                <p data-i18n="about-calc-mal-note"><strong>Note:</strong> The gold price and exchange rates are updated in real-time to ensure accuracy.</p>
+                <h3 data-i18n="about-dev-title">Developer</h3>
+                <p><span data-i18n="about-dev-name">Abdulrahman Alhaytham</span> — <span data-i18n="about-dev-role">Software Engineer</span></p>
+                <div class="social-links">
+                    <a href="https://github.com/abdo13579" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/abdoalhythm/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:abdulrahman.contactus@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
         </section>
     </main>

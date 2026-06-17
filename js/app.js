@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const translations = {
         en: {
             'app-name': 'ZakatCalc',
+            'page-title': 'Zakat Calculator',
             'nav-home': 'Home',
             'nav-zakat-fitr': 'Zakat Al-Fitr',
             'nav-zakat-fitr-full': 'Calculate Zakat Al-Fitr',
@@ -14,9 +15,30 @@ document.addEventListener('DOMContentLoaded', () => {
             'fitr-title': 'Zakat Al-Fitr',
             'fitr-description': 'Quickly calculate Zakat Al-Fitr based on local food prices and family size.',
             'fitr-button': 'Go to Zakat Al-Fitr',
+            'fitr-calculator-title': 'Zakat Al-Fitr Calculator',
+            'fitr-helper-text': 'Calculate the amount of Zakat Al-Fitr due based on food prices and family size.',
             'mal-title': 'Zakat Al-Mal',
             'mal-description': 'Check if your wealth has reached the Nisaab and how much Zakat is due.',
             'mal-button': 'Go to Zakat Al-Mal',
+            'nav-zakat-zuru': 'Zakat Al-Zuru',
+            'nav-zakat-zuru-full': 'Calculate Zakat Al-Zuru',
+            'zuru-title': 'Zakat Al-Zuru',
+            'zuru-description': 'Calculate Zakat on agricultural produce based on irrigation type and harvest weight.',
+            'zuru-button': 'Go to Zakat Al-Zuru',
+            'zuru-calculator-title': 'Zakat Al-Zuru Calculator',
+            'zuru-helper-text': 'Calculate Zakat on agricultural crops based on total harvest weight and irrigation method.',
+            'zuru-weight-label': 'Total Harvest Weight (kg)',
+            'zuru-weight-placeholder': 'e.g., 1000',
+            'zuru-irrigation-label': 'Irrigation Type',
+            'zuru-rainfed': 'Rainfed (10%)',
+            'zuru-irrigated': 'Irrigated (5%)',
+            'zuru-mixed': 'Mixed (7.5%)',
+            'zuru-result-title': 'Zakat Al-Zuru Result',
+            'zuru-result-nisaab': 'Zakat Nisaab (minimum threshold)',
+            'zuru-result-eligible': 'This harvest is eligible for Zakat.',
+            'zuru-result-not-eligible': 'This harvest is below the Nisaab. No Zakat is due.',
+            'zuru-result-rate': 'Zakat Rate Applied:',
+            'zuru-result-due': 'Total Zakat Due:',
             'mal-calculator-title': 'Zakat Al-Mal Calculator',
             'mal-helper-text': 'Use this calculator to estimate if you owe Zakat based on the current gold price.',
             'fitr-food-price-label': 'Food Price per Kilogram',
@@ -24,50 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
             'fitr-currency-label': 'Currency',
             'fitr-individuals-label': 'Number of Individuals',
             'fitr-individuals-placeholder': 'e.g., 4',
-            'fitr-food-type-label': 'Food Type',
-            'food-rice': 'Rice (2.0 kg)',
-            'food-wheat': 'Wheat (2.5 kg)',
-            'food-dates': 'Dates (3.0 kg)',
-            'food-raisins': 'Raisins (1.625 kg)',
-            'food-corn': 'Corn (2.0 kg)',
             'mal-wealth-label': 'Total Liquid Wealth',
             'mal-wealth-placeholder': 'e.g., 50000',
             'mal-currency-label': 'Currency',
             'button-calculate': 'Calculate',
             'about-title': 'About ZakatCalc',
-            'about-description-1': 'ZakatCalc is a modern, easy-to-use web application designed to help Muslims around the world calculate their Zakat accurately and with confidence. Our goal is to provide a reliable tool that simplifies the process of fulfilling this important pillar of Islam.',
-            'about-description-2': 'The application uses real-time financial data for currency exchange rates and the market price of gold to ensure that the calculations for both Zakat Al-Fitr and Zakat Al-Mal are as precise as possible.',
+            'about-description': 'ZakatCalc is a bilingual web application that helps Muslims calculate Zakat Al-Fitr, Zakat Al-Mal, and Zakat Al-Zuru accurately using real-time gold prices, currency exchange rates, and Islamic jurisprudence.',
             'about-api-title': 'API Usage',
-            'about-api-intro': 'ZakatCalc uses two public APIs to fetch real-time financial data:',
-            'about-api-currency': 'Currency Exchange Rates: https://open.er-api.com/v6/latest/USD - Provides up-to-date exchange rates for various currencies based on USD.',
-            'about-api-gold': 'Gold Price: https://mintedmetal.com/api/prices.json - Provides the current market price of gold per ounce, which is converted to per gram for calculations.',
-            'about-api-note': 'These APIs are called automatically when you use the calculators. No API keys are required as we use free public endpoints.',
-            'about-calc-fitr-title': 'How We Calculate Zakat Al-Fitr',
-            'about-calc-fitr-intro': 'Zakat Al-Fitr is calculated based on the amount of staple food required per person:',
-            'about-calc-fitr-rice': 'Rice: 2.0 kg per person',
-            'about-calc-fitr-wheat': 'Wheat: 2.5 kg per person',
-            'about-calc-fitr-dates': 'Dates: 3.0 kg per person',
-            'about-calc-fitr-raisins': 'Raisins: 1.625 kg per person',
-            'about-calc-fitr-corn': 'Corn: 2.0 kg per person',
-            'about-calc-fitr-formula': 'Formula:',
-            'about-calc-fitr-step1': 'Total Weight = Number of Individuals × Food Weight per Person',
-            'about-calc-fitr-step2': 'Total Monetary Value = Total Weight × Food Price per Kilogram',
-            'about-calc-fitr-example': 'Example: For a family of 4 using rice at 2.50 per kg: Total Weight = 4 × 2.0 = 8.0 kg, Total Value = 8.0 × 2.50 = 20.00',
-            'about-calc-mal-title': 'How We Calculate Zakat Al-Mal',
-            'about-calc-mal-intro': 'Zakat Al-Mal is calculated based on the Nisaab (minimum threshold) which is equivalent to 85 grams of gold:',
-            'about-calc-mal-step1': 'Nisaab Calculation: We fetch the current gold price per gram in USD, then calculate: Nisaab in USD = 85 grams × Gold Price per Gram',
-            'about-calc-mal-step2': 'Currency Conversion: The Nisaab is then converted to your selected currency using real-time exchange rates.',
-            'about-calc-mal-step3': 'Zakat Calculation: If your total liquid wealth is equal to or exceeds the Nisaab, you owe Zakat of 2.5% (0.025) of your total wealth.',
-            'about-calc-mal-formula': 'Formula:',
-            'about-calc-mal-formula1': 'Nisaab (in selected currency) = 85 × Gold Price per Gram (USD) × Exchange Rate',
-            'about-calc-mal-formula2': 'If Wealth ≥ Nisaab: Zakat Due = Wealth × 0.025 (2.5%)',
-            'about-calc-mal-formula3': 'If Wealth < Nisaab: No Zakat is due',
-            'about-calc-mal-note': 'Note: The gold price and exchange rates are updated in real-time to ensure accuracy.',
-            'about-disclaimer-title': 'Disclaimer',
-            'about-disclaimer-text': 'This tool is intended for informational purposes only and should not be a substitute for consultation with a qualified religious scholar. While we strive for accuracy, we cannot guarantee the absolute correctness of every calculation. Please consult with your local Imam or scholar for definitive rulings.',
-            'about-developer-title': 'Developer',
-            'about-developer-text': 'This application was developed by a passionate software engineer dedicated to creating useful tools for the Muslim community.',
-            'footer-text': '© 2025 ZakatCalc. All Rights Reserved.',
+            'about-api-currency': 'Currency Rates: open.er-api.com/v6/latest/USD — Free public endpoint, no key required.',
+            'about-api-gold': 'Gold Price: mintedmetal.com/api/prices.json — Free public endpoint, no key required. Price per ounce is converted to grams (÷ 31.1035).',
+            'about-calc-fitr-title': 'Zakat Al-Fitr',
+            'about-calc-fitr-text': 'Calculated as 3 kg of staple food per person, multiplied by the local food price per kilogram. No API needed.',
+            'about-calc-mal-title': 'Zakat Al-Mal',
+            'about-calc-mal-text': 'Wealth Zakat is due when your liquid wealth exceeds the Nisaab (85 grams of gold). The Nisaab is calculated using live gold prices and exchange rates. Zakat due is 2.5% of total liquid wealth.',
+            'about-calc-zuru-title': 'Zakat Al-Zuru',
+            'about-calc-zuru-text': 'Agricultural Zakat is due when the harvest weight reaches the Nisaab of 600 kg. The rate depends on irrigation: rainfed (10%), irrigated (5%), or mixed (7.5%).',
+            'about-dev-title': 'Developer',
+            'about-dev-name': 'Abdulrahman Alhaytham',
+            'about-dev-role': 'Software Engineer',
+            'footer-text': '© ZakatCalc. All Rights Reserved.',
             'fitr-result-title': 'Zakat Al-Fitr Result',
             'fitr-result-weight': 'Total Required Weight:',
             'fitr-result-value': 'Total Monetary Value:',
@@ -85,11 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'error-rates-load': 'Could not load currency rates. Please try again later.',
             'calculating': 'Calculating...',
             'button-copy': 'Copy Result',
-            'button-clear': 'Clear Form',
             'copied-success': 'Result copied to clipboard!',
         },
         ar: {
             'app-name': 'حاسبة الزكاة',
+            'page-title': 'حاسبة الزكاة',
             'nav-home': 'الرئيسية',
             'nav-zakat-fitr': 'زكاة الفطر',
             'nav-zakat-fitr-full': 'حساب زكاة الفطر',
@@ -101,9 +98,30 @@ document.addEventListener('DOMContentLoaded', () => {
             'fitr-title': 'زكاة الفطر',
             'fitr-description': 'احسب زكاة الفطر بسرعة بناءً على أسعار الطعام المحلية وحجم الأسرة.',
             'fitr-button': 'انتقل إلى زكاة الفطر',
+            'fitr-calculator-title': 'حاسبة زكاة الفطر',
+            'fitr-helper-text': 'احسب مقدار زكاة الفطر المستحقة بناءً على أسعار الطعام وحجم الأسرة.',
             'mal-title': 'زكاة المال',
             'mal-description': 'تحقق مما إذا كان ثروتك قد وصلت إلى النصاب وكم مقدار الزكاة المستحقة.',
             'mal-button': 'انتقل إلى زكاة المال',
+            'nav-zakat-zuru': 'زكاة الزروع',
+            'nav-zakat-zuru-full': 'حساب زكاة الزروع',
+            'zuru-title': 'زكاة الزروع',
+            'zuru-description': 'احسب زكاة الزروع والثمار بناءً على نوع الري ووزن المحصول.',
+            'zuru-button': 'انتقل إلى زكاة الزروع',
+            'zuru-calculator-title': 'حاسبة زكاة الزروع',
+            'zuru-helper-text': 'احسب زكاة المحاصيل الزراعية بناءً على الوزن الإجمالي للمحصول وطريقة الري.',
+            'zuru-weight-label': 'الوزن الإجمالي للمحصول (كجم)',
+            'zuru-weight-placeholder': 'مثال: 1000',
+            'zuru-irrigation-label': 'نوع الري',
+            'zuru-rainfed': 'ري طبيعي (مطر) - 10%',
+            'zuru-irrigated': 'ري صناعي - 5%',
+            'zuru-mixed': 'ري مختلط - 7.5%',
+            'zuru-result-title': 'نتيجة زكاة الزروع',
+            'zuru-result-nisaab': 'النصاب (الحد الأدنى)',
+            'zuru-result-eligible': 'هذا المحصول بلغ النصاب، الزكاة واجبة.',
+            'zuru-result-not-eligible': 'هذا المحصول لم يبلغ النصاب. لا زكاة واجبة.',
+            'zuru-result-rate': 'نسبة الزكاة المطبقة:',
+            'zuru-result-due': 'إجمالي الزكاة الواجبة:',
             'mal-calculator-title': 'حاسبة زكاة المال',
             'mal-helper-text': 'استخدم هذه الحاسبة لتقدير ما إذا كنت مديناً بالزكاة بناءً على سعر الذهب الحالي.',
             'fitr-food-price-label': 'سعر الطعام لكل كيلوغرام',
@@ -111,50 +129,25 @@ document.addEventListener('DOMContentLoaded', () => {
             'fitr-currency-label': 'العملة',
             'fitr-individuals-label': 'عدد الأفراد',
             'fitr-individuals-placeholder': 'مثال: 4',
-            'fitr-food-type-label': 'نوع الطعام',
-            'food-rice': 'أرز (2.0 كجم)',
-            'food-wheat': 'قمح (2.5 كجم)',
-            'food-dates': 'تمر (3.0 كجم)',
-            'food-raisins': 'زبيب (1.625 كجم)',
-            'food-corn': 'ذرة (2.0 كجم)',
             'mal-wealth-label': 'إجمالي الثروة السائلة',
             'mal-wealth-placeholder': 'مثال: 50000',
             'mal-currency-label': 'العملة',
             'button-calculate': 'احسب',
             'about-title': 'حول حاسبة الزكاة',
-            'about-description-1': 'حاسبة الزكاة هي تطبيق ويب حديث وسهل الاستخدام مصمم لمساعدة المسلمين حول العالم على حساب زكاتهم بدقة وثقة. هدفنا هو توفير أداة موثوقة تبسط عملية أداء هذا الركن المهم من الإسلام.',
-            'about-description-2': 'يستخدم التطبيق بيانات مالية في الوقت الفعلي لأسعار صرف العملات وسعر الذهب في السوق لضمان أن حسابات زكاة الفطر وزكاة المال دقيقة قدر الإمكان.',
+            'about-description': 'حاسبة الزكاة هي تطبيق ويب ثنائي اللغة يساعد المسلمين على حساب زكاة الفطر وزكاة المال وزكاة الزروع بدقة باستخدام أسعار الذهب الحية وأسعار صرف العملات وأحكام الفقه الإسلامي.',
             'about-api-title': 'استخدام واجهة برمجة التطبيقات',
-            'about-api-intro': 'تستخدم حاسبة الزكاة واجهتين برمجيتين عامتين لجلب البيانات المالية في الوقت الفعلي:',
-            'about-api-currency': 'أسعار صرف العملات: https://open.er-api.com/v6/latest/USD - يوفر أسعار صرف محدثة للعملات المختلفة بناءً على الدولار الأمريكي.',
-            'about-api-gold': 'سعر الذهب: https://mintedmetal.com/api/prices.json - يوفر سعر الذهب الحالي في السوق للأونصة، والذي يتم تحويله إلى الجرام للحسابات.',
-            'about-api-note': 'يتم استدعاء هذه الواجهات البرمجية تلقائياً عند استخدام الحاسبات. لا حاجة لمفاتيح واجهة برمجة التطبيقات حيث نستخدم نقاط نهاية عامة مجانية.',
-            'about-calc-fitr-title': 'كيف نحسب زكاة الفطر',
-            'about-calc-fitr-intro': 'يتم حساب زكاة الفطر بناءً على كمية الطعام الأساسي المطلوبة لكل شخص:',
-            'about-calc-fitr-rice': 'الأرز: 2.0 كجم لكل شخص',
-            'about-calc-fitr-wheat': 'القمح: 2.5 كجم لكل شخص',
-            'about-calc-fitr-dates': 'التمر: 3.0 كجم لكل شخص',
-            'about-calc-fitr-raisins': 'الزبيب: 1.625 كجم لكل شخص',
-            'about-calc-fitr-corn': 'الذرة: 2.0 كجم لكل شخص',
-            'about-calc-fitr-formula': 'الصيغة:',
-            'about-calc-fitr-step1': 'إجمالي الوزن = عدد الأفراد × وزن الطعام لكل شخص',
-            'about-calc-fitr-step2': 'إجمالي القيمة النقدية = إجمالي الوزن × سعر الطعام لكل كيلوغرام',
-            'about-calc-fitr-example': 'مثال: لعائلة مكونة من 4 أشخاص تستخدم الأرز بسعر 2.50 لكل كجم: إجمالي الوزن = 4 × 2.0 = 8.0 كجم، إجمالي القيمة = 8.0 × 2.50 = 20.00',
-            'about-calc-mal-title': 'كيف نحسب زكاة المال',
-            'about-calc-mal-intro': 'يتم حساب زكاة المال بناءً على النصاب (الحد الأدنى) والذي يعادل 85 جراماً من الذهب:',
-            'about-calc-mal-step1': 'حساب النصاب: نجلب سعر الذهب الحالي لكل جرام بالدولار الأمريكي، ثم نحسب: النصاب بالدولار = 85 جرام × سعر الذهب لكل جرام',
-            'about-calc-mal-step2': 'تحويل العملة: يتم بعد ذلك تحويل النصاب إلى العملة المختارة باستخدام أسعار الصرف في الوقت الفعلي.',
-            'about-calc-mal-step3': 'حساب الزكاة: إذا كانت ثروتك السائلة الإجمالية تساوي أو تتجاوز النصاب، فإنك مدين بزكاة مقدارها 2.5% (0.025) من إجمالي ثروتك.',
-            'about-calc-mal-formula': 'الصيغة:',
-            'about-calc-mal-formula1': 'النصاب (بالعملة المختارة) = 85 × سعر الذهب لكل جرام (بالدولار) × سعر الصرف',
-            'about-calc-mal-formula2': 'إذا كانت الثروة ≥ النصاب: الزكاة المستحقة = الثروة × 0.025 (2.5%)',
-            'about-calc-mal-formula3': 'إذا كانت الثروة < النصاب: لا زكاة مستحقة',
-            'about-calc-mal-note': 'ملاحظة: يتم تحديث سعر الذهب وأسعار الصرف في الوقت الفعلي لضمان الدقة.',
-            'about-disclaimer-title': 'إخلاء المسؤولية',
-            'about-disclaimer-text': 'هذه الأداة مخصصة لأغراض إعلامية فقط ولا ينبغي أن تكون بديلاً عن استشارة عالم ديني مؤهل. بينما نسعى جاهدين للدقة، لا يمكننا ضمان الصحة المطلقة لكل حساب. يرجى استشارة إمامك المحلي أو عالم ديني للحصول على أحكام نهائية.',
-            'about-developer-title': 'المطور',
-            'about-developer-text': 'تم تطوير هذا التطبيق بواسطة مهندس برمجيات متحمس مكرس لإنشاء أدوات مفيدة للمجتمع المسلم.',
-            'footer-text': '© 2025 حاسبة الزكاة. جميع الحقوق محفوظة.',
+            'about-api-currency': 'أسعار العملات: open.er-api.com/v6/latest/USD — نقطة نهاية عامة مجانية، لا حاجة لمفتاح.',
+            'about-api-gold': 'سعر الذهب: mintedmetal.com/api/prices.json — نقطة نهاية عامة مجانية، لا حاجة لمفتاح. يتم تحويل سعر الأونصة إلى الجرام (÷ 31.1035).',
+            'about-calc-fitr-title': 'زكاة الفطر',
+            'about-calc-fitr-text': 'تحسب بواقع 3 كجم من الطعام الأساسي لكل شخص، مضروبة في سعر الكيلوغرام المحلي. لا حاجة لواجهة برمجة تطبيقات.',
+            'about-calc-mal-title': 'زكاة المال',
+            'about-calc-mal-text': 'تجب زكاة المال عندما تتجاوز ثروتك السائلة النصاب (85 جراماً من الذهب). يحسب النصاب باستخدام أسعار الذهب الحية وأسعار الصرف. الزكاة المستحقة هي 2.5% من إجمالي الثروة السائلة.',
+            'about-calc-zuru-title': 'زكاة الزروع',
+            'about-calc-zuru-text': 'تجب زكاة الزروع عندما يصل وزن المحصول إلى النصاب وهو 600 كجم. تختلف النسبة حسب نوع الري: ري طبيعي (10%)، ري صناعي (5%)، أو ري مختلط (7.5%).',
+            'about-dev-title': 'المطور',
+            'about-dev-name': 'عبدالرحمن الهيثم',
+            'about-dev-role': 'مهندس برمجيات',
+            'footer-text': '© حاسبة الزكاة. جميع الحقوق محفوظة.',
             'fitr-result-title': 'نتيجة زكاة الفطر',
             'fitr-result-weight': 'إجمالي الوزن المطلوب:',
             'fitr-result-value': 'إجمالي القيمة النقدية:',
@@ -172,7 +165,6 @@ document.addEventListener('DOMContentLoaded', () => {
             'error-rates-load': 'تعذر تحميل أسعار العملات. يرجى المحاولة مرة أخرى لاحقاً.',
             'calculating': 'جاري الحساب...',
             'button-copy': 'نسخ النتيجة',
-            'button-clear': 'مسح النموذج',
             'copied-success': 'تم نسخ النتيجة إلى الحافظة!',
         }
     };
@@ -184,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             rates: null,
             gold: null,
         },
-        currentLang: localStorage.getItem('zakatcalc_lang') || 'en',
+        currentLang: localStorage.getItem('zakatcalc_lang') || 'ar',
     };
 
     // Elements
@@ -201,6 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const fitrResults = document.getElementById('fitr-results');
     const malForm = document.getElementById('mal-form');
     const malResults = document.getElementById('mal-results');
+    const zuruForm = document.getElementById('zuru-form');
+    const zuruResults = document.getElementById('zuru-results');
 
     // --- Language Support ---
     function setupLanguage() {
@@ -235,6 +229,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Update page title
+        if (translations[lang] && translations[lang]['page-title']) {
+            document.title = translations[lang]['page-title'];
+        }
+
         // Update placeholder attributes
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
             const key = el.getAttribute('data-i18n-placeholder');
@@ -244,16 +243,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Update select options
-        const foodTypeSelect = document.getElementById('food-type');
-        if (foodTypeSelect) {
-            const options = foodTypeSelect.querySelectorAll('option');
-            options.forEach(option => {
-                const key = option.getAttribute('data-i18n');
-                if (key && translations[lang] && translations[lang][key]) {
-                    option.textContent = translations[lang][key];
-                }
-            });
-        }
+        ['irrigation-type'].forEach(selectId => {
+            const select = document.getElementById(selectId);
+            if (select) {
+                const options = select.querySelectorAll('option');
+                options.forEach(option => {
+                    const key = option.getAttribute('data-i18n');
+                    if (key && translations[lang] && translations[lang][key]) {
+                        option.textContent = translations[lang][key];
+                    }
+                });
+            }
+        });
     }
 
     function t(key) {
@@ -279,6 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setupFitrForm();
         setupMalForm();
+        setupZuruForm();
         setupInputFormatting();
     }
 
@@ -404,9 +406,14 @@ document.addEventListener('DOMContentLoaded', () => {
             select.innerHTML = '';
             const clonedFragment = fragment.cloneNode(true);
             // Set default selection
-            const defaultCurrency = (select.id === 'mal-currency') ? 'SAR' : 'USD';
-            const optionToSelect = clonedFragment.querySelector(`option[value="${defaultCurrency}"]`);
-            if(optionToSelect) optionToSelect.selected = true;
+            const preferredCurrency = detectUserCurrency();
+            const optionToSelect = clonedFragment.querySelector(`option[value="${preferredCurrency}"]`);
+            if (optionToSelect) {
+                optionToSelect.selected = true;
+            } else {
+                const usdOption = clonedFragment.querySelector('option[value="USD"]');
+                if (usdOption) usdOption.selected = true;
+            }
             select.appendChild(clonedFragment);
         });
     }
@@ -442,6 +449,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Utility Functions ---
+    const REGION_CURRENCY = {
+        US: 'USD', GB: 'GBP', EU: 'EUR', DE: 'EUR', FR: 'EUR', IT: 'EUR',
+        ES: 'EUR', NL: 'EUR', SA: 'SAR', AE: 'AED', EG: 'EGP', KW: 'KWD',
+        TR: 'TRY', ID: 'IDR', PK: 'PKR', QA: 'QAR', BH: 'BHD', JO: 'JOD',
+        CA: 'CAD', AU: 'AUD', JP: 'JPY', CN: 'CNY', IN: 'INR', SG: 'SGD',
+        MY: 'MYR', PH: 'PHP', BD: 'BDT', NG: 'NGN', ZA: 'ZAR',
+    };
+
+    function detectUserCurrency() {
+        try {
+            const locale = navigator.language || 'en-US';
+            const parts = locale.split('-');
+            const region = parts[parts.length - 1].toUpperCase();
+            return REGION_CURRENCY[region] || 'USD';
+        } catch {
+            return 'USD';
+        }
+    }
+
     function formatNumber(num) {
         return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
@@ -507,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const foodPrice = parseFloat(foodPriceInput.value);
             const individuals = parseInt(individualsInput.value);
             const currency = document.getElementById('currency').value;
-            const foodWeight = parseFloat(document.getElementById('food-type').selectedOptions[0].dataset.weight);
+            const foodWeight = 3.0;
 
             if (isNaN(foodPrice) || foodPrice <= 0 || isNaN(individuals) || individuals <= 0) {
                 fitrResults.innerHTML = `<p class="error">${t('error-invalid-input')}</p>`;
@@ -591,6 +617,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
             malResults.innerHTML = resultHTML;
             addResultActions(malResults, resultText, resultHTML, t('mal-result-title'));
+        });
+    }
+
+    // --- Zakat Al-Zuru Calculator ---
+    const ZURU_NISAAB = 600;
+
+    function setupZuruForm() {
+        zuruForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const weight = parseFloat(document.getElementById('harvest-weight').value);
+            const rate = parseFloat(document.getElementById('irrigation-type').selectedOptions[0].dataset.rate);
+
+            if (isNaN(weight) || weight <= 0) {
+                zuruResults.innerHTML = `<p class="error">${t('error-invalid-input')}</p>`;
+                zuruResults.classList.add('show');
+                return;
+            }
+
+            const isEligible = weight >= ZURU_NISAAB;
+            const zakatDue = isEligible ? weight * rate : 0;
+
+            const ratePercent = (rate * 100).toFixed(1);
+
+            let resultHTML = `
+                <h3>${t('zuru-result-title')}</h3>
+                <p><strong>${t('zuru-result-nisaab')}:</strong> ${ZURU_NISAAB} kg</p>
+                <p><strong>${t('zuru-result-rate')}</strong> ${ratePercent}%</p>
+                <hr>`;
+
+            let resultText = `${t('zuru-result-title')}\n${t('zuru-result-nisaab')}: ${ZURU_NISAAB} kg\n${t('zuru-result-rate')} ${ratePercent}%\n`;
+
+            if (isEligible) {
+                resultHTML += `
+                    <p>${t('zuru-result-eligible')}</p>
+                    <p><strong>${t('zuru-result-due')}</strong> <span class="accent-text">${formatNumber(zakatDue)} kg</span></p>`;
+                resultText += `${t('zuru-result-eligible')}\n${t('zuru-result-due')} ${formatNumber(zakatDue)} kg`;
+            } else {
+                resultHTML += `<p>${t('zuru-result-not-eligible')}</p>`;
+                resultText += `${t('zuru-result-not-eligible')}`;
+            }
+
+            zuruResults.innerHTML = resultHTML;
+            zuruResults.classList.add('show');
+            addResultActions(zuruResults, resultText, resultHTML, t('zuru-result-title'));
+            scrollToResults(zuruResults);
         });
     }
 

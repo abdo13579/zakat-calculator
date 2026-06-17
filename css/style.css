@@ -396,6 +396,23 @@ form .cta-button {
     border: 1px solid var(--border-color);
 }
 
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.social-links a {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
 footer {
     text-align: center;
     padding: 1.5rem;
