@@ -1,6 +1,6 @@
 # ZakatCalc
 
-A modern, bilingual web application that helps Muslims calculate **Zakat Al-Mal** (wealth Zakat) and **Zakat Al-Fitr** (charity of breaking the fast) accurately using real-time gold prices and currency exchange rates.
+A modern, bilingual web application that helps Muslims calculate **Zakat Al-Fitr**, **Zakat Al-Mal** (wealth Zakat), and **Zakat Al-Zuru** (agriculture Zakat) accurately using real-time gold prices, currency exchange rates, and Islamic jurisprudence.
 
 **[→ Live version](https://zakacalc.netlify.app/)**
 
@@ -19,16 +19,21 @@ ZakaCalc provides a simple and trustworthy way to fulfill the Islamic obligation
 ### Calculators
 
 - **Zakat Al-Fitr** — Calculate the amount due based on:
+  - **3.0 kg** of staple food per person (fixed weight)
   - Local food price per kilogram
   - Number of individuals in the household
-  - Food type: Rice (2.0 kg), Wheat (2.5 kg), Dates (3.0 kg), Raisins (1.625 kg), or Corn (2.0 kg) per person
   - Multiple currencies (USD, EUR, GBP, SAR, EGP, AED, KWD, TRY, IDR, PKR)
+  - No API needed
 
 - **Zakat Al-Mal** — Check if your wealth meets the Nisaab and compute Zakat:
   - Nisaab based on **85 grams of gold** at current market price
   - **2.5%** Zakat on total liquid wealth when above Nisaab
   - Real-time gold price and exchange rates
-  - Same currency options as above
+
+- **Zakat Al-Zuru** — Calculate Zakat on agricultural produce:
+  - Nisaab of **600 kg** of harvest weight
+  - Rates: rainfed (10%), irrigated (5%), mixed (7.5%)
+  - No API needed
 
 ### User experience
 
@@ -45,15 +50,23 @@ ZakaCalc provides a simple and trustworthy way to fulfill the Islamic obligation
 
 ### Zakat Al-Fitr
 
-- **Total weight** = Number of individuals × Food weight per person (by chosen type)
-- **Total value** = Total weight × Food price per kilogram  
-- Result is shown in the selected currency (no API needed for this calculator).
+- **Total weight** = Number of individuals × 3.0 kg
+- **Total value** = Total weight × Food price per kilogram
+- Result is shown in the selected currency (no API needed).
 
 ### Zakat Al-Mal
 
 - **Nisaab** = 85 grams × current gold price per gram (USD), then converted to selected currency via live exchange rate.
 - If **wealth ≥ Nisaab**: **Zakat due** = Wealth × 2.5% (0.025).
 - If **wealth < Nisaab**: No Zakat is due.
+
+### Zakat Al-Zuru
+
+- **Nisaab** = 600 kg harvest weight.
+- If **weight ≥ Nisaab**: **Zakat due** = Weight × Rate (0.10 / 0.05 / 0.075 depending on irrigation).
+- If **weight < Nisaab**: No Zakat is due.
+
+No API needed for this calculator.
 
 Gold price and exchange rates are fetched when you run the calculation so Nisaab and Zakat amounts reflect current markets.
 
@@ -74,7 +87,7 @@ Gold price and exchange rates are fetched when you run the calculation so Nisaab
 | Purpose              | API | Notes |
 |----------------------|-----|--------|
 | Currency exchange    | [open.er-api.com/v6/latest/USD](https://open.er-api.com/v6/latest/USD) | USD-based rates for conversion |
-| Gold price           | [data-asg.goldprice.org/dbXRates/USD](https://data-asg.goldprice.org/dbXRates/USD) | Price per ounce, converted to per gram (÷ 31.1035) |
+| Gold price           | [mintedmetal.com/api/prices.json](https://mintedmetal.com/api/prices.json) | Price per ounce, converted to per gram (÷ 31.1035) |
 
 No API keys are required; the app uses these public endpoints when you use the Zakat Al-Mal calculator (and for loading currency options).
 
@@ -84,14 +97,14 @@ No API keys are required; the app uses these public endpoints when you use the Z
 
 ```
 zakacalc/
-├── index.html          # Single-page app: landing, Zakat Al-Fitr, Zakat Al-Mal, About
+├── index.html          # Single-page app: landing, Fitr, Mal, Zuru, About
 ├── favicon.svg         # App icon
 ├── img.png             # Screenshot for README
 ├── css/
 │   └── style.css       # Global styles, theme variables, layout, components
 ├── js/
 │   ├── api.js          # getCurrencyRates(), getGoldPrice()
-│   └── app.js          # i18n, theme, navigation, form handling, both calculators
+│   └── app.js          # i18n, theme, navigation, form handling, all calculators
 └── README.md
 ```
 
@@ -122,10 +135,11 @@ The app is static. You can deploy the folder to any static host (e.g. Netlify, V
 
 ## Usage summary
 
-1. **Home** — Choose “Zakat Al-Fitr” or “Zakat Al-Mal.”
-2. **Zakat Al-Fitr** — Enter price per kg, currency, number of people, and food type → **Calculate**.
+1. **Home** — Choose a calculator from the landing cards.
+2. **Zakat Al-Fitr** — Enter food price per kg, currency, and number of people → **Calculate**.
 3. **Zakat Al-Mal** — Enter total liquid wealth and currency → **Calculate** (app fetches gold price and rates).
-4. Use **Copy** on the result if needed; switch **language** or **theme** via the header.
+4. **Zakat Al-Zuru** — Enter harvest weight (kg) and select irrigation type → **Calculate**.
+5. Use **Copy** on any result; switch **language** or **theme** via the header.
 
 ---
 
