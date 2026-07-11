@@ -2,7 +2,7 @@
 
 A modern, bilingual web application that helps Muslims calculate **Zakat Al-Fitr**, **Zakat Al-Mal** (wealth Zakat), and **Zakat Al-Zuru** (agriculture Zakat) accurately using real-time gold prices, currency exchange rates, and Islamic jurisprudence.
 
-**[→ Live version](https://zakacalc.netlify.app/)**
+**[→ Live version](https://abdo13579.github.io/zakat-calculator/)**
 
 ![ZakaCalc homepage](img.png)
 
@@ -129,7 +129,7 @@ zakacalc/
 
 ### Deploy
 
-The app is static. You can deploy the folder to any static host (e.g. Netlify, Vercel, GitHub Pages) by serving the project root; the live site is hosted on [Netlify](https://zakacalc.netlify.app/).
+The app is static. You can deploy the folder to any static host (e.g. Netlify, Vercel, GitHub Pages) by serving the project root; the live site is hosted on [Pages](https://abdo13579.github.io/zakat-calculator/).
 
 ---
 
