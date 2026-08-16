@@ -4,13 +4,13 @@ A modern, bilingual web application that helps Muslims calculate **Zakat Al-Fitr
 
 **[→ Live version](https://abdo13579.github.io/zakat-calculator/)**
 
-![ZakaCalc homepage](img.png)
+![ZakatCalc homepage](img.png)
 
 ---
 
 ## Overview
 
-ZakaCalc provides a simple and trustworthy way to fulfill the Islamic obligation of Zakat. The app supports **English** and **Arabic** (with full RTL layout), works offline for Zakat Al-Fitr, and uses live financial data for Zakat Al-Mal so Nisaab and amounts stay up to date.
+ZakatCalc provides a simple and trustworthy way to fulfill the Islamic obligation of Zakat. The app supports **English** and **Arabic** (with full RTL layout), works offline for Zakat Al-Fitr, and uses live financial data for Zakat Al-Mal so Nisaab and amounts stay up to date.
 
 ---
 
@@ -74,11 +74,14 @@ Gold price and exchange rates are fetched when you run the calculation so Nisaab
 
 ## Tech stack
 
-- **HTML5** — Semantic structure, `data-i18n` for translations
-- **CSS3** — Custom properties (light/dark), Flexbox/Grid, responsive layout, IBM Plex Sans Arabic font
-- **Vanilla JavaScript (ES6)** — No frameworks; modular `api.js` and `app.js`
-- **Font Awesome 6** — Icons
-- **External APIs** (see below)
+- **Vite** — Build tool and dev server
+- **React 18 (JSX)** — UI components and state
+- **CSS Modules** — Per-component scoped styles
+- **Vitest** — Automated calculation-logic tests (merge gate)
+- **Font Awesome 6** — Icons (CDN)
+- **External APIs** — see below
+
+Calculation logic lives in pure domain modules under `src/domain/` and is guarded by Vitest. No other runtime or build dependency is permitted by the project constitution.
 
 ---
 
@@ -95,16 +98,34 @@ No API keys are required; the app uses these public endpoints when you use the Z
 
 ## Project structure
 
-```
+```text
 zakacalc/
-├── index.html          # Single-page app: landing, Fitr, Mal, Zuru, About
-├── favicon.svg         # App icon
-├── img.png             # Screenshot for README
-├── css/
-│   └── style.css       # Global styles, theme variables, layout, components
-├── js/
-│   ├── api.js          # getCurrencyRates(), getGoldPrice()
-│   └── app.js          # i18n, theme, navigation, form handling, all calculators
+├── index.html                # Vite entry (CDN fonts/icons kept)
+├── vite.config.js            # base: '/zakat-calculator/', react plugin
+├── package.json
+├── public/                   # Static assets served as-is
+│   ├── favicon.svg
+│   └── img.png
+├── src/
+│   ├── main.jsx              # React entry, root providers
+│   ├── App.jsx               # State-driven view switching
+│   ├── i18n/
+│   │   ├── translations.js   # EN + AR catalogs
+│   │   └── I18nContext.jsx   # lang state, t(), dir sync, persistence
+│   ├── theme/
+│   │   └── ThemeContext.jsx  # dark/light + localStorage
+│   ├── services/
+│   │   └── api.js            # getCurrencyRates, getGoldPrice (keyless, CORS)
+│   ├── domain/               # Pure calculation modules (no I/O, no DOM)
+│   │   ├── fitr.js
+│   │   ├── mal.js
+│   │   ├── zuru.js
+│   │   └── __tests__/        # Vitest suites asserting contract vectors
+│   ├── components/           # Header, Sidebar, Footer, ResultCard, ...
+│   ├── views/                # Landing, Fitr, Mal, Zuru, About
+│   └── styles/
+│       ├── tokens.css        # CSS custom properties (light/dark themes)
+│       └── global.css        # Resets, shared layout, results container, ...
 └── README.md
 ```
 
@@ -114,22 +135,59 @@ zakacalc/
 
 ### Prerequisites
 
+- Node.js LTS (18+)
 - A modern browser (Chrome, Firefox, Safari, Edge)
-- For Zakat Al-Mal: internet connection (to load rates and gold price)
 
-### Run locally
+### Install
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/zakacalc.git
-   cd zakacalc
-   ```
-2. Open `index.html` in your browser (e.g. double-click or `open index.html`).
-3. No build step or server is required.
+```bash
+npm install
+```
 
-### Deploy
+### Run locally (dev server)
 
-The app is static. You can deploy the folder to any static host (e.g. Netlify, Vercel, GitHub Pages) by serving the project root; the live site is hosted on [Pages](https://abdo13579.github.io/zakat-calculator/).
+```bash
+npm run dev
+```
+
+Vite serves the app at `http://localhost:5173/zakat-calculator/` (or the next free port).
+
+### Test
+
+```bash
+npm test
+```
+
+Runs the Vitest suite that guards the three calculators against the contract test vectors.
+
+### Build
+
+```bash
+npm run build
+```
+
+Produces a static `dist/` directory ready to deploy.
+
+### Preview the production build
+
+```bash
+npm run preview
+```
+
+Serves `dist/` at `http://localhost:4173/zakat-calculator/`.
+
+---
+
+## Deployment
+
+The app is a static SPA. To publish the existing GitHub Pages site:
+
+```bash
+npm run build
+git subtree push --prefix dist origin gh-pages
+```
+
+The site lives at <https://abdo13579.github.io/zakat-calculator/>.
 
 ---
 
@@ -153,9 +211,9 @@ This tool is for **informational purposes only** and is not a substitute for gui
 
 1. Fork the repository.
 2. Create a branch: `git checkout -b feature-or-fix-name`.
-3. Commit your changes: `git commit -m "Describe your change"`.
-4. Push: `git push origin feature-or-fix-name`.
-5. Open a Pull Request.
+3. Make your change; add or update Vitest coverage for any new calculation logic.
+4. Confirm `npm test` passes locally.
+5. Commit and open a Pull Request.
 
 ---
 

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zakat Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2301c5d3;stop-opacity:1'/%3E%3Cstop offset='100%25' style='stop-color:%2301a0ab;stop-opacity:1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23grad)'/%3E%3Ctext x='50' y='70' font-family='Arial, sans-serif' font-size='60' font-weight='bold' fill='white' text-anchor='middle'%3Eز%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <meta name="google-site-verification" content="vz-kl9ZjG4lSWrkljux7dfm5Zu2QF-1ck9tbstSr2bM" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo" data-i18n="app-name">ZakatCalc</div>
+            <nav class="desktop-nav">
+                <a href="#" class="nav-link" data-page="landing-page"><i class="fas fa-home"></i> <span data-i18n="nav-home">Home</span></a>
+                <a href="#" class="nav-link" data-page="zakat-al-fitr"><i class="fas fa-calculator"></i> <span data-i18n="nav-zakat-fitr">Zakat Al-Fitr</span></a>
+                <a href="#" class="nav-link" data-page="zakat-al-mal"><i class="fas fa-money-bill-wave"></i> <span data-i18n="nav-zakat-mal">Zakat Al-Mal</span></a>
+                <a href="#" class="nav-link" data-page="zakat-al-zuru"><i class="fas fa-seedling"></i> <span data-i18n="nav-zakat-zuru">Zakat Al-Zuru</span></a>
+                <a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> <span data-i18n="nav-about">About</span></a>
+            </nav>
+            <div class="header-actions">
+                <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">
+                    <i class="fas fa-language"></i>
+                </button>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <a href="#" class="nav-link" data-page="landing-page"><i class="fas fa-home"></i> <span data-i18n="nav-home">Home</span></a>
+        <a href="#" class="nav-link" data-page="zakat-al-fitr"><i class="fas fa-calculator"></i> <span data-i18n="nav-zakat-fitr-full">Calculate Zakat Al-Fitr</span></a>
+        <a href="#" class="nav-link" data-page="zakat-al-mal"><i class="fas fa-money-bill-wave"></i> <span data-i18n="nav-zakat-mal-full">Calculate Zakat Al-Mal</span></a>
+        <a href="#" class="nav-link" data-page="zakat-al-zuru"><i class="fas fa-seedling"></i> <span data-i18n="nav-zakat-zuru-full">Calculate Zakat Al-Zuru</span></a>
+        <a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> <span data-i18n="nav-about">About</span></a>
+    </nav>
+
+    <main id="main-content">
+        <div id="global-message" class="global-message hidden" role="status" aria-live="polite"></div>
+
+        <section id="landing-page" class="page">
+            <h1 data-i18n="landing-title">Welcome to ZakatCalc</h1>
+            <p data-i18n="landing-subtitle">Your trustworthy tool for calculating Zakat.</p>
+
+            <div class="cards-grid">
+                <article class="feature-card">
+                    <h2><i class="fas fa-bowl-rice"></i> <span data-i18n="fitr-title">Zakat Al-Fitr</span></h2>
+                    <p data-i18n="fitr-description">Quickly calculate Zakat Al-Fitr based on local food prices and family size.</p>
+                    <button class="cta-button nav-link" data-page="zakat-al-fitr"><span data-i18n="fitr-button">Go to Zakat Al-Fitr</span></button>
+                </article>
+
+                <article class="feature-card">
+                    <h2><i class="fas fa-coins"></i> <span data-i18n="mal-title">Zakat Al-Mal</span></h2>
+                    <p data-i18n="mal-description">Check if your wealth has reached the Nisaab and how much Zakat is due.</p>
+                    <button class="cta-button nav-link" data-page="zakat-al-mal"><span data-i18n="mal-button">Go to Zakat Al-Mal</span></button>
+                </article>
+
+                <article class="feature-card">
+                    <h2><i class="fas fa-seedling"></i> <span data-i18n="zuru-title">Zakat Al-Zuru</span></h2>
+                    <p data-i18n="zuru-description">Calculate Zakat on agricultural produce based on irrigation type and harvest weight.</p>
+                    <button class="cta-button nav-link" data-page="zakat-al-zuru"><span data-i18n="zuru-button">Go to Zakat Al-Zuru</span></button>
+                </article>
+            </div>
+        </section>
+
+        <section id="zakat-al-fitr" class="page hidden">
+            <h2 data-i18n="fitr-calculator-title">Zakat Al-Fitr Calculator</h2>
+            <p class="section-helper-text" data-i18n="fitr-helper-text">Calculate the amount of Zakat Al-Fitr due based on food prices and family size.</p>
+            <form id="fitr-form" novalidate>
+                <div class="form-group">
+                    <label for="food-price" data-i18n="fitr-food-price-label">Food Price per Kilogram</label>
+                    <input type="number" id="food-price" step="0.01" min="0" data-i18n-placeholder="fitr-food-price-placeholder" placeholder="e.g., 2.50">
+                </div>
+                <div class="form-group">
+                    <label for="currency" data-i18n="fitr-currency-label">Currency</label>
+                    <select id="currency">
+                        <option value="EGP">EGP</option>
+                        <option value="SAR">SAR</option>
+                        <option value="USD">USD</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="individuals" data-i18n="fitr-individuals-label">Number of Individuals</label>
+                    <input type="number" id="individuals" min="1" step="1" data-i18n-placeholder="fitr-individuals-placeholder" placeholder="e.g., 4">
+                </div>
+                <button type="submit" class="cta-button" data-i18n="button-calculate">Calculate</button>
+            </form>
+            <div id="fitr-results" class="results-container"></div>
+        </section>
+
+        <section id="zakat-al-mal" class="page hidden">
+            <h2 data-i18n="mal-calculator-title">Zakat Al-Mal Calculator</h2>
+            <p class="section-helper-text" data-i18n="mal-helper-text">Use this calculator to estimate if you owe Zakat based on the current gold price.</p>
+            <form id="mal-form" novalidate>
+                <div class="form-group">
+                    <label for="wealth" data-i18n="mal-wealth-label">Total Liquid Wealth</label>
+                    <input type="number" id="wealth" step="0.01" data-i18n-placeholder="mal-wealth-placeholder" placeholder="e.g., 50000">
+                </div>
+                <div class="form-group">
+                    <label for="mal-currency" data-i18n="mal-currency-label">Currency</label>
+                    <select id="mal-currency">
+                        <option value="EGP">EGP</option>
+                        <option value="SAR">SAR</option>
+                        <option value="USD">USD</option>
+                    </select>
+                </div>
+                <button type="submit" class="cta-button" data-i18n="button-calculate">Calculate</button>
+            </form>
+            <div id="mal-results" class="results-container"></div>
+        </section>
+
+        <section id="zakat-al-zuru" class="page hidden">
+            <h2 data-i18n="zuru-calculator-title">Zakat Al-Zuru Calculator</h2>
+            <p class="section-helper-text" data-i18n="zuru-helper-text">Calculate Zakat on agricultural crops based on total harvest weight and irrigation method.</p>
+            <form id="zuru-form" novalidate>
+                <div class="form-group">
+                    <label for="harvest-weight" data-i18n="zuru-weight-label">Total Harvest Weight (kg)</label>
+                    <input type="number" id="harvest-weight" step="any" min="0" data-i18n-placeholder="zuru-weight-placeholder" placeholder="e.g., 1000">
+                </div>
+                <div class="form-group">
+                    <label for="irrigation-type" data-i18n="zuru-irrigation-label">Irrigation Type</label>
+                    <select id="irrigation-type">
+                        <option value="rainfed" data-rate="0.10" data-i18n="zuru-rainfed">Rainfed (10%)</option>
+                        <option value="irrigated" data-rate="0.05" data-i18n="zuru-irrigated">Irrigated (5%)</option>
+                        <option value="mixed" data-rate="0.075" data-i18n="zuru-mixed">Mixed (7.5%)</option>
+                    </select>
+                </div>
+                <button type="submit" class="cta-button" data-i18n="button-calculate">Calculate</button>
+            </form>
+            <div id="zuru-results" class="results-container"></div>
+        </section>
+
+        <section id="about" class="page hidden">
+            <h2 data-i18n="about-title">About ZakatCalc</h2>
+            <div class="about-content">
+                <p data-i18n="about-description">ZakatCalc is a bilingual web application that helps Muslims calculate Zakat Al-Fitr, Zakat Al-Mal, and Zakat Al-Zuru accurately using real-time gold prices, currency exchange rates, and Islamic jurisprudence.</p>
+
+                <h3 data-i18n="about-calc-fitr-title">Zakat Al-Fitr</h3>
+                <p data-i18n="about-calc-fitr-text">Calculated as 3 kg of staple food per person, multiplied by the local food price per kilogram. No API needed.</p>
+
+                <h3 data-i18n="about-calc-mal-title">Zakat Al-Mal</h3>
+                <p data-i18n="about-calc-mal-text">Wealth Zakat is due when your liquid wealth exceeds the Nisaab (85 grams of gold). The Nisaab is calculated using live gold prices and exchange rates. Zakat due is 2.5% of total liquid wealth.</p>
+
+                <h3 data-i18n="about-calc-zuru-title">Zakat Al-Zuru</h3>
+                <p data-i18n="about-calc-zuru-text">Agricultural Zakat is due when the harvest weight reaches the Nisaab of 600 kg. The rate depends on irrigation: rainfed (10%), irrigated (5%), or mixed (7.5%).</p>
+
+                <h3 data-i18n="about-api-title">API Usage</h3>
+                <ul>
+                    <li data-i18n="about-api-currency"><strong>Currency Rates:</strong> <code>open.er-api.com/v6/latest/USD</code> — Free public endpoint, no key required.</li>
+                    <li data-i18n="about-api-gold"><strong>Gold Price:</strong> <code>mintedmetal.com/api/prices.json</code> — Free public endpoint, no key required. Price per ounce is converted to grams (÷ 31.1035).</li>
+                </ul>
+
+                <h3 data-i18n="about-dev-title">Developer</h3>
+                <p><span data-i18n="about-dev-name">Abdulrahman Alhaytham</span> — <span data-i18n="about-dev-role">Software Engineer</span></p>
+                <div class="social-links">
+                    <a href="https://github.com/abdo13579" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/abdoalhythm/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:abdulrahman.contactus@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p data-i18n="footer-text">&copy; 2025 ZakatCalc. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

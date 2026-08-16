@@ -1,0 +1,114 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useI18n } from '../i18n/I18nContext.jsx';
+import { calculateFitr } from '../domain/fitr.js';
+import { currenciesAvailable, detectUserCurrency, POPULAR_CURRENCIES } from '../utils/currency.js';
+import { formatNumber, sanitizeNumericInput } from '../utils/format.js';
+import { ResultCard } from '../components/ResultCard.jsx';
+import styles from './FitrView.module.css';
+
+export function FitrView({ rates, onRatesLoadFailed }) {
+    const { t } = useI18n();
+    const [pricePerKg, setPricePerKg] = useState('');
+    const [individuals, setIndividuals] = useState('');
+    const [currency, setCurrency] = useState('USD');
+    const [result, setResult] = useState(null);
+    const [error, setError] = useState(null);
+
+    const available = useMemo(() => currenciesAvailable(rates), [rates]);
+
+    useEffect(() => {
+        if (!rates) return;
+        const preferred = detectUserCurrency();
+        const initial = available.includes(preferred) ? preferred : (available[0] || 'USD');
+        setCurrency(prev => (available.includes(prev) ? prev : initial));
+    }, [rates, available]);
+
+    function onSubmit(e) {
+        e.preventDefault();
+        const persons = parseInt(individuals, 10);
+        const price = parseFloat(pricePerKg);
+        const calc = calculateFitr({ persons, pricePerKg: price });
+        if (calc === null) {
+            setError(t('error-invalid-input'));
+            setResult(null);
+            return;
+        }
+        setError(null);
+        setResult({ ...calc, currency });
+    }
+
+    return (
+        <section id="zakat-al-fitr" className="page">
+            <h2>{t('fitr-calculator-title')}</h2>
+            <p className="section-helper-text">{t('fitr-helper-text')}</p>
+            <form onSubmit={onSubmit} noValidate>
+                <div className="form-group">
+                    <label htmlFor="food-price">{t('fitr-food-price-label')}</label>
+                    <input
+                        type="number"
+                        id="food-price"
+                        step="0.01"
+                        min="0"
+                        value={pricePerKg}
+                        onChange={(e) => setPricePerKg(sanitizeNumericInput(e.target.value))}
+                        placeholder={t('fitr-food-price-placeholder')}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="currency">{t('fitr-currency-label')}</label>
+                    <select
+                        id="currency"
+                        value={currency}
+                        onChange={(e) => setCurrency(e.target.value)}
+                    >
+                        {(rates ? available : POPULAR_CURRENCIES.slice(0, 3)).map(code => (
+                            <option key={code} value={code}>{code}</option>
+                        ))}
+                        {!rates && (
+                            <>
+                                <option value="EGP">EGP</option>
+                                <option value="SAR">SAR</option>
+                                <option value="USD">USD</option>
+                            </>
+                        )}
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="individuals">{t('fitr-individuals-label')}</label>
+                    <input
+                        type="number"
+                        id="individuals"
+                        min="1"
+                        step="1"
+                        value={individuals}
+                        onChange={(e) => setIndividuals(sanitizeNumericInput(e.target.value))}
+                        placeholder={t('fitr-individuals-placeholder')}
+                    />
+                </div>
+                <button type="submit" className="cta-button">{t('button-calculate')}</button>
+            </form>
+
+            {error && (
+                <ResultCard title={null} plainText={error}>
+                    <p className="error">{error}</p>
+                </ResultCard>
+            )}
+            {result && (
+                <ResultCard
+                    title={t('fitr-result-title')}
+                    plainText={
+                        `${t('fitr-result-title')}\n` +
+                        `${t('fitr-result-weight')} ${formatNumber(result.totalWeightKg)} kg\n` +
+                        `${t('fitr-result-value')} ${formatNumber(result.totalValue)} ${result.currency}`
+                    }
+                >
+                    <p><strong>{t('fitr-result-weight')}</strong> {formatNumber(result.totalWeightKg)} kg</p>
+                    <p>
+                        <strong>{t('fitr-result-value')}</strong>{' '}
+                        <span className="accent-text">{formatNumber(result.totalValue)} {result.currency}</span>
+                    </p>
+                </ResultCard>
+            )}
+        </section>
+    );
+}
