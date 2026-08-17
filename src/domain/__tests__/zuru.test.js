@@ -34,6 +34,10 @@ describe('calculateZuru — contract vectors', () => {
         expect(calculateZuru({ weightKg: 1000, irrigation: 'foo' })).toBeNull();
     });
 
+    it('returns null for inherited properties like toString', () => {
+        expect(calculateZuru({ weightKg: 1000, irrigation: 'toString' })).toBeNull();
+    });
+
     it('returns null for negative weight', () => {
         expect(calculateZuru({ weightKg: -10, irrigation: 'rainfed' })).toBeNull();
     });

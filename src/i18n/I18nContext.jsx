@@ -33,18 +33,18 @@ export function I18nProvider({ children }) {
         }
     }, [lang]);
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            window.localStorage.setItem(STORAGE_KEY, lang);
+        }
+    }, [lang]);
+
     const t = useCallback((key) => {
         return translations[lang]?.[key] || translations.en[key] || key;
     }, [lang]);
 
     const toggleLang = useCallback(() => {
-        setLang(prev => {
-            const next = prev === 'en' ? 'ar' : 'en';
-            if (typeof window !== 'undefined') {
-                window.localStorage.setItem(STORAGE_KEY, next);
-            }
-            return next;
-        });
+        setLang(prev => (prev === 'en' ? 'ar' : 'en'));
     }, []);
 
     const value = useMemo(() => ({ lang, t, toggleLang }), [lang, t, toggleLang]);

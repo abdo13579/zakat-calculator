@@ -4,7 +4,7 @@ A modern, bilingual web application that helps Muslims calculate **Zakat Al-Fitr
 
 **[→ Live version](https://abdo13579.github.io/zakat-calculator/)**
 
-![ZakatCalc homepage](img.png)
+![ZakatCalc homepage](public/img.png)
 
 ---
 

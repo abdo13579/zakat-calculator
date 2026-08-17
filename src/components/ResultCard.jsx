@@ -19,9 +19,14 @@ function legacyCopy(text, successKey) {
         ta.value = text;
         document.body.appendChild(ta);
         ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        showSuccessMessage(successKey);
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                showSuccessMessage(successKey);
+            }
+        } finally {
+            document.body.removeChild(ta);
+        }
     };
 }
 

@@ -531,11 +531,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const individualsInput = document.getElementById('individuals');
             
             const foodPrice = parseFloat(foodPriceInput.value);
-            const individuals = parseInt(individualsInput.value);
+            const individuals = parseFloat(individualsInput.value);
             const currency = document.getElementById('currency').value;
             const foodWeight = 3.0;
 
-            if (isNaN(foodPrice) || foodPrice <= 0 || isNaN(individuals) || individuals <= 0) {
+            if (isNaN(foodPrice) || foodPrice <= 0 || isNaN(individuals) || individuals <= 0 || !Number.isInteger(individuals)) {
                 fitrResults.innerHTML = `<p class="error">${t('error-invalid-input')}</p>`;
                 fitrResults.classList.add('show');
                 return;

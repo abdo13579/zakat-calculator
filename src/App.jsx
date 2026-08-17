@@ -15,6 +15,7 @@ export function App() {
     const { t } = useI18n();
     const [view, setView] = useState('landing');
     const [rates, setRates] = useState(null);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [globalMessage, setGlobalMessage] = useState({ text: null, type: 'info' });
 
     const handleNavigate = useCallback((targetView) => {
@@ -58,8 +59,8 @@ export function App() {
 
     return (
         <>
-            <Header onNavigate={handleNavigate} currentView={view} />
-            <Sidebar isOpen={false} onClose={() => document.body.classList.remove('sidebar-open')} onNavigate={handleNavigate} currentView={view} />
+            <Header onNavigate={handleNavigate} currentView={view} onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
+            <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} onNavigate={handleNavigate} currentView={view} />
             <main id="main-content">
                 <GlobalMessage message={globalMessage.text} type={globalMessage.type} />
                 {view === 'landing' && <LandingView onNavigate={handleNavigate} />}

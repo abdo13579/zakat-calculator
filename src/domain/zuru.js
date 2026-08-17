@@ -11,7 +11,7 @@ export function calculateZuru({ weightKg, irrigation }) {
     if (
         typeof weightKg !== 'number' || !Number.isFinite(weightKg) ||
         weightKg < 0 ||
-        !(irrigation in RATE_BY_IRRIGATION)
+        !Object.prototype.hasOwnProperty.call(RATE_BY_IRRIGATION, irrigation)
     ) return null;
 
     const rate = RATE_BY_IRRIGATION[irrigation];

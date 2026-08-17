@@ -80,7 +80,11 @@ export const translations = {
         'error-rates-load': 'Could not load currency rates. Please try again later.',
         'calculating': 'Calculating...',
         'button-copy': 'Copy Result',
-        'copied-success': 'Result copied to clipboard!'
+        'copied-success': 'Result copied to clipboard!',
+        'toggle-language': 'Toggle language',
+        'switch-light-mode': 'Switch to light mode',
+        'switch-dark-mode': 'Switch to dark mode',
+        'toggle-menu': 'Toggle navigation menu'
     },
     ar: {
         'app-name': 'حاسبة الزكاة',
@@ -163,6 +167,10 @@ export const translations = {
         'error-rates-load': 'تعذر تحميل أسعار العملات. يرجى المحاولة مرة أخرى لاحقاً.',
         'calculating': 'جاري الحساب...',
         'button-copy': 'نسخ النتيجة',
-        'copied-success': 'تم نسخ النتيجة إلى الحافظة!'
+        'copied-success': 'تم نسخ النتيجة إلى الحافظة!',
+        'toggle-language': 'تغيير اللغة',
+        'switch-light-mode': 'التبديل إلى الوضع الفاتح',
+        'switch-dark-mode': 'التبديل إلى الوضع الداكن',
+        'toggle-menu': 'تبديل قائمة التنقل'
     }
 };

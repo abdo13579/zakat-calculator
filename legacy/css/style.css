@@ -162,14 +162,14 @@ main {
     display: block;
     max-width: 760px;
     margin: 0 auto;
-    animation: fadeInUp 0.4s ease-out;
+    animation: fade-in-up 0.4s ease-out;
 }
 
 .page.hidden {
     display: none;
 }
 
-@keyframes fadeInUp {
+@keyframes fade-in-up {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -324,7 +324,7 @@ form .cta-button {
     border-left: 5px solid var(--primary-color);
     text-align: left;
     display: none; /* Hidden by default */
-    animation: fadeIn 0.5s;
+    animation: fade-in 0.5s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
 }
@@ -504,12 +504,12 @@ body.dark-mode .global-message--error {
     100% { transform: rotate(360deg); }
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideIn {
+@keyframes slide-in {
     from {
         opacity: 0;
         transform: translateX(-20px);
@@ -530,7 +530,7 @@ body.dark-mode .global-message--error {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    animation: slideIn 0.3s ease-out;
+    animation: slide-in 0.3s ease-out;
 }
 
 body.dark-mode .success-message {

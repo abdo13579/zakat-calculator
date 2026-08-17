@@ -44,15 +44,12 @@
     transform: scale(0.97);
 }
 
-.hamburger {
-}
-
 .desktopNav {
     display: flex;
     align-items: center;
 }
 
-.desktopNav a {
+.navLink {
     color: var(--primary-color);
     text-decoration: none;
     padding: 0.75rem 1rem;
@@ -62,11 +59,8 @@
     transition: background-color 0.2s;
 }
 
-.desktopNav a:hover {
+.navLink:hover {
     background-color: var(--background-color);
-}
-
-.navLink {
 }
 
 .active {

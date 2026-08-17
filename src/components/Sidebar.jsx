@@ -14,30 +14,24 @@ export function Sidebar({ isOpen, onClose, onNavigate, currentView }) {
     const { t } = useI18n();
 
     useEffect(() => {
-        function onToggle() {
-            // Header's hamburger dispatches this; Sidebar responds by reading localStorage-less state.
-            document.body.classList.toggle('sidebar-open');
-        }
+        if (!isOpen) return;
         function onClickAway(e) {
-            if (!document.body.classList.contains('sidebar-open')) return;
             const sb = document.getElementById('zakatcalc-sidebar');
             const hb = document.querySelector('[data-testid="hamburger"]');
-            if (sb && !sb.contains(e.target) && hb && !hb.contains(e.target)) {
-                document.body.classList.remove('sidebar-open');
+            if (sb && !sb.contains(e.target) && (!hb || !hb.contains(e.target))) {
+                onClose?.();
             }
         }
-        window.addEventListener('zakatcalc:toggle-sidebar', onToggle);
         document.body.addEventListener('click', onClickAway);
         return () => {
-            window.removeEventListener('zakatcalc:toggle-sidebar', onToggle);
             document.body.removeEventListener('click', onClickAway);
         };
-    }, []);
+    }, [isOpen, onClose]);
 
     return (
         <nav
             id="zakatcalc-sidebar"
-            className={`${styles.sidebar} ${document.body.classList.contains('sidebar-open') ? styles.open : ''}`}
+            className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}
         >
             {ITEMS.map(item => (
                 <a
@@ -47,7 +41,7 @@ export function Sidebar({ isOpen, onClose, onNavigate, currentView }) {
                     onClick={(e) => {
                         e.preventDefault();
                         onNavigate(item.id);
-                        onClose();
+                        onClose?.();
                     }}
                 >
                     <i className={`fas ${item.icon}`}></i> <span>{t(item.labelKey)}</span>

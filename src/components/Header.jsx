@@ -2,7 +2,7 @@ import { useI18n } from '../i18n/I18nContext.jsx';
 import { useTheme } from '../theme/ThemeContext.jsx';
 import styles from './Header.module.css';
 
-export function Header({ onNavigate, currentView }) {
+export function Header({ onNavigate, currentView, onToggleSidebar }) {
     const { t, toggleLang } = useI18n();
     const { isDark, toggleTheme } = useTheme();
 
@@ -36,7 +36,7 @@ export function Header({ onNavigate, currentView }) {
                         type="button"
                         className={styles.iconButton}
                         onClick={toggleLang}
-                        aria-label="Toggle language"
+                        aria-label={t('toggle-language')}
                     >
                         <i className="fas fa-language"></i>
                     </button>
@@ -44,15 +44,16 @@ export function Header({ onNavigate, currentView }) {
                         type="button"
                         className={styles.iconButton}
                         onClick={toggleTheme}
-                        aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                        aria-label={t(isDark ? 'switch-light-mode' : 'switch-dark-mode')}
                     >
                         <i className={`fas ${isDark ? 'fa-sun' : 'fa-moon'}`}></i>
                     </button>
                     <button
                         type="button"
+                        data-testid="hamburger"
                         className={`${styles.iconButton} ${styles.hamburger}`}
-                        onClick={() => window.dispatchEvent(new CustomEvent('zakatcalc:toggle-sidebar'))}
-                        aria-label="Toggle navigation menu"
+                        onClick={onToggleSidebar}
+                        aria-label={t('toggle-menu')}
                     >
                         <i className="fas fa-bars"></i>
                     </button>

@@ -19,14 +19,14 @@ export function ThemeProvider({ children }) {
         document.body.classList.toggle('dark-mode', isDark);
     }, [isDark]);
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            window.localStorage.setItem(STORAGE_KEY, isDark ? 'dark' : 'light');
+        }
+    }, [isDark]);
+
     const toggleTheme = useCallback(() => {
-        setIsDark(prev => {
-            const next = !prev;
-            if (typeof window !== 'undefined') {
-                window.localStorage.setItem(STORAGE_KEY, next ? 'dark' : 'light');
-            }
-            return next;
-        });
+        setIsDark(prev => !prev);
     }, []);
 
     const value = useMemo(() => ({ isDark, toggleTheme }), [isDark, toggleTheme]);

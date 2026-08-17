@@ -25,8 +25,13 @@ export function FitrView({ rates, onRatesLoadFailed }) {
 
     function onSubmit(e) {
         e.preventDefault();
-        const persons = parseInt(individuals, 10);
+        const persons = parseFloat(individuals);
         const price = parseFloat(pricePerKg);
+        if (!Number.isInteger(persons)) {
+            setError(t('error-invalid-input'));
+            setResult(null);
+            return;
+        }
         const calc = calculateFitr({ persons, pricePerKg: price });
         if (calc === null) {
             setError(t('error-invalid-input'));
