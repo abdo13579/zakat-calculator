@@ -42,9 +42,6 @@
     width: auto;
 }
 
-.navLink {
-}
-
 @media (max-width: 768px) {
     .cta-button.navLink,
     .card .cta-button {

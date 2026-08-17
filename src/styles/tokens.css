@@ -95,8 +95,9 @@
     --color-on-surface: var(--color-neutral-900);
     --color-on-surface-muted: var(--color-neutral-500);
     --color-on-interactive: #ffffff;
-    --color-interactive: var(--color-primary-500);
-    --color-interactive-hover: var(--color-primary-600);
+    --color-interactive: var(--color-primary-700);
+    --color-interactive-hover: var(--color-primary-800);
+    --color-accent-text: var(--color-accent-700);
     --color-border: var(--color-neutral-200);
     --color-border-subtle: var(--color-neutral-100);
     --color-focus-ring: rgba(1, 197, 211, 0.25);
@@ -113,8 +114,9 @@ body.dark-mode {
     --color-surface-elevated: #334155;
     --color-on-surface: var(--color-neutral-100);
     --color-on-surface-muted: var(--color-neutral-400);
-    --color-interactive: var(--color-primary-400);
-    --color-interactive-hover: var(--color-primary-300);
+    --color-interactive: var(--color-primary-300);
+    --color-interactive-hover: var(--color-primary-200);
+    --color-accent-text: var(--color-accent-300);
     --color-border: rgba(255, 255, 255, 0.08);
     --color-border-subtle: rgba(255, 255, 255, 0.04);
     --color-focus-ring: rgba(1, 197, 211, 0.35);

@@ -58,7 +58,7 @@ main {
     display: block;
     max-width: 760px;
     margin: 0 auto;
-    animation: fadeInUp 0.4s ease-out;
+    animation: fade-in-up 0.4s ease-out;
     transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
@@ -66,7 +66,7 @@ main {
     display: none;
 }
 
-@keyframes fadeInUp {
+@keyframes fade-in-up {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -231,7 +231,7 @@ form .cta-button {
     border-radius: var(--radius-lg);
     text-align: start;
     display: none;
-    animation: fadeIn 0.4s ease-out;
+    animation: fade-in 0.4s ease-out;
     box-shadow: var(--shadow-card);
     position: relative;
     transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
@@ -260,7 +260,7 @@ form .cta-button {
 }
 
 .accent-text {
-    color: var(--color-accent-500);
+    color: var(--color-accent-text);
     font-weight: var(--weight-bold);
     font-size: var(--text-lg);
 }
@@ -272,7 +272,7 @@ form .cta-button {
     color: var(--color-on-surface-muted);
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }

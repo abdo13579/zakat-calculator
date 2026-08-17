@@ -2,7 +2,7 @@
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-08-17
-**Feature**: [spec.md](file:///home/abdoalhythm/Documents/Projects/zakat-calculator/specs/003-design-modernization/spec.md)
+**Feature**: [spec.md](../spec.md)
 
 ## Content Quality
 

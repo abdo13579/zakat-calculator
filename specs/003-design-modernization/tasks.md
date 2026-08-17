@@ -1,6 +1,6 @@
 # Tasks: Design Modernization
 
-**Branch**: `003-design-modernization` | **Spec**: [spec.md](specs/003-design-modernization/spec.md) | **Plan**: [plan.md](specs/003-design-modernization/plan.md)
+**Branch**: `003-design-modernization` | **Spec**: [spec.md](spec.md) | **Plan**: [plan.md](plan.md)
 
 ---
 
@@ -9,7 +9,7 @@
 **Purpose**: Establish the expanded design token foundation and no-FOUC theme initialization that all subsequent work depends on.
 
 - [X] T001 Expand the design token scale in `src/styles/tokens.css` — replace the current 7 variables with the full two-tier token system (Primitive: color-primary-50→900, color-neutral-50→900, color-accent-50→900, color-error/success/info, spacing scale, radius scale, shadow scale, font-size scale, font-weight scale, transition durations; Semantic: color-bg, color-surface, color-surface-elevated, color-on-surface, color-on-surface-muted, color-interactive, color-interactive-hover, color-border, color-border-subtle, color-focus-ring, shadow-card, shadow-elevated) per the token scale in `specs/003-design-modernization/data-model.md`. Light mode values in `:root`, dark mode overrides in `body.dark-mode`. Preserve backward-compatible aliases for `--primary-color`, `--accent-color`, `--white-color`, `--text-color`, `--background-color`, `--border-color`, `--error-color` mapping to their semantic equivalents so existing consumers don't break during migration.
-- [X] T002 Add a blocking inline `<script>` in the `<head>` of `index.html` that reads `localStorage.getItem('zakatcalc_theme')` and applies the `dark-mode` class to `<body>` before first paint, preventing flash-of-unstyled-content per research decision R7 in `specs/003-design-modernization/research.md`.
+- [X] T002 Add blocking inline `<script>` tags in `index.html`: one in the `<head>` targeting `document.documentElement` and one in the `<body>` (before `#root`) targeting `document.body`, both reading `localStorage.getItem('zakatcalc_theme')` and applying the `dark-mode` class before first paint to prevent flash-of-unstyled-content, matching the `body.dark-mode` token structure per research decision R7 in `specs/003-design-modernization/research.md`.
 - [X] T003 Add CSS transition declarations for theme-sensitive properties (`background-color`, `color`, `border-color`, `box-shadow`) with `0.15s ease` duration to the `body`, `.page`, and common container selectors in `src/styles/global.css` to enable smooth theme switching.
 
 **Checkpoint**: Tokens defined, backward-compatible aliases in place, FOUC prevention active. App should look identical to before (aliases map to original values) but with the new token infrastructure ready.

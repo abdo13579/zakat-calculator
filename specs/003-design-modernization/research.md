@@ -1,6 +1,6 @@
 # Research: Design Modernization
 
-**Feature**: [spec.md](specs/003-design-modernization/spec.md)
+**Feature**: [spec.md](spec.md)
 **Date**: 2026-08-17
 
 ## Research Tasks & Findings
@@ -94,7 +94,7 @@
 
 **Task**: Determine how to prevent flash-of-unstyled-content during theme switching.
 
-**Decision**: Apply the theme class (`dark-mode`) synchronously via a blocking inline script in `<head>` that reads `localStorage` before the page renders. CSS transitions on `background-color`, `color`, and `border-color` with a `0.15s ease` duration handle smooth animated switching. The `ThemeContext` initializes from the same `localStorage` value to stay in sync.
+**Decision**: Apply the theme class (`dark-mode`) synchronously via blocking inline scripts: the `<head>` script targets `document.documentElement` while the `<body>` script (before `#root`) applies the class to `document.body` for compatibility with `body.dark-mode` token selectors. Both read `localStorage` before rendering. CSS transitions on `background-color`, `color`, and `border-color` with a `0.15s ease` duration handle smooth animated switching. The `ThemeContext` initializes from the same `localStorage` value to stay in sync.
 
 **Rationale**: The current `ThemeContext` already reads `localStorage` on mount, but if the body class is applied after React hydration, there's a brief flash. A tiny inline `<script>` in `<head>` that applies the class before first paint is the standard solution (used by Next.js, Docusaurus, etc.). CSS transitions on theme-sensitive properties complete the smooth switch.
 

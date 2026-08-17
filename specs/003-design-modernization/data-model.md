@@ -1,6 +1,6 @@
 # Data Model: Design Modernization
 
-**Feature**: [spec.md](specs/003-design-modernization/spec.md)
+**Feature**: [spec.md](spec.md)
 **Date**: 2026-08-17
 
 ## Overview

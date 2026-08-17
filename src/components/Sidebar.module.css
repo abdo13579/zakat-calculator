@@ -1,19 +1,19 @@
 .sidebar {
     position: fixed;
     top: 0;
-    inset-inline-end: -300px;
+    inset-inline-start: -300px;
     width: 260px;
     height: 100%;
     background-color: var(--color-surface-elevated);
     box-shadow: var(--shadow-elevated);
     padding: 5.5rem var(--space-lg) var(--space-2xl);
-    transition: inset-inline-end 0.3s ease-in-out, background-color var(--transition-fast);
+    transition: inset-inline-start var(--transition-normal), background-color var(--transition-fast);
     z-index: 1000;
     box-sizing: border-box;
 }
 
 .open {
-    inset-inline-end: 0;
+    inset-inline-start: 0;
 }
 
 .navLink {

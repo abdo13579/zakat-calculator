@@ -1,8 +1,8 @@
 .toastContainer {
     position: fixed;
     top: 5rem;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
+    inset-inline: 0;
+    margin-inline: auto;
     width: calc(100% - 2rem);
     max-width: 480px;
     z-index: 998;
@@ -24,12 +24,12 @@
     gap: var(--space-sm);
     box-shadow: var(--shadow-elevated);
     box-sizing: border-box;
-    animation: toastSlideDown var(--transition-fast) cubic-bezier(0.16, 1, 0.3, 1);
+    animation: toast-slide-down var(--transition-fast) cubic-bezier(0.16, 1, 0.3, 1);
     transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .toast.exiting {
-    animation: toastSlideUp var(--transition-fast) ease-in forwards;
+    animation: toast-slide-up var(--transition-fast) ease-in forwards;
 }
 
 .success {
@@ -61,7 +61,7 @@
     text-align: start;
 }
 
-@keyframes toastSlideDown {
+@keyframes toast-slide-down {
     from {
         opacity: 0;
         transform: translateY(-12px);
@@ -72,7 +72,7 @@
     }
 }
 
-@keyframes toastSlideUp {
+@keyframes toast-slide-up {
     from {
         opacity: 1;
         transform: translateY(0);

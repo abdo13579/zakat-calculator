@@ -1,6 +1,6 @@
 # Implementation Plan: Design Modernization
 
-**Branch**: `003-design-modernization` | **Date**: 2026-08-17 | **Spec**: [spec.md](file:///home/abdoalhythm/Documents/Projects/zakat-calculator/specs/003-design-modernization/spec.md)
+**Branch**: `003-design-modernization` | **Date**: 2026-08-17 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `specs/003-design-modernization/spec.md`
 
@@ -26,7 +26,7 @@ Modernize ZakatCalc's visual design system by expanding the CSS custom property 
 
 **Constraints**: Per constitution Principle II — no new runtime dependencies beyond Vite, React, ReactDOM. All changes limited to CSS files, JSX component markup, and the notification context. Per Principle III — full bilingual (EN/AR) and accessible (semantic HTML, ARIA, keyboard) compliance maintained. Per Principle V — zero server-side component.
 
-**Scale/Scope**: 7 CSS files (1 token, 1 global, 5 module), 5 view components, 5 shared components, 1 new context provider (Toast/Notification)
+**Scale/Scope**: 11 CSS files (1 token, 1 global, 9 module), 5 view components, 5 shared components, 1 new context provider (Toast/Notification)
 
 ## Constitution Check
 
