@@ -1,13 +1,10 @@
 .footer {
     text-align: center;
-    padding: 1.5rem;
+    padding: var(--space-xl);
     margin-top: auto;
-    background-color: var(--white-color);
-    color: #6c757d;
-    font-size: 0.9rem;
-    border-top: 1px solid var(--border-color);
-}
-
-body.dark-mode .footer {
-    box-shadow: none;
+    background-color: var(--color-surface);
+    color: var(--color-on-surface-muted);
+    font-size: var(--text-sm);
+    border-top: 1px solid var(--color-border);
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }

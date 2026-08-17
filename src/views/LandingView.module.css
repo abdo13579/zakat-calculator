@@ -1,54 +1,53 @@
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
 }
 
 .card {
-    background-color: var(--white-color);
-    border-radius: 10px;
-    padding: 1.5rem 1.25rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    text-align: left;
-    border: 1px solid var(--border-color);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl) var(--space-lg);
+    box-shadow: var(--shadow-card);
+    text-align: start;
+    border: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    transition: transform 0.2s, box-shadow 0.2s;
+    gap: var(--space-md);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    box-shadow: var(--shadow-elevated);
 }
 
 .card h2 {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-sm);
     margin: 0;
 }
 
 .card p {
     margin: 0;
+    color: var(--color-on-surface-muted);
+    font-size: var(--text-base);
 }
 
 .card .cta-button {
     align-self: center;
-    margin-top: 1rem;
+    margin-top: var(--space-lg);
     width: auto;
-}
-
-body[dir="rtl"] .card {
-    text-align: right;
 }
 
 .navLink {
 }
 
 @media (max-width: 768px) {
-    .cta-button.navLink {
+    .cta-button.navLink,
+    .card .cta-button {
         width: 100%;
     }
 }

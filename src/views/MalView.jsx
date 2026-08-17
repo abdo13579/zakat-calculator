@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useI18n } from '../i18n/I18nContext.jsx';
+import { useToast } from '../toast/ToastContext.jsx';
 import { calculateMal } from '../domain/mal.js';
 import { currenciesAvailable, detectUserCurrency, POPULAR_CURRENCIES } from '../utils/currency.js';
 import { formatNumber, sanitizeNumericInput } from '../utils/format.js';
-import { getCurrencyRates, getGoldPrice } from '../services/api.js';
+import { getGoldPrice, getCurrencyRates } from '../services/api.js';
 import { ResultCard } from '../components/ResultCard.jsx';
-import styles from './MalView.module.css';
 
-export function MalView({ rates, setRates, onGlobalError }) {
+export function MalView({ rates, setRates }) {
     const { t } = useI18n();
+    const toast = useToast();
     const [wealth, setWealth] = useState('');
     const [currency, setCurrency] = useState('USD');
     const [result, setResult] = useState(null);
@@ -47,15 +48,17 @@ export function MalView({ rates, setRates, onGlobalError }) {
             if (!goldResult || !(ratesResult?.rates || rates)) {
                 setError(t('error-api-failed'));
                 setLoading(false);
-                onGlobalError?.(t('error-api-failed'));
+                toast.error(t('error-api-failed'));
                 return;
             }
             ratesToUse = ratesResult?.rates || rates;
             const goldPricePerGramUsd = goldResult.price;
             const exchangeRate = ratesToUse[currency];
             if (!exchangeRate) {
-                setError(`${t('error-currency-rate')} ${currency}.`);
+                const msg = `${t('error-currency-rate')} ${currency}.`;
+                setError(msg);
                 setLoading(false);
+                toast.error(msg);
                 return;
             }
             const calc = calculateMal({ wealth: wealthNum, goldPricePerGramUsd, exchangeRate });
@@ -70,21 +73,25 @@ export function MalView({ rates, setRates, onGlobalError }) {
             console.error(err);
             setError(t('error-api-failed'));
             setLoading(false);
-            onGlobalError?.(t('error-api-failed'));
+            toast.error(t('error-api-failed'));
         }
     }
 
     function renderResultBody() {
         if (loading) {
             return (
-                <div>
-                    <div className={styles.loader}></div>
+                <div className="results-container show">
+                    <div className="loader"></div>
                     <p>{t('calculating')}</p>
                 </div>
             );
         }
         if (error) {
-            return <p className="error">{error}</p>;
+            return (
+                <ResultCard title={null} plainText={error}>
+                    <p className="error">{error}</p>
+                </ResultCard>
+            );
         }
         if (result) {
             const { nisaab, eligible, zakatDue, wealth: w, currency: cur } = result;
@@ -123,14 +130,20 @@ export function MalView({ rates, setRates, onGlobalError }) {
             <form onSubmit={onSubmit} noValidate>
                 <div className="form-group">
                     <label htmlFor="wealth">{t('mal-wealth-label')}</label>
-                    <input
-                        type="number"
-                        id="wealth"
-                        step="0.01"
-                        value={wealth}
-                        onChange={(e) => setWealth(sanitizeNumericInput(e.target.value))}
-                        placeholder={t('mal-wealth-placeholder')}
-                    />
+                    <div className="input-group">
+                        <input
+                            type="number"
+                            id="wealth"
+                            step="0.01"
+                            value={wealth}
+                            onChange={(e) => setWealth(sanitizeNumericInput(e.target.value))}
+                            placeholder={t('mal-wealth-placeholder')}
+                            aria-describedby="wealth-addon"
+                        />
+                        <span id="wealth-addon" className="input-addon">
+                            {currency}
+                        </span>
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="mal-currency">{t('mal-currency-label')}</label>

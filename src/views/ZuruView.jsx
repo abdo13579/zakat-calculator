@@ -48,15 +48,21 @@ export function ZuruView() {
             <form onSubmit={onSubmit} noValidate>
                 <div className="form-group">
                     <label htmlFor="harvest-weight">{t('zuru-weight-label')}</label>
-                    <input
-                        type="number"
-                        id="harvest-weight"
-                        step="any"
-                        min="0"
-                        value={weight}
-                        onChange={(e) => setWeight(sanitizeNumericInput(e.target.value))}
-                        placeholder={t('zuru-weight-placeholder')}
-                    />
+                    <div className="input-group">
+                        <input
+                            type="number"
+                            id="harvest-weight"
+                            step="any"
+                            min="0"
+                            value={weight}
+                            onChange={(e) => setWeight(sanitizeNumericInput(e.target.value))}
+                            placeholder={t('zuru-weight-placeholder')}
+                            aria-describedby="harvest-weight-addon"
+                        />
+                        <span id="harvest-weight-addon" className="input-addon">
+                            kg
+                        </span>
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="irrigation-type">{t('zuru-irrigation-label')}</label>
@@ -76,9 +82,9 @@ export function ZuruView() {
             </form>
 
             {error && (
-                <div className="results-container show">
+                <ResultCard title={null} plainText={error}>
                     <p className="error">{error}</p>
-                </div>
+                </ResultCard>
             )}
             {result && (
                 <ResultCard

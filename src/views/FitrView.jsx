@@ -4,7 +4,6 @@ import { calculateFitr } from '../domain/fitr.js';
 import { currenciesAvailable, detectUserCurrency, POPULAR_CURRENCIES } from '../utils/currency.js';
 import { formatNumber, sanitizeNumericInput } from '../utils/format.js';
 import { ResultCard } from '../components/ResultCard.jsx';
-import styles from './FitrView.module.css';
 
 const FALLBACK_CURRENCIES = Array.from(new Set([...POPULAR_CURRENCIES.slice(0, 3), 'EGP', 'SAR', 'USD']));
 
@@ -53,15 +52,21 @@ export function FitrView({ rates, onRatesLoadFailed }) {
             <form onSubmit={onSubmit} noValidate>
                 <div className="form-group">
                     <label htmlFor="food-price">{t('fitr-food-price-label')}</label>
-                    <input
-                        type="number"
-                        id="food-price"
-                        step="0.01"
-                        min="0"
-                        value={pricePerKg}
-                        onChange={(e) => setPricePerKg(sanitizeNumericInput(e.target.value))}
-                        placeholder={t('fitr-food-price-placeholder')}
-                    />
+                    <div className="input-group">
+                        <input
+                            type="number"
+                            id="food-price"
+                            step="0.01"
+                            min="0"
+                            value={pricePerKg}
+                            onChange={(e) => setPricePerKg(sanitizeNumericInput(e.target.value))}
+                            placeholder={t('fitr-food-price-placeholder')}
+                            aria-describedby="food-price-addon"
+                        />
+                        <span id="food-price-addon" className="input-addon">
+                            {currency}
+                        </span>
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="currency">{t('fitr-currency-label')}</label>

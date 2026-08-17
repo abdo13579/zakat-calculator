@@ -1,9 +1,134 @@
 :root {
-    --primary-color: #01c5d3;
-    --accent-color: #d4af37;
-    --white-color: #ffffff;
-    --text-color: #333;
-    --background-color: #d6fcff;
-    --border-color: #dee2e6;
-    --error-color: #dc3545;
+    /* Primitive Color Scale — Primary (Teal) */
+    --color-primary-50: #e6fafb;
+    --color-primary-100: #cbf4f7;
+    --color-primary-200: #97e9ef;
+    --color-primary-300: #64dee8;
+    --color-primary-400: #31d3e0;
+    --color-primary-500: #01c5d3;
+    --color-primary-600: #01a0ab;
+    --color-primary-700: #017a82;
+    --color-primary-800: #01555b;
+    --color-primary-900: #014f54;
+
+    /* Primitive Color Scale — Neutral */
+    --color-neutral-50: #fafafa;
+    --color-neutral-100: #f5f5f5;
+    --color-neutral-200: #e5e5e5;
+    --color-neutral-300: #d4d4d4;
+    --color-neutral-400: #a3a3a3;
+    --color-neutral-500: #737373;
+    --color-neutral-600: #525252;
+    --color-neutral-700: #404040;
+    --color-neutral-800: #262626;
+    --color-neutral-900: #171717;
+
+    /* Primitive Color Scale — Accent (Gold) */
+    --color-accent-50: #fdf8e8;
+    --color-accent-100: #fbf1d1;
+    --color-accent-200: #f7e3a3;
+    --color-accent-300: #f3d575;
+    --color-accent-400: #efc747;
+    --color-accent-500: #d4af37;
+    --color-accent-600: #aa8c2c;
+    --color-accent-700: #806921;
+    --color-accent-800: #564616;
+    --color-accent-900: #5a4a17;
+
+    /* Primitive Color Scale — Semantic Status */
+    --color-error: #dc3545;
+    --color-error-bg: #fee2e2;
+    --color-error-text: #991b1b;
+    --color-error-border: #fca5a5;
+    --color-success: #22c55e;
+    --color-success-bg: #dcfce7;
+    --color-success-text: #166534;
+    --color-success-border: #86efac;
+    --color-info: #3b82f6;
+    --color-info-bg: #dbeafe;
+    --color-info-text: #1e40af;
+    --color-info-border: #93c5fd;
+
+    /* Spacing Scale */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 0.75rem;
+    --space-lg: 1rem;
+    --space-xl: 1.5rem;
+    --space-2xl: 2rem;
+    --space-3xl: 3rem;
+
+    /* Radius Scale */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-pill: 999px;
+
+    /* Shadow Scale */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+    /* Typography Scale */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.375rem;
+    --text-2xl: 1.75rem;
+    --text-3xl: 2rem;
+
+    /* Font Weights */
+    --weight-normal: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 200ms ease;
+
+    /* Semantic Tokens (Light Mode Defaults) */
+    --color-bg: var(--color-neutral-50);
+    --color-surface: #ffffff;
+    --color-surface-elevated: #ffffff;
+    --color-on-surface: var(--color-neutral-900);
+    --color-on-surface-muted: var(--color-neutral-500);
+    --color-on-interactive: #ffffff;
+    --color-interactive: var(--color-primary-500);
+    --color-interactive-hover: var(--color-primary-600);
+    --color-border: var(--color-neutral-200);
+    --color-border-subtle: var(--color-neutral-100);
+    --color-focus-ring: rgba(1, 197, 211, 0.25);
+    --color-error-focus: rgba(220, 53, 69, 0.15);
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Semantic Tokens (Dark Mode Overrides) */
+body.dark-mode {
+    --color-bg: #0f172a;
+    --color-surface: #1e293b;
+    --color-surface-elevated: #334155;
+    --color-on-surface: var(--color-neutral-100);
+    --color-on-surface-muted: var(--color-neutral-400);
+    --color-interactive: var(--color-primary-400);
+    --color-interactive-hover: var(--color-primary-300);
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-subtle: rgba(255, 255, 255, 0.04);
+    --color-focus-ring: rgba(1, 197, 211, 0.35);
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-elevated: 0 2px 8px rgba(0, 0, 0, 0.4);
+
+    /* Dark Mode Status Tokens */
+    --color-error-bg: #450a0a;
+    --color-error-text: #fecaca;
+    --color-error-border: #7f1d1d;
+    --color-success-bg: #052e16;
+    --color-success-text: #bbf7d0;
+    --color-success-border: #14532d;
+    --color-info-bg: #172554;
+    --color-info-text: #bfdbfe;
+    --color-info-border: #1e3a8a;
 }
