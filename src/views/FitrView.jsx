@@ -16,14 +16,16 @@ export function FitrView({ rates, onRatesLoadFailed }) {
     const [result, setResult] = useState(null);
     const [error, setError] = useState(null);
 
-    const available = useMemo(() => currenciesAvailable(rates), [rates]);
+    const currencyOptions = useMemo(() => {
+        const available = currenciesAvailable(rates);
+        return available.length > 0 ? available : FALLBACK_CURRENCIES;
+    }, [rates]);
 
     useEffect(() => {
-        if (!rates) return;
         const preferred = detectUserCurrency();
-        const initial = available.includes(preferred) ? preferred : (available[0] || 'USD');
-        setCurrency(prev => (available.includes(prev) ? prev : initial));
-    }, [rates, available]);
+        const initial = currencyOptions.includes(preferred) ? preferred : (currencyOptions[0] || 'USD');
+        setCurrency(prev => (currencyOptions.includes(prev) ? prev : initial));
+    }, [currencyOptions]);
 
     function onSubmit(e) {
         e.preventDefault();
@@ -68,7 +70,7 @@ export function FitrView({ rates, onRatesLoadFailed }) {
                         value={currency}
                         onChange={(e) => setCurrency(e.target.value)}
                     >
-                        {(rates ? available : FALLBACK_CURRENCIES).map(code => (
+                        {currencyOptions.map(code => (
                             <option key={code} value={code}>{code}</option>
                         ))}
                     </select>
