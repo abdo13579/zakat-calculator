@@ -6,6 +6,8 @@ import { formatNumber, sanitizeNumericInput } from '../utils/format.js';
 import { ResultCard } from '../components/ResultCard.jsx';
 import styles from './FitrView.module.css';
 
+const FALLBACK_CURRENCIES = Array.from(new Set([...POPULAR_CURRENCIES.slice(0, 3), 'EGP', 'SAR', 'USD']));
+
 export function FitrView({ rates, onRatesLoadFailed }) {
     const { t } = useI18n();
     const [pricePerKg, setPricePerKg] = useState('');
@@ -28,13 +30,13 @@ export function FitrView({ rates, onRatesLoadFailed }) {
         const persons = parseFloat(individuals);
         const price = parseFloat(pricePerKg);
         if (!Number.isInteger(persons)) {
-            setError(t('error-invalid-input'));
+            setError('error-invalid-input');
             setResult(null);
             return;
         }
         const calc = calculateFitr({ persons, pricePerKg: price });
         if (calc === null) {
-            setError(t('error-invalid-input'));
+            setError('error-invalid-input');
             setResult(null);
             return;
         }
@@ -66,16 +68,9 @@ export function FitrView({ rates, onRatesLoadFailed }) {
                         value={currency}
                         onChange={(e) => setCurrency(e.target.value)}
                     >
-                        {(rates ? available : POPULAR_CURRENCIES.slice(0, 3)).map(code => (
+                        {(rates ? available : FALLBACK_CURRENCIES).map(code => (
                             <option key={code} value={code}>{code}</option>
                         ))}
-                        {!rates && (
-                            <>
-                                <option value="EGP">EGP</option>
-                                <option value="SAR">SAR</option>
-                                <option value="USD">USD</option>
-                            </>
-                        )}
                     </select>
                 </div>
                 <div className="form-group">
@@ -94,8 +89,8 @@ export function FitrView({ rates, onRatesLoadFailed }) {
             </form>
 
             {error && (
-                <ResultCard title={null} plainText={error}>
-                    <p className="error">{error}</p>
+                <ResultCard title={null} plainText={t(error)}>
+                    <p className="error">{t(error)}</p>
                 </ResultCard>
             )}
             {result && (
