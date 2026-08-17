@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useI18n } from './i18n/I18nContext.jsx';
+import { useToast } from './toast/ToastContext.jsx';
 import { Header } from './components/Header.jsx';
 import { Sidebar } from './components/Sidebar.jsx';
-import { GlobalMessage } from './components/GlobalMessage.jsx';
 import { Footer } from './components/Footer.jsx';
 import { LandingView } from './views/LandingView.jsx';
 import { FitrView } from './views/FitrView.jsx';
@@ -13,10 +13,10 @@ import { getCurrencyRates } from './services/api.js';
 
 export function App() {
     const { t } = useI18n();
+    const toast = useToast();
     const [view, setView] = useState('landing');
     const [rates, setRates] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [globalMessage, setGlobalMessage] = useState({ text: null, type: 'info' });
 
     const handleNavigate = useCallback((targetView) => {
         setView(targetView);
@@ -25,7 +25,7 @@ export function App() {
         }
     }, []);
 
-    // Load currency rates on app start (legacy behavior — populate the dropdowns).
+    // Load currency rates on app start
     useEffect(() => {
         let cancelled = false;
         (async () => {
@@ -35,41 +35,25 @@ export function App() {
                 if (r && r.rates) {
                     setRates(r.rates);
                 } else {
-                    setGlobalMessage({ text: t('error-rates-load'), type: 'error' });
+                    toast.error(t('error-rates-load'));
                 }
             } catch (err) {
                 if (cancelled) return;
                 console.error(err);
-                setGlobalMessage({ text: t('error-rates-load'), type: 'error' });
+                toast.error(t('error-rates-load'));
             }
         })();
         return () => { cancelled = true; };
-    }, [t]);
-
-    // Listen for clear event from GlobalMessage.
-    useEffect(() => {
-        function onClear() { setGlobalMessage({ text: null, type: 'info' }); }
-        window.addEventListener('zakatcalc:clear-global-message', onClear);
-        return () => window.removeEventListener('zakatcalc:clear-global-message', onClear);
-    }, []);
-
-    function handleGlobalError(message) {
-        setGlobalMessage({ text: message, type: 'error' });
-    }
+    }, [t, toast]);
 
     return (
         <>
             <Header onNavigate={handleNavigate} currentView={view} onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
             <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} onNavigate={handleNavigate} currentView={view} />
             <main id="main-content">
-                <GlobalMessage message={globalMessage.text} type={globalMessage.type} />
                 {view === 'landing' && <LandingView onNavigate={handleNavigate} />}
-                {view === 'fitr' && (
-                    <FitrView rates={rates} />
-                )}
-                {view === 'mal' && (
-                    <MalView rates={rates} setRates={setRates} onGlobalError={handleGlobalError} />
-                )}
+                {view === 'fitr' && <FitrView rates={rates} />}
+                {view === 'mal' && <MalView rates={rates} setRates={setRates} />}
                 {view === 'zuru' && <ZuruView />}
                 {view === 'about' && <AboutView />}
             </main>

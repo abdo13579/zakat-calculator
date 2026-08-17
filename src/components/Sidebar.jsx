@@ -14,6 +14,17 @@ export function Sidebar({ isOpen, onClose, onNavigate, currentView }) {
     const { t } = useI18n();
 
     useEffect(() => {
+        if (typeof document !== 'undefined') {
+            document.body.classList.toggle('sidebar-open', isOpen);
+        }
+        return () => {
+            if (typeof document !== 'undefined') {
+                document.body.classList.remove('sidebar-open');
+            }
+        };
+    }, [isOpen]);
+
+    useEffect(() => {
         if (!isOpen) return;
         function onClickAway(e) {
             const sb = document.getElementById('zakatcalc-sidebar');

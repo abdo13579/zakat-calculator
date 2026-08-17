@@ -6,39 +6,50 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: "IBM Plex Sans Arabic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    background-color: var(--color-bg);
+    color: var(--color-on-surface);
     line-height: 1.6;
     position: relative;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 body.sidebar-open::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 999;
     transition: background-color 0.3s;
     cursor: pointer;
 }
 
-h1, h2 {
-    color: var(--primary-color);
+h1 {
+    color: var(--color-interactive);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-md);
+}
+
+h2 {
+    color: var(--color-interactive);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    margin-bottom: var(--space-sm);
 }
 
 h3 {
-    color: var(--primary-color);
-    margin-top: 2rem;
+    color: var(--color-interactive);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-sm);
 }
 
 main {
-    padding: 5.5rem 1.5rem 2.5rem;
+    padding: 5.5rem var(--space-xl) var(--space-2xl);
     text-align: center;
     flex-grow: 1;
 }
@@ -47,14 +58,15 @@ main {
     display: block;
     max-width: 760px;
     margin: 0 auto;
-    animation: fadeInUp 0.4s ease-out;
+    animation: fade-in-up 0.4s ease-out;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .page.hidden {
     display: none;
 }
 
-@keyframes fadeInUp {
+@keyframes fade-in-up {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -66,19 +78,45 @@ main {
 }
 
 .cta-button {
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    background-color: var(--color-interactive);
+    color: var(--color-on-interactive);
     border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 5px;
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    margin: 0.5rem auto;
-    transition: background-color 0.2s;
+    margin: var(--space-sm) auto;
+    transition: all var(--transition-fast);
     width: 100%;
-    margin-top: 1rem;
+    margin-top: var(--space-lg);
     display: block;
+    box-sizing: border-box;
+}
+
+.cta-button:hover {
+    background-color: var(--color-interactive-hover);
+    color: var(--color-on-interactive);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.cta-button:active {
+    background-color: var(--color-interactive-hover);
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.cta-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.cta-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 form .cta-button {
@@ -87,58 +125,116 @@ form .cta-button {
 }
 
 .nav-link.active {
-    background-color: var(--background-color);
+    background-color: var(--color-bg);
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
-    text-align: left;
+    margin-bottom: var(--space-xl);
+    text-align: start;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    margin-bottom: var(--space-sm);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-base);
+    color: var(--color-on-surface);
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    font-size: 1rem;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-family: inherit;
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
     box-sizing: border-box;
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.1s;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(1, 197, 211, 0.1);
-    transform: translateY(-1px);
+    border-color: var(--color-interactive);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
 .form-group input:invalid:not(:placeholder-shown) {
-    border-color: var(--error-color);
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 3px var(--color-error-focus);
 }
 
 .form-group input:valid:not(:placeholder-shown) {
-    border-color: #28a745;
+    border-color: var(--color-success);
+}
+
+.form-group input:disabled,
+.form-group select:disabled {
+    opacity: 0.6;
+    background-color: var(--color-bg);
+    cursor: not-allowed;
+}
+
+/* Input Group (Input + Addon) Base Styles */
+.input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    position: relative;
+}
+
+.input-group input {
+    flex: 1;
+    border-inline-end: none;
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+}
+
+.input-group input:focus {
+    z-index: 1;
+}
+
+.input-addon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-bg);
+    color: var(--color-on-surface-muted);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-base);
+    border: 1px solid var(--color-border);
+    border-inline-start: 1px solid var(--color-border);
+    border-start-end-radius: var(--radius-md);
+    border-end-end-radius: var(--radius-md);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    user-select: none;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+    box-sizing: border-box;
+}
+
+.input-group:focus-within .input-addon {
+    border-color: var(--color-interactive);
 }
 
 .results-container {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background-color: var(--white-color);
-    border-radius: 5px;
-    border-left: 5px solid var(--primary-color);
-    text-align: left;
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-inline-start: 3px solid var(--color-interactive);
+    border-radius: var(--radius-lg);
+    text-align: start;
     display: none;
-    animation: fadeIn 0.5s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fade-in 0.4s ease-out;
+    box-shadow: var(--shadow-card);
     position: relative;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .results-container.show {
@@ -147,104 +243,67 @@ form .cta-button {
 
 .results-container h3 {
     margin-top: 0;
-    color: var(--primary-color);
+    color: var(--color-interactive);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
 }
 
 .results-container p {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+    font-size: var(--text-base);
+    color: var(--color-on-surface);
 }
 
 .results-container .error {
-    color: var(--error-color);
-    font-weight: bold;
+    color: var(--color-error);
+    font-weight: var(--weight-bold);
 }
 
 .accent-text {
-    color: var(--accent-color);
-    font-weight: bold;
-    font-size: 1.2rem;
+    color: var(--color-accent-text);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-lg);
 }
 
 .section-helper-text {
-    margin-top: 0.25rem;
-    margin-bottom: 1.25rem;
-    font-size: 0.95rem;
-    color: #6c757d;
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-xl);
+    font-size: var(--text-sm);
+    color: var(--color-on-surface-muted);
 }
 
-/* Dark mode */
-body.dark-mode {
-    --background-color: #111827;
-    --white-color: #020617;
-    --text-color: #e5e7eb;
-    --border-color: #1f2937;
-}
-
-@keyframes fadeIn {
+@keyframes fade-in {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.loader {
+    border: 3px solid var(--color-border);
+    border-top: 3px solid var(--color-interactive);
+    border-radius: var(--radius-pill);
+    width: 32px;
+    height: 32px;
+    animation: spin 1s linear infinite;
+    margin: var(--space-lg) auto;
 }
 
-.success-message {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 0.75rem 1rem;
-    border-radius: 5px;
-    margin-top: 1rem;
-    border: 1px solid #c3e6cb;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    animation: slideIn 0.3s ease-out;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-body.dark-mode .success-message {
-    background-color: #1e3a1e;
-    color: #90ee90;
-    border-color: #2d5a2d;
-}
 
-/* RTL Support */
-body[dir="rtl"] {
-    direction: rtl;
-}
-
-body[dir="rtl"] .feature-card {
-    text-align: right;
-}
-
-body[dir="rtl"] .form-group {
-    text-align: right;
-}
-
-body[dir="rtl"] .results-container {
-    text-align: right;
-    border-left: none;
-    border-right: 5px solid var(--primary-color);
-}
-
-body[dir="rtl"] .about-content {
-    text-align: right;
-}
 
 @media (max-width: 768px) {
     main {
-        padding: 5.5rem 1rem 2rem;
+        padding: 5.5rem var(--space-lg) var(--space-xl);
     }
 
     h1 {
-        font-size: 1.8rem;
+        font-size: var(--text-xl);
+    }
+
+    form .cta-button {
+        width: 100%;
     }
 }

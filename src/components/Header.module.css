@@ -1,43 +1,55 @@
+header {
+    position: fixed;
+    top: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    width: 100%;
+    z-index: 1001;
+}
+
 .headerContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    background-color: var(--white-color);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    gap: var(--space-lg);
+    padding: var(--space-md) var(--space-xl);
+    background-color: var(--color-surface-elevated);
+    box-shadow: var(--shadow-elevated);
+    border-bottom: 1px solid var(--color-border-subtle);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 800;
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
     letter-spacing: 0.03em;
-    color: var(--primary-color);
+    color: var(--color-interactive);
 }
 
 .headerActions {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-xs);
 }
 
 .iconButton {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--primary-color);
-    border-radius: 999px;
-    padding: 0.35rem 0.55rem;
+    color: var(--color-interactive);
+    border-radius: var(--radius-pill);
+    padding: var(--space-xs) var(--space-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, color 0.2s, transform 0.1s;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
     z-index: 1002;
 }
 
 .iconButton:hover {
-    background-color: var(--background-color);
+    background-color: var(--color-bg);
+    color: var(--color-interactive-hover);
 }
 
 .iconButton:active {
@@ -47,51 +59,32 @@
 .desktopNav {
     display: flex;
     align-items: center;
+    gap: var(--space-xs);
 }
 
 .navLink {
-    color: var(--primary-color);
+    color: var(--color-interactive);
     text-decoration: none;
-    padding: 0.75rem 1rem;
-    margin: 0 0.5rem;
-    border-radius: 5px;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-base);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .navLink:hover {
-    background-color: var(--background-color);
+    background-color: var(--color-bg);
+    color: var(--color-interactive-hover);
 }
 
 .active {
-    background-color: var(--background-color);
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1001;
-}
-
-body[dir="rtl"] .headerContainer {
-    flex-direction: row-reverse;
-}
-
-body[dir="rtl"] .desktopNav {
-    flex-direction: row-reverse;
-}
-
-body[dir="rtl"] .headerActions {
-    flex-direction: row-reverse;
+    background-color: var(--color-bg);
+    font-weight: var(--weight-semibold);
 }
 
 @media (max-width: 768px) {
     .headerContainer {
-        flex-direction: row;
-        justify-content: space-between;
+        padding: var(--space-md) var(--space-lg);
     }
     .desktopNav {
         display: none;

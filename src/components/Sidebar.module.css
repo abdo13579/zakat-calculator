@@ -1,49 +1,41 @@
 .sidebar {
     position: fixed;
     top: 0;
-    right: -300px;
-    width: 250px;
+    inset-inline-start: -300px;
+    width: 260px;
     height: 100%;
-    background-color: var(--white-color);
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-    padding: 5rem 1.5rem 2rem;
-    transition: right 0.3s ease-in-out;
+    background-color: var(--color-surface-elevated);
+    box-shadow: var(--shadow-elevated);
+    padding: 5.5rem var(--space-lg) var(--space-2xl);
+    transition: inset-inline-start var(--transition-normal), background-color var(--transition-fast);
     z-index: 1000;
-}
-
-body[dir="rtl"] .sidebar {
-    right: auto;
-    left: -300px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    transition: left 0.3s ease-in-out;
+    box-sizing: border-box;
 }
 
 .open {
-    right: 0;
-}
-
-body[dir="rtl"] .open {
-    right: auto;
-    left: 0;
+    inset-inline-start: 0;
 }
 
 .navLink {
     display: block;
-    color: var(--primary-color);
+    color: var(--color-interactive);
     text-decoration: none;
-    padding: 1rem 1.25rem;
-    margin-bottom: 0.75rem;
-    border-radius: 5px;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    padding: var(--space-md) var(--space-lg);
+    margin-bottom: var(--space-sm);
+    border-radius: var(--radius-md);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-base);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .navLink:hover {
-    background-color: var(--background-color);
+    background-color: var(--color-bg);
+    color: var(--color-interactive-hover);
 }
 
 .active {
-    background-color: var(--background-color);
+    background-color: var(--color-bg);
+    font-weight: var(--weight-semibold);
 }
 
 @media (min-width: 769px) {
