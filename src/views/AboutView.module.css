@@ -1,0 +1,36 @@
+.content {
+    text-align: left;
+    background: var(--white-color);
+    padding: 1.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+body[dir="rtl"] .content {
+    text-align: right;
+}
+
+.social {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.social a {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.social a:hover {
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+body.dark-mode .content,
+body.dark-mode .cards-grid,
+body.dark-mode .results-container,
+body.dark-mode .header-container,
+body.dark-mode .sidebar {
+    box-shadow: none;
+}

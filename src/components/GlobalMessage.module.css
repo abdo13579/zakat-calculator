@@ -1,0 +1,35 @@
+.msg {
+    max-width: 760px;
+    margin: 0 auto 1.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info {
+    background-color: #e7f5ff;
+    color: #084298;
+    border-color: #b6d4fe;
+}
+
+.error {
+    background-color: #ffe3e6;
+    color: #842029;
+    border-color: #f5c2c7;
+}
+
+body.dark-mode .info {
+    background-color: #0f172a;
+    color: #e5e7eb;
+    border-color: #1e293b;
+}
+
+body.dark-mode .error {
+    background-color: #7f1d1d;
+    color: #fee2e2;
+    border-color: #991b1b;
+}
