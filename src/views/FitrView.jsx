@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useI18n } from '../i18n/I18nContext.jsx';
 import { calculateFitr } from '../domain/fitr.js';
-import { currenciesAvailable, detectUserCurrency, POPULAR_CURRENCIES } from '../utils/currency.js';
+import { currenciesAvailable, detectUserCurrency, POPULAR_CURRENCIES, currencyDisplayName } from '../utils/currency.js';
 import { formatNumber, sanitizeNumericInput } from '../utils/format.js';
 import { ResultCard } from '../components/ResultCard.jsx';
 
 const FALLBACK_CURRENCIES = Array.from(new Set([...POPULAR_CURRENCIES.slice(0, 3), 'EGP', 'SAR', 'USD']));
 
 export function FitrView({ rates, onRatesLoadFailed }) {
-    const { t } = useI18n();
+    const { t, lang } = useI18n();
     const [pricePerKg, setPricePerKg] = useState('');
     const [individuals, setIndividuals] = useState('');
     const [currency, setCurrency] = useState('USD');
@@ -45,6 +45,8 @@ export function FitrView({ rates, onRatesLoadFailed }) {
         setResult({ ...calc, currency });
     }
 
+    const curLabel = currencyDisplayName(currency, lang);
+
     return (
         <section id="zakat-al-fitr" className="page">
             <h2>{t('fitr-calculator-title')}</h2>
@@ -64,7 +66,7 @@ export function FitrView({ rates, onRatesLoadFailed }) {
                             aria-describedby="food-price-addon"
                         />
                         <span id="food-price-addon" className="input-addon">
-                            {currency}
+                            {curLabel}
                         </span>
                     </div>
                 </div>
@@ -76,7 +78,9 @@ export function FitrView({ rates, onRatesLoadFailed }) {
                         onChange={(e) => setCurrency(e.target.value)}
                     >
                         {currencyOptions.map(code => (
-                            <option key={code} value={code}>{code}</option>
+                            <option key={code} value={code}>
+                                {currencyDisplayName(code, lang)}
+                            </option>
                         ))}
                     </select>
                 </div>
@@ -106,13 +110,13 @@ export function FitrView({ rates, onRatesLoadFailed }) {
                     plainText={
                         `${t('fitr-result-title')}\n` +
                         `${t('fitr-result-weight')} ${formatNumber(result.totalWeightKg)} kg\n` +
-                        `${t('fitr-result-value')} ${formatNumber(result.totalValue)} ${result.currency}`
+                        `${t('fitr-result-value')} ${formatNumber(result.totalValue)} ${currencyDisplayName(result.currency, lang)}`
                     }
                 >
                     <p><strong>{t('fitr-result-weight')}</strong> {formatNumber(result.totalWeightKg)} kg</p>
                     <p>
                         <strong>{t('fitr-result-value')}</strong>{' '}
-                        <span className="accent-text">{formatNumber(result.totalValue)} {result.currency}</span>
+                        <span className="accent-text">{formatNumber(result.totalValue)} {currencyDisplayName(result.currency, lang)}</span>
                     </p>
                 </ResultCard>
             )}

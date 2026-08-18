@@ -1,3 +1,5 @@
+import { CURRENCY_NAMES_AR } from './currencyNames.js';
+
 // Currency helpers ported from legacy js/app.js (populateCurrencyDropdowns / detectUserCurrency).
 
 export const POPULAR_CURRENCIES = ['USD', 'EUR', 'GBP', 'SAR', 'EGP', 'AED', 'KWD', 'TRY', 'IDR', 'PKR'];
@@ -35,4 +37,16 @@ export function detectUserCurrency() {
 export function currenciesAvailable(rates) {
     if (!rates) return [];
     return sortedPopularCurrencies().filter(code => rates[code] != null);
+}
+
+/**
+ * Returns Arabic display name when lang === 'ar' and name exists, else code.
+ * Contract: specs/005-back-nav-multi-currency/contracts/i18n-catalog.md
+ */
+export function currencyDisplayName(code, lang) {
+    if (!code) return '';
+    if (lang === 'ar' && CURRENCY_NAMES_AR && CURRENCY_NAMES_AR[code]) {
+        return CURRENCY_NAMES_AR[code];
+    }
+    return code;
 }

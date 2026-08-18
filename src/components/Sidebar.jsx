@@ -53,7 +53,6 @@ export function Sidebar({ isOpen, onClose, onNavigate, currentView }) {
                     onClick={(e) => {
                         e.preventDefault();
                         onNavigate(item.id);
-                        onClose?.();
                     }}
                 >
                     <i className={`fas ${item.icon}`}></i> <span>{t(item.labelKey)}</span>
