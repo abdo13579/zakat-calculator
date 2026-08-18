@@ -26,6 +26,13 @@ export function LandingView({ onNavigate }) {
             descKey: 'zuru-description',
             btnKey: 'zuru-button',
         },
+        {
+            id: 'anaam',
+            icon: 'fa-paw',
+            titleKey: 'anaam-title',
+            descKey: 'anaam-description',
+            btnKey: 'anaam-button',
+        },
     ];
 
     return (

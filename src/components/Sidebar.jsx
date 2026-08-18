@@ -7,6 +7,7 @@ const ITEMS = [
     { id: 'fitr', icon: 'fa-calculator', labelKey: 'nav-zakat-fitr-full' },
     { id: 'mal', icon: 'fa-money-bill-wave', labelKey: 'nav-zakat-mal-full' },
     { id: 'zuru', icon: 'fa-seedling', labelKey: 'nav-zakat-zuru-full' },
+    { id: 'anaam', icon: 'fa-paw', labelKey: 'nav-zakat-anaam-full' },
     { id: 'about', icon: 'fa-info-circle', labelKey: 'nav-about' },
 ];
 

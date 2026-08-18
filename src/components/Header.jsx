@@ -11,6 +11,7 @@ export function Header({ onNavigate, currentView, onToggleSidebar }) {
         { id: 'fitr', icon: 'fa-calculator', labelKey: 'nav-zakat-fitr', fullLabelKey: 'nav-zakat-fitr-full' },
         { id: 'mal', icon: 'fa-money-bill-wave', labelKey: 'nav-zakat-mal', fullLabelKey: 'nav-zakat-mal-full' },
         { id: 'zuru', icon: 'fa-seedling', labelKey: 'nav-zakat-zuru', fullLabelKey: 'nav-zakat-zuru-full' },
+        { id: 'anaam', icon: 'fa-paw', labelKey: 'nav-zakat-anaam', fullLabelKey: 'nav-zakat-anaam-full' },
         { id: 'about', icon: 'fa-info-circle', labelKey: 'nav-about', fullLabelKey: 'nav-about' },
     ];
 

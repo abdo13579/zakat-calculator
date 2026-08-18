@@ -18,6 +18,9 @@ export function AboutView() {
                 <h3>{t('about-calc-zuru-title')}</h3>
                 <p>{t('about-calc-zuru-text')}</p>
 
+                <h3>{t('about-calc-anaam-title')}</h3>
+                <p>{t('about-calc-anaam-text')}</p>
+
                 <h3>{t('about-api-title')}</h3>
                 <ul>
                     <li>{t('about-api-currency')}</li>
