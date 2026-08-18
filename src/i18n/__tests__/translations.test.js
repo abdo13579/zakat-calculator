@@ -141,6 +141,19 @@ describe('translation catalog parity', () => {
             expect(translations.ar).toHaveProperty(key);
         }
     });
+
+    it('placeholders in translation strings are resolvable via known keys (no orphan {tokens})', () => {
+        const KNOWN_PARAMS = new Set(['tabi', 'bintLabun']);
+        const placeholderRe = /\{(\w+)\}/g;
+        for (const lang of ['en', 'ar']) {
+            for (const [key, value] of Object.entries(translations[lang])) {
+                let match;
+                while ((match = placeholderRe.exec(value)) !== null) {
+                    expect(KNOWN_PARAMS.has(match[1]), `${lang}[${key}] has unknown placeholder {${match[1]}}`).toBe(true);
+                }
+            }
+        }
+    });
 });
 
 import { POPULAR_CURRENCIES, currencyDisplayName } from '../../utils/currency.js';

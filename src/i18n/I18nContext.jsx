@@ -39,8 +39,12 @@ export function I18nProvider({ children }) {
         }
     }, [lang]);
 
-    const t = useCallback((key) => {
-        return translations[lang]?.[key] || translations.en[key] || key;
+    const t = useCallback((key, params) => {
+        const raw = translations[lang]?.[key] || translations.en[key] || key;
+        if (!params) return raw;
+        return raw.replace(/\{(\w+)\}/g, (m, name) =>
+            Object.prototype.hasOwnProperty.call(params, name) ? String(params[name]) : m
+        );
     }, [lang]);
 
     const toggleLang = useCallback(() => {
