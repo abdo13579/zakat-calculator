@@ -1,14 +1,15 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 2.0.0
+- Version change: 2.0.0 → 2.1.0
 - Modified principles:
-  - I. Shariah Accuracy First → unchanged
-  - II. Buildless Vanilla Stack → II. Lean Static SPA Stack (redefined: permits Vite + React + CSS Modules)
-  - III. Full Bilingual and Accessible Experience → unchanged title, reworded body (removes the data-i18n mechanism mandate)
-  - IV. Graceful Degradation of Live Data → unchanged
+  - I. Shariah Accuracy First → unchanged title, expanded body (adds Zakat Al-Anaam constants)
+  - II. Lean Static SPA Stack → unchanged
+  - III. Full Bilingual and Accessible Experience → unchanged
+  - IV. Graceful Degradation of Live Data → unchanged title, expanded body (adds Anaam to offline list; adds multi-currency conversion guarantee)
   - V. Client-Side Privacy and Transparency → unchanged
 - Added sections: none
 - Removed sections: none
+- Removed content: stale "Transition note" in Additional Constraints (React migration has merged)
 - Follow-up TODOs: none
 -->
 
@@ -21,9 +22,10 @@ Sync Impact Report
 Calculation constants and methods MUST follow mainstream Islamic jurisprudence as
 documented in the README: 85 g gold Nisaab, 2.5% rate on eligible wealth, 3.0 kg of
 staple food per person for Zakat Al-Fitr, 600 kg Nisaab and 10%/5%/7.5% irrigation
-rates for Zakat Al-Zuru. Any change to a constant, formula, or Nisaab threshold MUST
-cite a documented scholarly basis in the pull request. The scholarly disclaimer MUST
-remain visible in the app and the README.
+rates for Zakat Al-Zuru, and 5/30/40 head Nisaab with the per-bracket animal schedules
+for Zakat Al-Anaam (camels, cattle, sheep/goats). Any change to a constant, formula,
+or Nisaab threshold MUST cite a documented scholarly basis in the pull request. The
+scholarly disclaimer MUST remain visible in the app and the README.
 
 Rationale: users rely on this tool for a religious obligation; an incorrect result is
 the worst possible defect, worse than any outage or visual bug.
@@ -55,9 +57,12 @@ one language, or is inaccessible, is an incomplete feature.
 
 Zakat Al-Mal depends on live gold and exchange-rate data; every external fetch MUST
 handle failure explicitly, surface a clear user-visible error state, and MUST never
-crash the app or display a silently stale result. Zakat Al-Fitr and Zakat Al-Zuru MUST
-remain fully functional with no network access. Loading states MUST be shown while
-fetches are in flight.
+crash the app or display a silently stale result. When Zakat Al-Mal is calculated
+across multiple currencies, conversion depends on a successful rate fetch; on fetch
+failure or a missing rate for a selected currency, the app MUST surface a clear error
+and MUST NOT display a partial or silently incorrect aggregate. Zakat Al-Fitr, Zakat
+Al-Zuru, and Zakat Al-Anaam MUST remain fully functional with no network access.
+Loading states MUST be shown while fetches are in flight.
 
 Rationale: users may be offline or the public endpoints may fail; the tool MUST stay
 honest and useful in both cases.
@@ -83,9 +88,6 @@ risk by construction and builds trust.
   site is built with the base path `/zakat-calculator/` and the build output is published
   manually to the `gh-pages` branch.
 - Supported browsers: current versions of Chrome, Firefox, Safari, and Edge.
-- Transition note: until the React migration (`implementation-plan.md`, Phase 1) merges, the
-  running app remains the legacy vanilla HTML/CSS/JS stack; the stack constraints above take
-  full effect with that migration.
 
 ## Development Workflow
 
@@ -113,4 +115,4 @@ compliance with the principles; any deviation MUST be either corrected or resolv
 through a formal amendment. The README serves as the runtime user guidance file and
 MUST be updated whenever calculation methods or user-visible behavior change.
 
-**Version**: 2.0.0 | **Ratified**: 2026-08-16 | **Last Amended**: 2026-08-16
+**Version**: 2.1.0 | **Ratified**: 2026-08-16 | **Last Amended**: 2026-08-18
