@@ -18,3 +18,101 @@ export function calculateMal({ wealth, goldPricePerGramUsd, exchangeRate }) {
     const zakatDue = eligible ? wealth * 0.025 : 0;
     return { nisaab, eligible, zakatDue };
 }
+
+/**
+ * calculateMalMulti: Multi-currency Zakat Al-Mal calculation.
+ * Contract: specs/005-back-nav-multi-currency/contracts/calculation-api.md
+ * Data Model: specs/005-back-nav-multi-currency/data-model.md
+ */
+export function calculateMalMulti({ entries, goldPricePerGramUsd, rates }) {
+    if (typeof goldPricePerGramUsd !== 'number' || !Number.isFinite(goldPricePerGramUsd) || goldPricePerGramUsd <= 0) {
+        return {
+            ok: false,
+            errors: [{ index: -1, currency: '', key: 'error-api-failed' }]
+        };
+    }
+
+    if (!rates || typeof rates !== 'object') {
+        return {
+            ok: false,
+            errors: [{ index: -1, currency: '', key: 'error-api-failed' }]
+        };
+    }
+
+    if (!Array.isArray(entries) || entries.length === 0) {
+        return {
+            ok: false,
+            errors: [{ index: -1, currency: '', key: 'error-invalid-wealth' }]
+        };
+    }
+
+    const errors = [];
+    for (let i = 0; i < entries.length; i++) {
+        const entry = entries[i];
+        const errorObj = { index: i, currency: entry && typeof entry.currency === 'string' ? entry.currency : '' };
+        if (entry && entry.id) {
+            errorObj.id = entry.id;
+        }
+
+        if (!entry || typeof entry.amount !== 'number' || !Number.isFinite(entry.amount) || entry.amount < 0) {
+            errorObj.key = 'error-invalid-wealth';
+            errors.push(errorObj);
+            continue;
+        }
+
+        if (
+            typeof entry.currency !== 'string' ||
+            entry.currency.trim() === '' ||
+            !Object.prototype.hasOwnProperty.call(rates, entry.currency) ||
+            typeof rates[entry.currency] !== 'number' ||
+            !Number.isFinite(rates[entry.currency]) ||
+            rates[entry.currency] <= 0
+        ) {
+            errorObj.key = 'error-currency-rate';
+            errors.push(errorObj);
+            continue;
+        }
+    }
+
+    if (errors.length > 0) {
+        return {
+            ok: false,
+            errors
+        };
+    }
+
+    // Merge entries by currency
+    const mergedMap = new Map();
+    for (const entry of entries) {
+        const current = mergedMap.get(entry.currency) || 0;
+        mergedMap.set(entry.currency, current + entry.amount);
+    }
+
+    const perCurrency = [];
+    let totalUsd = 0;
+    for (const [currency, amount] of mergedMap.entries()) {
+        const rate = rates[currency];
+        const amountUsd = amount / rate;
+        totalUsd += amountUsd;
+        perCurrency.push({
+            currency,
+            amount,
+            amountUsd
+        });
+    }
+
+    const nisabUsd = 85 * goldPricePerGramUsd;
+    const eligible = totalUsd >= nisabUsd;
+    const zakatDueUsd = eligible ? totalUsd * 0.025 : 0;
+
+    return {
+        ok: true,
+        totalUsd,
+        nisabUsd,
+        eligible,
+        zakatDueUsd,
+        perCurrency,
+        resultCurrency: 'USD'
+    };
+}
+

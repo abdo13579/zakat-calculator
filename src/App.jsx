@@ -11,20 +11,46 @@ import { ZuruView } from './views/ZuruView.jsx';
 import { AnaamView } from './views/AnaamView.jsx';
 import { AboutView } from './views/AboutView.jsx';
 import { getCurrencyRates } from './services/api.js';
+import { useViewHistory } from './hooks/useViewHistory.js';
 
 export function App() {
     const { t } = useI18n();
     const toast = useToast();
-    const [view, setView] = useState('landing');
     const [rates, setRates] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    const handleNavigate = useCallback((targetView) => {
-        setView(targetView);
-        if (typeof window !== 'undefined') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    const handleCloseSidebarFromPopstate = useCallback(() => {
+        setSidebarOpen(false);
     }, []);
+
+    const {
+        view,
+        navigate,
+        onSidebarOpen,
+        onSidebarClosed,
+    } = useViewHistory({
+        views: ['landing', 'fitr', 'mal', 'zuru', 'anaam', 'about'],
+        initialView: 'landing',
+        isSidebarOpen: sidebarOpen,
+        onCloseSidebar: handleCloseSidebarFromPopstate,
+    });
+
+    const handleToggleSidebar = useCallback(() => {
+        const next = !sidebarOpen;
+        setSidebarOpen(next);
+        if (next) {
+            onSidebarOpen();
+        } else {
+            onSidebarClosed();
+        }
+    }, [sidebarOpen, onSidebarOpen, onSidebarClosed]);
+
+    const handleSidebarManualClose = useCallback(() => {
+        if (sidebarOpen) {
+            setSidebarOpen(false);
+            onSidebarClosed();
+        }
+    }, [sidebarOpen, onSidebarClosed]);
 
     // Load currency rates on app start
     useEffect(() => {
@@ -49,10 +75,19 @@ export function App() {
 
     return (
         <>
-            <Header onNavigate={handleNavigate} currentView={view} onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
-            <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} onNavigate={handleNavigate} currentView={view} />
+            <Header
+                onNavigate={navigate}
+                currentView={view}
+                onToggleSidebar={handleToggleSidebar}
+            />
+            <Sidebar
+                isOpen={sidebarOpen}
+                onClose={handleSidebarManualClose}
+                onNavigate={navigate}
+                currentView={view}
+            />
             <main id="main-content">
-                {view === 'landing' && <LandingView onNavigate={handleNavigate} />}
+                {view === 'landing' && <LandingView onNavigate={navigate} />}
                 {view === 'fitr' && <FitrView rates={rates} />}
                 {view === 'mal' && <MalView rates={rates} setRates={setRates} />}
                 {view === 'zuru' && <ZuruView />}

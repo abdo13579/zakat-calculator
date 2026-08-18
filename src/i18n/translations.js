@@ -135,7 +135,21 @@ export const translations = {
         'anaam-ref-cattle-continuation': 'per 40 & 1 × {tabi} per 30',
         'anaam-ref-camels-continuation': 'per 50 & 1 × {bintLabun} per 40',
         'about-calc-anaam-title': 'Zakat Al-Anaam',
-        'about-calc-anaam-text': 'Livestock Zakat applies to grazing, non-working camels, cattle, and sheep/goats held for a full lunar year. Nisab thresholds are 5 camels, 30 cattle, and 40 sheep/goats, with specific animal types and age requirements due at each bracket.'
+        'about-calc-anaam-text': 'Livestock Zakat applies to grazing, non-working camels, cattle, and sheep/goats held for a full lunar year. Nisab thresholds are 5 camels, 30 cattle, and 40 sheep/goats, with specific animal types and age requirements due at each bracket.',
+        'mal-wealth-row-label': 'Wealth Entry',
+        'mal-wealth-amount-label': 'Amount',
+        'mal-wealth-currency-label': 'Currency',
+        'mal-add-row': 'Add another currency',
+        'mal-remove-row': 'Remove',
+        'mal-result-currency': 'Result currency',
+        'mal-result-total': 'Combined wealth (converted to USD):',
+        'mal-result-breakdown': 'Per-currency breakdown',
+        'mal-result-zakat': 'Zakat Due (2.5% of combined total):',
+        'mal-result-below-multi': 'Your combined wealth of',
+        'mal-result-below-multi-cont': 'has not reached the Nisaab.',
+        'mal-result-above-multi': 'Your combined wealth of',
+        'mal-result-above-multi-cont': 'is above the Nisaab.',
+        'error-row-invalid': 'One or more entries are invalid. Please fix the highlighted rows.'
     },
     ar: {
         'app-name': 'حاسبة الزكاة',
@@ -273,6 +287,20 @@ export const translations = {
         'anaam-ref-cattle-continuation': 'لكل 40 و1 × {tabi} لكل 30',
         'anaam-ref-camels-continuation': 'لكل 50 و1 × {bintLabun} لكل 40',
         'about-calc-anaam-title': 'زكاة الأنعام',
-        'about-calc-anaam-text': 'تجب زكاة الأنعام في الإبل والبقر والغنم السائمة غير العاملة إذا بلغت النصاب وحال عليها الحول. أنصبتها: 5 من الإبل، 30 من البقر، 40 من الغنم، وتخرج بأنواع وأعمار محددة شرعاً لكل شريحة.'
+        'about-calc-anaam-text': 'تجب زكاة الأنعام في الإبل والبقر والغنم السائمة غير العاملة إذا بلغت النصاب وحال عليها الحول. أنصبتها: 5 من الإبل، 30 من البقر، 40 من الغنم، وتخرج بأنواع وأعمار محددة شرعاً لكل شريحة.',
+        'mal-wealth-row-label': 'إدخال ثروة',
+        'mal-wealth-amount-label': 'المبلغ',
+        'mal-wealth-currency-label': 'العملة',
+        'mal-add-row': 'أضف عملة أخرى',
+        'mal-remove-row': 'إزالة',
+        'mal-result-currency': 'عملة النتيجة',
+        'mal-result-total': 'إجمالي الثروة (محوّل إلى دولار أمريكي):',
+        'mal-result-breakdown': 'تفصيل حسب العملة',
+        'mal-result-zakat': 'الزكاة المستحقة (2.5% من الإجمالي):',
+        'mal-result-below-multi': 'ثروتك المجمعة البالغة',
+        'mal-result-below-multi-cont': 'لم تصل إلى النصاب.',
+        'mal-result-above-multi': 'ثروتك المجمعة البالغة',
+        'mal-result-above-multi-cont': 'تتجاوز النصاب.',
+        'error-row-invalid': 'واحد أو أكثر من الإدخالات غير صالح. يرجى تصحيح الصفوف المظللة.'
     }
 };

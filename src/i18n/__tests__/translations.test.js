@@ -89,6 +89,23 @@ const REQUIRED_LEGACY_KEYS = [
     'copied-success',
 ];
 
+const REQUIRED_MULTI_CURRENCY_KEYS = [
+    'mal-wealth-row-label',
+    'mal-wealth-amount-label',
+    'mal-wealth-currency-label',
+    'mal-add-row',
+    'mal-remove-row',
+    'mal-result-currency',
+    'mal-result-total',
+    'mal-result-breakdown',
+    'mal-result-zakat',
+    'mal-result-below-multi',
+    'mal-result-below-multi-cont',
+    'mal-result-above-multi',
+    'mal-result-above-multi-cont',
+    'error-row-invalid',
+];
+
 describe('translation catalog parity', () => {
     it('exports both en and ar catalogs at the same shape', () => {
         expect(translations).toBeTypeOf('object');
@@ -117,4 +134,38 @@ describe('translation catalog parity', () => {
             expect(translations.ar).toHaveProperty(key);
         }
     });
+
+    it('contains all new multi-currency UI keys in both translations.en and translations.ar', () => {
+        for (const key of REQUIRED_MULTI_CURRENCY_KEYS) {
+            expect(translations.en).toHaveProperty(key);
+            expect(translations.ar).toHaveProperty(key);
+        }
+    });
 });
+
+import { POPULAR_CURRENCIES, currencyDisplayName } from '../../utils/currency.js';
+import { CURRENCY_NAMES_AR } from '../../utils/currencyNames.js';
+
+describe('currency names catalog and helper', () => {
+    it('covers all popular currencies in CURRENCY_NAMES_AR (Principle III coverage rule)', () => {
+        expect(POPULAR_CURRENCIES.every(code => typeof CURRENCY_NAMES_AR[code] === 'string' && CURRENCY_NAMES_AR[code].length > 0)).toBe(true);
+    });
+
+    it('returns Arabic name when lang === "ar" and name exists', () => {
+        expect(currencyDisplayName('USD', 'ar')).toBe('دولار أمريكي');
+        expect(currencyDisplayName('EGP', 'ar')).toBe('جنيه مصري');
+        expect(currencyDisplayName('SAR', 'ar')).toBe('ريال سعودي');
+    });
+
+    it('returns ISO code when lang === "en"', () => {
+        expect(currencyDisplayName('USD', 'en')).toBe('USD');
+        expect(currencyDisplayName('EGP', 'en')).toBe('EGP');
+        expect(currencyDisplayName('SAR', 'en')).toBe('SAR');
+    });
+
+    it('falls back to ISO code for unknown currency in Arabic mode', () => {
+        expect(currencyDisplayName('UNKNOWN_XYZ', 'ar')).toBe('UNKNOWN_XYZ');
+    });
+});
+
+

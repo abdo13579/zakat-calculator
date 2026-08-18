@@ -26,9 +26,12 @@ ZakatCalc provides an intuitive, trustworthy, and privacy-first way to fulfill t
   - 100% offline capable
 
 - **Zakat Al-Mal** — Check if liquid wealth meets the Nisaab and compute obligation:
+  - Multi-currency wealth entry: enter cash holdings across multiple currencies (USD, EGP, SAR, EUR, etc.) with automatic client-side aggregation to USD
+  - Auto-merging of same-currency entries and detailed per-currency breakdown
   - Nisaab based on **85 grams of 24k gold** at current market spot price
-  - **2.5%** rate on total liquid wealth when at or above Nisaab
+  - **2.5%** rate on total liquid wealth when at or above Nisaab (result in USD)
   - Real-time gold price and currency exchange rates with graceful offline degradation
+  - Full Arabic currency display names when using Arabic interface with defensive ISO fallback
 
 - **Zakat Al-Zuru** — Calculate Zakat on agricultural crops and fruit produce:
   - Nisaab of **600 kg** of harvest weight (5 Wasqs)
@@ -46,7 +49,8 @@ ZakatCalc provides an intuitive, trustworthy, and privacy-first way to fulfill t
 
 ### User Experience & Design
 
-- **Bilingual & RTL**: Seamless toggle between English and Arabic with automated text direction (`dir="ltr"` / `dir="rtl"`) and typography via IBM Plex Sans Arabic.
+- **Bilingual & RTL**: Seamless toggle between English and Arabic with automated text direction (`dir="ltr"` / `dir="rtl"`), Arabic currency names, and typography via IBM Plex Sans Arabic.
+- **In-App Back & Forward Navigation**: Seamless integration with browser and mobile hardware back/forward buttons — navigating between calculators keeps history intact without unintended site exits, and pressing back while the mobile drawer is open closes the drawer first.
 - **Theme Support**: Dark and light modes with smooth transitions and persistent user preference in `localStorage`.
 - **Responsive & Accessible**: Fully fluid layout from mobile devices to large desktop screens, semantic HTML5 landmarks, ARIA labels, and complete keyboard operability.
 - **Sticky Footer**: Robust viewport layout ensuring the footer stays pinned to the bottom on short pages and flows naturally with longer content.
@@ -121,10 +125,12 @@ zakat-calculator/
 │   │   ├── Footer.jsx          # Sticky application footer
 │   │   ├── Footer.module.css
 │   │   ├── ResultCard.jsx      # Result card with copy-to-clipboard action
-│   │   └── ResultCard.module.css
+│   │   ├── ResultCard.module.css
+│   │   ├── WealthRow.jsx       # Multi-currency wealth input row
+│   │   └── WealthRow.module.css
 │   ├── domain/                 # Pure mathematical domain modules (zero I/O)
 │   │   ├── fitr.js             # Zakat Al-Fitr calculation logic
-│   │   ├── mal.js              # Zakat Al-Mal calculation logic
+│   │   ├── mal.js              # Zakat Al-Mal calculation logic (single & multi-currency)
 │   │   ├── zuru.js             # Zakat Al-Zuru calculation logic
 │   │   ├── anaam.js            # Zakat Al-Anaam calculation & eligibility logic
 │   │   └── __tests__/          # Vitest unit test suites
@@ -132,6 +138,8 @@ zakat-calculator/
 │   │       ├── mal.test.js
 │   │       ├── zuru.test.js
 │   │       └── anaam.test.js
+│   ├── hooks/                  # Custom React hooks
+│   │   └── useViewHistory.js   # Navigation history & drawer back handling
 │   ├── i18n/                   # Internationalization
 │   │   ├── I18nContext.jsx     # Language context, translation hook, RTL sync
 │   │   ├── translations.js     # English and Arabic translation catalogs
@@ -148,7 +156,8 @@ zakat-calculator/
 │   │   ├── ToastContext.jsx
 │   │   └── Toast.module.css
 │   ├── utils/                  # Formatting & helper utilities
-│   │   ├── currency.js         # Currency detection & list formatting
+│   │   ├── currency.js         # Currency detection & display helpers
+│   │   ├── currencyNames.js    # Arabic currency names catalog
 │   │   └── format.js           # Number formatting & input sanitization
 │   └── views/                  # Calculator view pages
 │       ├── LandingView.jsx     # Home view with calculator cards
