@@ -38,7 +38,7 @@ ZakatCalc provides an intuitive, trustworthy, and privacy-first way to fulfill t
 
 - **Zakat Al-Anaam** — Calculate Zakat on grazing livestock:
   - **Camels** (*Ibil* / الإبل): Nisab of 5 camels (Shah, Bint Makhad, Bint Labun, Hiqqah, Jadha'ah, and $> 120$ integer decomposition)
-  - **Cattle & Buffalo** (*Baqar* / البقر): Nisab of 30 cattle (Tabi', Musinnah, and $\ge 130$ integer decomposition)
+  - **Cattle & Buffalo** (*Baqar* / البقر): Nisab of 30 cattle (Tabi', Musinnah, and $\ge 120$ integer decomposition with waqs flooring to nearest 10)
   - **Sheep & Goats** (*Ghanam* / الغنم): Nisab of 40 animals (Shah)
   - Interactive Shariah eligibility checklist (Sa'imah grazing pasture, non-working, 1-year Hawl) with diagnostic feedback
   - Interactive reference schedule tables and fiqh age descriptions
@@ -82,12 +82,21 @@ For the complete jurisprudential formulas, edge cases, and worked examples, see 
 
 ## APIs Used
 
+### Calculation APIs
+
 | Purpose | API Endpoint | Notes |
 |:---|:---|:---|
 | **Currency Exchange** | [`https://open.er-api.com/v6/latest/USD`](https://open.er-api.com/v6/latest/USD) | USD-based real-time conversion rates |
 | **Gold Price** | [`https://mintedmetal.com/api/prices.json`](https://mintedmetal.com/api/prices.json) | Price per troy ounce, converted to per gram ($\div 31.1035$) |
 
-No API keys are required. Outbound network requests are limited strictly to these two public endpoints when using Zakat Al-Mal.
+No API keys are required. Outbound calculation API requests are limited strictly to these two public endpoints when using Zakat Al-Mal.
+
+### Third-Party Resources
+
+The application loads the following external resources for typography and icons:
+
+- **Google Fonts**: IBM Plex Sans Arabic (via Google Fonts CDN)
+- **Font Awesome 6**: Icon library (via CDN)
 
 ---
 
@@ -216,7 +225,17 @@ Serves the production bundle locally at `http://localhost:4173/zakat-calculator/
 ZakatCalc is a static Single-Page Application (SPA) with zero server dependencies. To deploy to GitHub Pages:
 
 ```bash
+# Build the production bundle
 npm run build
+
+# Commit the dist/ directory (if not already tracked)
+git add dist -f
+git commit -m "chore: build for deployment"
+
+# Ensure gh-pages branch exists (create if needed)
+git branch gh-pages 2>/dev/null || git checkout -b gh-pages && git checkout main
+
+# Push dist/ to gh-pages branch
 git subtree push --prefix dist origin gh-pages
 ```
 

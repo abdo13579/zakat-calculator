@@ -2,7 +2,7 @@
 
 This document provides a comprehensive and transparent explanation of how **ZakatCalc** computes Zakat across all supported categories: **Zakat Al-Fitr**, **Zakat Al-Mal**, **Zakat Al-Zuru**, and **Zakat Al-Anaam**.
 
-All formulas, Nisab thresholds, and calculation methods adhere strictly to mainstream Islamic jurisprudence (Sunni fiqh consensus) as ratified in the project constitution.
+All formulas, Nisab thresholds, and calculation methods are based on mainstream Islamic jurisprudence (Sunni fiqh consensus) as documented in the project constitution and verified against established scholarly sources.
 
 ---
 
@@ -159,7 +159,11 @@ Where:
 - $y =$ Count of **Musinnah** (40 animals each)
 - $x =$ Count of **Tabī'** (30 animals each)
 
-The algorithm maximizes $y$ (Musinnah-first preference) and provides any valid alternative integer combinations (e.g. at 120: $3\text{ Musinnah}$ primary, $4\text{ Tabī'}$ alternate; at 150: $3\text{ Musinnah} + 1\text{ Tabī'}$ primary, $5\text{ Tabī'}$ alternate).
+The algorithm maximizes $y$ (Musinnah-first preference) and provides any valid alternative integer combinations. For example:
+- At 120: $3\text{ Musinnah}$ (primary) or $4\text{ Tabī'}$ (alternate)
+- At 129: Floored to 120 $\to$ $3\text{ Musinnah}$ (primary) or $4\text{ Tabī'}$ (alternate), with 9 animals as waqs
+- At 130: $1\text{ Musinnah} + 3\text{ Tabī'}$
+- At 150: $3\text{ Musinnah} + 1\text{ Tabī'}$ (primary) or $5\text{ Tabī'}$ (alternate)
 
 ---
 

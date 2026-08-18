@@ -22,7 +22,7 @@ A Muslim livestock owner wants to calculate the zakat due on their flock of shee
 
 1. **Given** a user has 40 free-grazing sheep, **When** they enter 40 into the sheep/goats calculator, **Then** the result displays "1 sheep/goat" as the zakat due.
 2. **Given** a user has 130 sheep, **When** they enter 130, **Then** the result displays "2 sheep/goats" as the zakat due.
-3. **Given** a user has 350 sheep, **When** they enter 350, **Then** the result displays "4 sheep/goats" as the zakat due (3 for the first 300, plus 1 for the additional 100).
+3. **Given** a user has 350 sheep, **When** they enter 350, **Then** the result displays "3 sheep/goats" as the zakat due (within the 201-399 bracket).
 4. **Given** a user has fewer than 40 sheep, **When** they enter 30, **Then** the calculator displays that no zakat is due (below nisab).
 5. **Given** the user's language is Arabic, **When** they use the calculator, **Then** all labels, instructions, and results are displayed in Arabic with correct RTL layout.
 
@@ -95,10 +95,11 @@ A user wants to review the full zakat schedule tables for all three livestock ty
 
 ### Edge Cases
 
-- What happens when the user enters 0 or a negative number? → Display "no zakat due" with no error.
+- What happens when the user enters 0? → Valid input; display "no zakat due" (below nisab).
+- What happens when the user enters a negative number? → Invalid input; API returns null.
 - What happens when the user enters a non-integer value (e.g., 40.5)? → The input should only accept whole numbers since animals cannot be fractional.
 - What happens when the user enters an extremely large number of camels (e.g., above 120)? → The calculator must apply the continuation rule: for every 40 camels above 120, 1 Bint Labun; for every 50, 1 Hiqqah. The optimal combination yielding the fewest animals should be computed.
-- What happens when the user enters a number of cattle that is not cleanly divisible by 30 or 40? → The calculator must find the optimal combination of 30s and 40s that covers the total count.
+- What happens when the user enters a number of cattle that is not a multiple of 10 (e.g., 125, 135)? → For counts >= 120, the calculator floors to the nearest multiple of 10 (waqs normalization), then finds the optimal combination. The remainder is waqs (intermediate animals not counted).
 - What happens when the user clears the input field? → Reset to the initial state with no result displayed.
 
 ## Requirements *(mandatory)*
@@ -116,9 +117,9 @@ A user wants to review the full zakat schedule tables for all three livestock ty
   - Above 300: 3 sheep/goats + 1 additional for every 100 above 300
 - **FR-005**: System MUST calculate the zakat due for cattle using the following rules:
   - Below 30: No zakat due
-  - For every 30 head: 1 Tabi'/Tabi'ah (male or female calf, 1 year old)
-  - For every 40 head: 1 Musinnah (female, 2 years old)
-  - For any given total, the system must find the optimal combination of 30s and 40s
+  - 30-119: Fixed brackets per fiqh schedule
+  - 120 and above: Normalize the count down to the nearest multiple of 10 (waqs flooring), then find the optimal combination of 30s (Tabi') and 40s (Musinnah) that covers the normalized count, maximizing Musinnah
+  - Example: 35 cattle yields 1 Tabi' (30 cattle), with 5 as waqs; 135 cattle normalizes to 130, yielding 1 Musinnah + 3 Tabi', with 5 as waqs
 - **FR-006**: System MUST calculate the zakat due for camels using the following schedule:
   - Below 5: No zakat due
   - 5–9: 1 sheep/goat
@@ -135,10 +136,11 @@ A user wants to review the full zakat schedule tables for all three livestock ty
 - **FR-007**: System MUST display the zakat result in a human-readable format, including the animal type name in both English and Arabic.
 - **FR-008**: System MUST display the eligibility conditions for livestock zakat (free-grazing/Sa'imah, one lunar year ownership/Hawl, reaching nisab) prominently before the calculation inputs.
 - **FR-009**: System MUST display results immediately upon user action without requiring network access — all calculation logic runs client-side with no external API dependency.
-- **FR-010**: System MUST validate input to accept only positive whole numbers and gracefully handle invalid input.
+- **FR-010**: System MUST validate input to accept non-negative whole numbers (including zero) and gracefully handle invalid input. Negative numbers, fractional values, non-finite values (NaN, Infinity), and empty inputs are invalid and return null. Zero count is valid and returns "no zakat due" result.
 - **FR-011**: All user-facing strings MUST be available in both English and Arabic, with correct RTL layout for Arabic.
 - **FR-012**: The calculator MUST work in both light and dark themes.
 - **FR-013**: System MUST include a scholarly disclaimer indicating that users should consult a qualified scholar for specific personal circumstances.
+- **FR-014**: System MUST NOT transmit, store externally, or use for telemetry any user-entered herd data; all livestock count inputs and eligibility conditions remain strictly local to the user's browser session.
 
 ### Key Entities
 

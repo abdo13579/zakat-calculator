@@ -27,7 +27,7 @@ calculateAnaam({ species, count, conditions }) → LivestockCalculationResult | 
   count: 140,
   nisab: 5,
   isEligible: true,
-  ineligibilityReason: null, // or 'below-nisab' | 'not-grazing' | 'is-working' | 'no-hawl'
+  ineligibilityReason: null, // or 'below-nisab' | 'anaam-ineligible-stall-fed' | 'anaam-ineligible-working' | 'anaam-ineligible-no-hawl'
   zakatDueItems: [
     { key: 'anaam-animal-hiqqah', count: 2, ageDescriptionKey: 'anaam-desc-hiqqah' },
     { key: 'anaam-animal-bint-labun', count: 1, ageDescriptionKey: 'anaam-desc-bint-labun' }

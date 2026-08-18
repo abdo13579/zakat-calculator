@@ -130,6 +130,10 @@ export const translations = {
         'anaam-ref-toggle-hide': 'Hide Reference Schedules',
         'anaam-ref-range': 'Herd Range',
         'anaam-ref-due': 'Zakat Due',
+        'anaam-ref-below-nisab': 'Below Nisab',
+        'anaam-ref-per-100': 'per 100 animals',
+        'anaam-ref-cattle-continuation': 'per 40 & 1 × {tabi} per 30',
+        'anaam-ref-camels-continuation': 'per 50 & 1 × {bintLabun} per 40',
         'about-calc-anaam-title': 'Zakat Al-Anaam',
         'about-calc-anaam-text': 'Livestock Zakat applies to grazing, non-working camels, cattle, and sheep/goats held for a full lunar year. Nisab thresholds are 5 camels, 30 cattle, and 40 sheep/goats, with specific animal types and age requirements due at each bracket.'
     },
@@ -264,6 +268,10 @@ export const translations = {
         'anaam-ref-toggle-hide': 'إخفاء جداول المقادير والنصاب',
         'anaam-ref-range': 'العدد (الرؤوس)',
         'anaam-ref-due': 'الواجب إخراجه',
+        'anaam-ref-below-nisab': 'دون النصاب',
+        'anaam-ref-per-100': 'لكل 100 رأس',
+        'anaam-ref-cattle-continuation': 'لكل 40 و1 × {tabi} لكل 30',
+        'anaam-ref-camels-continuation': 'لكل 50 و1 × {bintLabun} لكل 40',
         'about-calc-anaam-title': 'زكاة الأنعام',
         'about-calc-anaam-text': 'تجب زكاة الأنعام في الإبل والبقر والغنم السائمة غير العاملة إذا بلغت النصاب وحال عليها الحول. أنصبتها: 5 من الإبل، 30 من البقر، 40 من الغنم، وتخرج بأنواع وأعمار محددة شرعاً لكل شريحة.'
     }

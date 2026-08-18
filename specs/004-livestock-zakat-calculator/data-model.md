@@ -33,7 +33,7 @@ interface EligibilityConditions {
 
 **Validation & Gate Logic**:
 - An animal herd is eligible for livestock Zakat **if and only if** `isGrazing === true && isNonWorking === true && heldForHawl === true`.
-- If any condition is `false`, `isEligible === false` with specific diagnostic key indicating reason (e.g. `'stall-fed'`, `'working'`, `'hawl-incomplete'`).
+- If any condition is `false`, `isEligible === false` with specific diagnostic translation key indicating reason (e.g. `'anaam-ineligible-stall-fed'`, `'anaam-ineligible-working'`, `'anaam-ineligible-no-hawl'`).
 
 ---
 
@@ -80,7 +80,7 @@ interface LivestockCalculationResult {
     count: number;
     nisab: number;
     isEligible: boolean;
-    ineligibilityReason?: 'below-nisab' | 'not-grazing' | 'is-working' | 'no-hawl';
+    ineligibilityReason?: 'below-nisab' | 'anaam-ineligible-stall-fed' | 'anaam-ineligible-working' | 'anaam-ineligible-no-hawl';
     zakatDueItems: ZakatDueItem[];
     alternateCombinations?: ZakatDueItem[][];
     explanationKey?: string;

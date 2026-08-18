@@ -24,9 +24,10 @@ Mainstream Sunni fiqh consensus defines three categories of livestock eligible f
    - **76–90**: 2 bint labūn (بنتا لبون).
    - **91–120**: 2 ḥiqqah (حقتان).
    - **> 120 Continuation Rule (Waqs / وقص)**:
-     - Floor to the nearest multiple of 10 (`Math.floor(n / 10) * 10`).
-     - Decompose into $50x + 40y = n$ where $x$ represents the count of Ḥiqqahs (50 each) and $y$ represents the count of Bint Labūns (40 each).
-     - Maximizing $x$ (Ḥiqqah) is the primary fiqh preference in standard charts (e.g., 200 camels $\to$ 4 Ḥiqqahs; alternatively 5 Bint Labūns noted as valid secondary).
+     - Define normalizedCount as the herd count floored to the nearest multiple of 10: `normalizedCount = Math.floor(n / 10) * 10`.
+     - The difference `n - normalizedCount` represents waqs (intermediate animals not counted in the zakat calculation).
+     - Decompose normalizedCount into $50x + 40y = \text{normalizedCount}$ where $x$ represents the count of Ḥiqqahs (50 each) and $y$ represents the count of Bint Labūns (40 each).
+     - Maximizing $x$ (Ḥiqqah) is the primary fiqh preference in standard charts (e.g., 200 camels $\to$ 4 Ḥiqqahs; alternatively 5 Bint Labūns noted as valid secondary; 135 camels $\to$ normalizedCount = 130, waqs = 5).
 
 2. **Cattle & Water Buffalo (`baqar` / البقر)**:
    - **Nisab**: 30 animals.
@@ -40,10 +41,11 @@ Mainstream Sunni fiqh consensus defines three categories of livestock eligible f
    - **100–109**: 1 musinnah + 2 tabī' (مسنة وتبيعان).
    - **110–119**: 2 musinnah + 1 tabī' (مسنتان وتبيع).
    - **120–129**: 3 musinnah or 4 tabī' (3 مسنات أو 4 أتبعة; standard preference: 3 musinnah).
-   - **$\ge 130$ Continuation Rule**:
-     - Floor to the nearest multiple of 10 (`Math.floor(n / 10) * 10`).
-     - Decompose into $40y + 30x = n$ where $y$ represents the count of Musinnahs (40 each) and $x$ represents the count of Tabī's (30 each).
-     - Maximizing $y$ (Musinnah-first) is preferred, with alternate valid combinations displayed or noted.
+   - **$\ge 120$ Continuation Rule**:
+     - Define normalizedCount as the herd count floored to the nearest multiple of 10: `normalizedCount = Math.floor(n / 10) * 10`.
+     - The difference `n - normalizedCount` represents waqs (intermediate animals not counted in the zakat calculation).
+     - Decompose normalizedCount into $40y + 30x = \text{normalizedCount}$ where $y$ represents the count of Musinnahs (40 each) and $x$ represents the count of Tabī's (30 each).
+     - Maximizing $y$ (Musinnah-first) is preferred, with alternate valid combinations displayed or noted (e.g., 135 cattle $\to$ normalizedCount = 130, waqs = 5).
 
 3. **Sheep & Goats (`ghanam` / الغنم)**:
    - **Nisab**: 40 animals.

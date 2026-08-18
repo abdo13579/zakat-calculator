@@ -179,6 +179,10 @@ describe('Zakat Al-Anaam Domain Logic', () => {
                 { key: 'anaam-animal-musinnah', count: 2, ageDescriptionKey: 'anaam-desc-musinnah' },
                 { key: 'anaam-animal-tabi', count: 1, ageDescriptionKey: 'anaam-desc-tabi' },
             ]);
+            expect(calculateCattle(119).zakatDueItems).toEqual([
+                { key: 'anaam-animal-musinnah', count: 2, ageDescriptionKey: 'anaam-desc-musinnah' },
+                { key: 'anaam-animal-tabi', count: 1, ageDescriptionKey: 'anaam-desc-tabi' },
+            ]);
 
             // 120 - 129: 3 Musinnah (with alternate 4 Tabi')
             const res120 = calculateCattle(120);
@@ -186,6 +190,14 @@ describe('Zakat Al-Anaam Domain Logic', () => {
                 { key: 'anaam-animal-musinnah', count: 3, ageDescriptionKey: 'anaam-desc-musinnah' },
             ]);
             expect(res120.alternateCombinations).toEqual([
+                [{ key: 'anaam-animal-tabi', count: 4, ageDescriptionKey: 'anaam-desc-tabi' }],
+            ]);
+
+            const res129 = calculateCattle(129);
+            expect(res129.zakatDueItems).toEqual([
+                { key: 'anaam-animal-musinnah', count: 3, ageDescriptionKey: 'anaam-desc-musinnah' },
+            ]);
+            expect(res129.alternateCombinations).toEqual([
                 [{ key: 'anaam-animal-tabi', count: 4, ageDescriptionKey: 'anaam-desc-tabi' }],
             ]);
         });

@@ -1,6 +1,6 @@
 # Implementation Plan: Zakat Al-Anaam (Livestock) Calculator
 
-**Branch**: `feature/004-livestock-zakat-calculator` | **Date**: 2026-08-18 | **Spec**: [spec.md](file:///home/abdoalhythm/Documents/Projects/zakat-calculator/specs/004-livestock-zakat-calculator/spec.md)
+**Branch**: `feature/004-livestock-zakat-calculator` | **Date**: 2026-08-18 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `/specs/004-livestock-zakat-calculator/spec.md`
 
@@ -38,7 +38,7 @@ Add a dedicated, guided Zakat Al-Anaam (Livestock) calculator supporting the thr
   - Rationale: Zakat Al-Anaam requires no live market prices and operates 100% offline.
 - **Principle V: Client-Side Privacy and Transparency**
   - Status: **PASS**
-  - Rationale: Zero telemetry or network transmission. All herd figures remain strictly local in the browser.
+  - Rationale: The Zakat Al-Anaam calculation path involves zero telemetry or network transmission of user data. All herd figures and eligibility conditions remain strictly local in the browser. (Note: The application does make currency-rate network requests during startup via getCurrencyRates() for the Zakat Al-Mal calculator, but no herd data is transmitted.)
 
 ## Project Structure
 

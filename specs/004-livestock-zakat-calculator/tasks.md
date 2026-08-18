@@ -1,9 +1,9 @@
 # Implementation Tasks: Zakat Al-Anaam (Livestock) Calculator
 
-**Feature Branch**: `feature/004-livestock-zakat-calculator`  
-**Specification**: [spec.md](file:///home/abdoalhythm/Documents/Projects/zakat-calculator/specs/004-livestock-zakat-calculator/spec.md)  
-**Implementation Plan**: [plan.md](file:///home/abdoalhythm/Documents/Projects/zakat-calculator/specs/004-livestock-zakat-calculator/plan.md)  
-**Contracts**: [contracts/calculation-api.md](file:///home/abdoalhythm/Documents/Projects/zakat-calculator/specs/004-livestock-zakat-calculator/contracts/calculation-api.md), [contracts/i18n-anaam-contract.md](file:///home/abdoalhythm/Documents/Projects/zakat-calculator/specs/004-livestock-zakat-calculator/contracts/i18n-anaam-contract.md)  
+**Feature Branch**: `feature/004-livestock-zakat-calculator`
+**Specification**: [spec.md](spec.md)
+**Implementation Plan**: [plan.md](plan.md)
+**Contracts**: [contracts/calculation-api.md](contracts/calculation-api.md), [contracts/i18n-anaam-contract.md](contracts/i18n-anaam-contract.md)  
 
 ---
 

@@ -105,6 +105,7 @@ export function AnaamView() {
                         onChange={(e) => {
                             setSpecies(e.target.value);
                             setResult(null);
+                            setError(null);
                         }}
                     >
                         <option value={LIVESTOCK_SPECIES.SHEEP_GOATS}>
@@ -132,7 +133,11 @@ export function AnaamView() {
                                 id="cond-grazing"
                                 className={styles.checkboxInput}
                                 checked={isGrazing}
-                                onChange={(e) => setIsGrazing(e.target.checked)}
+                                onChange={(e) => {
+                                    setIsGrazing(e.target.checked);
+                                    setResult(null);
+                                    setError(null);
+                                }}
                             />
                             <span className={styles.checkboxLabel}>{t('anaam-cond-grazing')}</span>
                         </label>
@@ -142,7 +147,11 @@ export function AnaamView() {
                                 id="cond-nonworking"
                                 className={styles.checkboxInput}
                                 checked={isNonWorking}
-                                onChange={(e) => setIsNonWorking(e.target.checked)}
+                                onChange={(e) => {
+                                    setIsNonWorking(e.target.checked);
+                                    setResult(null);
+                                    setError(null);
+                                }}
                             />
                             <span className={styles.checkboxLabel}>{t('anaam-cond-nonworking')}</span>
                         </label>
@@ -152,7 +161,11 @@ export function AnaamView() {
                                 id="cond-hawl"
                                 className={styles.checkboxInput}
                                 checked={heldForHawl}
-                                onChange={(e) => setHeldForHawl(e.target.checked)}
+                                onChange={(e) => {
+                                    setHeldForHawl(e.target.checked);
+                                    setResult(null);
+                                    setError(null);
+                                }}
                             />
                             <span className={styles.checkboxLabel}>{t('anaam-cond-hawl')}</span>
                         </label>
@@ -174,7 +187,11 @@ export function AnaamView() {
                         min="0"
                         step="1"
                         value={count}
-                        onChange={(e) => setCount(sanitizeNumericInput(e.target.value))}
+                        onChange={(e) => {
+                            setCount(sanitizeNumericInput(e.target.value));
+                            setResult(null);
+                            setError(null);
+                        }}
                         placeholder={t('anaam-count-placeholder')}
                         required
                     />
@@ -289,7 +306,7 @@ export function AnaamView() {
                                 <tbody>
                                     <tr>
                                         <td>1 – 39</td>
-                                        <td>0 (Below Nisab)</td>
+                                        <td>0 ({t('anaam-ref-below-nisab')})</td>
                                     </tr>
                                     <tr>
                                         <td>40 – 120</td>
@@ -305,7 +322,7 @@ export function AnaamView() {
                                     </tr>
                                     <tr>
                                         <td>400+</td>
-                                        <td>1 × {t('anaam-animal-shah')} per 100 animals</td>
+                                        <td>1 × {t('anaam-animal-shah')} {t('anaam-ref-per-100')}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -324,7 +341,7 @@ export function AnaamView() {
                                 <tbody>
                                     <tr>
                                         <td>1 – 29</td>
-                                        <td>0 (Below Nisab)</td>
+                                        <td>0 ({t('anaam-ref-below-nisab')})</td>
                                     </tr>
                                     <tr>
                                         <td>30 – 39</td>
@@ -364,7 +381,7 @@ export function AnaamView() {
                                     </tr>
                                     <tr>
                                         <td>130+</td>
-                                        <td>1 × {t('anaam-animal-musinnah')} per 40 &amp; 1 × {t('anaam-animal-tabi')} per 30</td>
+                                        <td>1 × {t('anaam-animal-musinnah')} {t('anaam-ref-cattle-continuation', { tabi: t('anaam-animal-tabi') })}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -383,7 +400,7 @@ export function AnaamView() {
                                 <tbody>
                                     <tr>
                                         <td>1 – 4</td>
-                                        <td>0 (Below Nisab)</td>
+                                        <td>0 ({t('anaam-ref-below-nisab')})</td>
                                     </tr>
                                     <tr>
                                         <td>5 – 9</td>
@@ -427,7 +444,7 @@ export function AnaamView() {
                                     </tr>
                                     <tr>
                                         <td>121+</td>
-                                        <td>1 × {t('anaam-animal-hiqqah')} per 50 &amp; 1 × {t('anaam-animal-bint-labun')} per 40</td>
+                                        <td>1 × {t('anaam-animal-hiqqah')} {t('anaam-ref-camels-continuation', { bintLabun: t('anaam-animal-bint-labun') })}</td>
                                     </tr>
                                 </tbody>
                             </table>
