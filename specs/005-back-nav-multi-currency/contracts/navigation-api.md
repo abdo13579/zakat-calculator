@@ -42,11 +42,11 @@ useViewHistory({ views, initialView, isSidebarOpen, onCloseSidebar }) → {
 
 On `popstate`, the hook inspects `event.state`:
 
-1. If `event.state?.sidebar === true` → call `onCloseSidebar()`. Do NOT change `view`. (The sentinel was consumed.)
+1. If the sidebar is currently open (`isSidebarOpen === true`), call `onCloseSidebar()` to close it and do NOT change `view`. This consumes the back press regardless of what `event.state` contains.
 2. Else if `event.state?.view` is a known view id → set `view = event.state.view`.
 3. Else (no state, e.g. the very first load entry) → set `view = initialView` (`'landing'`).
 
-This ordering produces the mandated UX: while the sidebar is open, the first back press hits the sentinel and closes the drawer; subsequent back presses hit real view entries and navigate.
+This ordering produces the mandated UX: while the sidebar is open, the first back press closes the drawer (consuming the sentinel entry) and leaves the view unchanged; the next back press then processes the preceding real `{ view }` entry and navigates. Forward navigation to a `{ sidebar: true }` sentinel reopens the sidebar.
 
 ## Edge cases
 

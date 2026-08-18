@@ -23,6 +23,10 @@ export function App() {
         setSidebarOpen(false);
     }, []);
 
+    const handleOpenSidebarFromPopstate = useCallback(() => {
+        setSidebarOpen(true);
+    }, []);
+
     const {
         view,
         navigate,
@@ -33,6 +37,7 @@ export function App() {
         initialView: 'landing',
         isSidebarOpen: sidebarOpen,
         onCloseSidebar: handleCloseSidebarFromPopstate,
+        onOpenSidebar: handleOpenSidebarFromPopstate,
     });
 
     const handleToggleSidebar = useCallback(() => {

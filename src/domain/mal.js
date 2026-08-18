@@ -85,7 +85,14 @@ export function calculateMalMulti({ entries, goldPricePerGramUsd, rates }) {
     const mergedMap = new Map();
     for (const entry of entries) {
         const current = mergedMap.get(entry.currency) || 0;
-        mergedMap.set(entry.currency, current + entry.amount);
+        const merged = current + entry.amount;
+        if (!Number.isFinite(merged)) {
+            return {
+                ok: false,
+                errors: [{ index: -1, currency: entry.currency, key: 'error-api-failed' }]
+            };
+        }
+        mergedMap.set(entry.currency, merged);
     }
 
     const perCurrency = [];
@@ -93,7 +100,19 @@ export function calculateMalMulti({ entries, goldPricePerGramUsd, rates }) {
     for (const [currency, amount] of mergedMap.entries()) {
         const rate = rates[currency];
         const amountUsd = amount / rate;
+        if (!Number.isFinite(amountUsd)) {
+            return {
+                ok: false,
+                errors: [{ index: -1, currency, key: 'error-api-failed' }]
+            };
+        }
         totalUsd += amountUsd;
+        if (!Number.isFinite(totalUsd)) {
+            return {
+                ok: false,
+                errors: [{ index: -1, currency, key: 'error-api-failed' }]
+            };
+        }
         perCurrency.push({
             currency,
             amount,

@@ -231,5 +231,32 @@ describe('calculateMalMulti — failure cases', () => {
             errors: [{ index: -1, currency: '', key: 'error-api-failed' }]
         });
     });
+
+    it('Merged amount overflow', () => {
+        const res = calculateMalMulti({
+            entries: [
+                { amount: Number.MAX_VALUE, currency: 'USD' },
+                { amount: Number.MAX_VALUE, currency: 'USD' }
+            ],
+            goldPricePerGramUsd: 70,
+            rates: { USD: 1 }
+        });
+        expect(res).toEqual({
+            ok: false,
+            errors: [{ index: -1, currency: 'USD', key: 'error-api-failed' }]
+        });
+    });
+
+    it('Conversion overflow from extremely small rate', () => {
+        const res = calculateMalMulti({
+            entries: [{ amount: Number.MAX_VALUE, currency: 'XYZ' }],
+            goldPricePerGramUsd: 70,
+            rates: { XYZ: Number.MIN_VALUE }
+        });
+        expect(res).toEqual({
+            ok: false,
+            errors: [{ index: -1, currency: 'XYZ', key: 'error-api-failed' }]
+        });
+    });
 });
 

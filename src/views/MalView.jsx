@@ -52,6 +52,7 @@ export function MalView({ rates, setRates }) {
             ...prev,
             { id: generateRowId(), amountRaw: '', currency: initialCurrency || 'USD' }
         ]);
+        setResult(null);
     }
 
     function handleRemoveRow(id) {
@@ -62,6 +63,7 @@ export function MalView({ rates, setRates }) {
             delete next[id];
             return next;
         });
+        setResult(null);
     }
 
     function handleChangeAmount(id, value) {
@@ -74,6 +76,7 @@ export function MalView({ rates, setRates }) {
             });
         }
         if (globalError) setGlobalError(null);
+        setResult(null);
     }
 
     function handleChangeCurrency(id, value) {
@@ -86,6 +89,7 @@ export function MalView({ rates, setRates }) {
             });
         }
         if (globalError) setGlobalError(null);
+        setResult(null);
     }
 
     function getOptionLabel(code) {

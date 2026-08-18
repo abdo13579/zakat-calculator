@@ -80,11 +80,11 @@ On mobile, a user opens the navigation sidebar drawer and then presses the back 
 ### Edge Cases
 
 - What happens when the user enters 0 as an amount in a row? → Valid input; that row contributes 0 to the combined total and does not affect eligibility.
-- What happens when the user enters a negative amount? → Invalid input; the row is rejected with a clear error message and excluded from the total.
-- What happens when a row's amount is empty or non-numeric? → Invalid input; the row is rejected with a clear error and excluded from the total.
+- What happens when the user enters a negative amount? → Invalid input; the calculation is aborted, the row is marked with a clear error message, and no result is displayed.
+- What happens when a row's amount is empty or non-numeric? → Invalid input; the calculation is aborted, the row is marked with a clear error, and no result is displayed.
 - What happens when only one currency row is present? → The calculation still works, preserving the existing single-currency flow as a degenerate case of the multi-currency calculator.
 - What happens when the live exchange-rate fetch fails (offline or endpoint down)? → The app MUST surface a clear user-visible error and MUST NOT display a silently incorrect or partially converted result; multi-currency conversion depends on successful rate retrieval.
-- What happens when a chosen currency is not present in the returned rates? → The app surfaces a clear error for that entry and excludes it, rather than guessing a rate.
+- What happens when a chosen currency is not present in the returned rates? → The app surfaces a clear error for that entry and aborts the calculation, displaying no result, rather than guessing a rate or showing a partial total.
 - What happens when the combined total is below nisab but one currency alone would have been close? → The result states no zakat is due; the combined total is still shown for transparency.
 - What happens when the user navigates very rapidly between pages and presses back repeatedly? → The back navigation follows the recorded order and does not skip or duplicate entries.
 - What happens when the user refreshes the page mid-session? → Because URLs are unchanged in this phase, refresh returns to the landing view; deep-linking/restoring the exact view on refresh is out of scope and accepted as a trade-off.
@@ -102,8 +102,8 @@ On mobile, a user opens the navigation sidebar drawer and then presses the back 
 - **FR-005**: The system MUST apply the 2.5% zakat rate to the combined eligible total when it meets or exceeds nisab, and MUST report zero zakat due when it is below nisab.
 - **FR-006**: The system MUST automatically merge wealth entries that share the same currency into a single summed contribution per currency before computing the total.
 - **FR-007**: The system MUST let users dynamically add new wealth rows and remove existing rows, while always keeping at least one row available.
-- **FR-008**: The system MUST validate each wealth entry as a non-negative finite number; negative, empty, non-numeric, or non-finite entries MUST be rejected with a clear, localized error message and excluded from the total.
-- **FR-009**: The system MUST handle exchange-rate retrieval failure with a clear user-visible error state and MUST NOT display a silently stale or incorrect multi-currency result (multi-currency conversion requires successful rate retrieval).
+- **FR-008**: The system MUST validate each wealth entry as a non-negative finite number; negative, empty, non-numeric, or non-finite entries MUST be rejected with a clear, localized error message, and the calculation MUST be aborted with no result displayed.
+- **FR-009**: The system MUST handle exchange-rate retrieval failure or missing exchange rates for any selected currency with a clear user-visible error state and MUST NOT display a silently stale or incorrect multi-currency result; any invalid amount or missing exchange rate aborts the calculation.
 - **FR-010**: The device/browser back button MUST navigate to the previously viewed in-app page instead of exiting the site, for every in-app navigation the user performs.
 - **FR-011**: The browser forward button MUST navigate forward through the same in-app navigation order the user previously traversed.
 - **FR-012**: When the user is on the first/landing view and there is no prior in-app page, pressing back MAY exit the app.

@@ -9,6 +9,7 @@ export function useViewHistory({
     initialView = 'landing',
     isSidebarOpen = false,
     onCloseSidebar = null,
+    onOpenSidebar = null,
 } = {}) {
     const [view, setView] = useState(initialView);
     const [historyLength, setHistoryLength] = useState(() => (
@@ -16,10 +17,15 @@ export function useViewHistory({
     ));
 
     const isSidebarOpenRef = useRef(isSidebarOpen);
-    isSidebarOpenRef.current = isSidebarOpen;
-
     const onCloseSidebarRef = useRef(onCloseSidebar);
-    onCloseSidebarRef.current = onCloseSidebar;
+    const onOpenSidebarRef = useRef(onOpenSidebar);
+
+    // Synchronize refs in commit phase to prevent stale values
+    useEffect(() => {
+        isSidebarOpenRef.current = isSidebarOpen;
+        onCloseSidebarRef.current = onCloseSidebar;
+        onOpenSidebarRef.current = onOpenSidebar;
+    }, [isSidebarOpen, onCloseSidebar, onOpenSidebar]);
 
     const syncHistoryLength = useCallback(() => {
         if (typeof window !== 'undefined' && window.history) {
@@ -38,11 +44,19 @@ export function useViewHistory({
             syncHistoryLength();
             const state = event.state;
 
-            // If the sidebar was open when the back button was pressed, the browser
-            // popped the sentinel entry. We close the sidebar and leave the current view unchanged.
+            // If the sidebar is currently open, close it first without changing the view.
+            // This consumes the back press; the next back will navigate to the preceding view entry.
             if (isSidebarOpenRef.current) {
                 if (typeof onCloseSidebarRef.current === 'function') {
                     onCloseSidebarRef.current();
+                }
+                return;
+            }
+
+            // Forward navigation to a sidebar sentinel: reopen the sidebar
+            if (state && state.sidebar === true) {
+                if (typeof onOpenSidebarRef.current === 'function') {
+                    onOpenSidebarRef.current();
                 }
                 return;
             }

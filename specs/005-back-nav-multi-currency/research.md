@@ -35,10 +35,10 @@ All clarifications were resolved during `/speckit-specify` grilling, so no `NEED
 - *Per-entry timestamped rates*: the rate API returns one snapshot; per-entry timestamps are not available. Using a single snapshot is the only honest option and is documented as an assumption.
 
 **Boundary cases resolved**:
-- `rates[currency]` missing → the entry is rejected with a clear localized error and excluded from the total (FR-009/edge case).
+- `rates[currency]` missing → the entry is rejected with a clear localized error and the calculation is aborted with no result displayed (FR-009/edge case).
 - Rate fetch fails entirely → the view surfaces the fetch error and displays NO result (FR-009).
 - Amount is 0 → contributes 0 (valid).
-- Amount negative/empty/non-finite → row rejected, excluded.
+- Amount negative/empty/non-finite → row rejected, calculation aborted, no result displayed.
 - Single entry → degenerates to the existing single-currency flow (backward compatibility, SC-007). The existing `calculateMal` is kept untouched for parity and direct unit testing; the new function is the multi-currency generalization.
 
 ## R3 — Arabic currency-name catalog
@@ -56,9 +56,9 @@ All clarifications were resolved during `/speckit-specify` grilling, so no `NEED
 
 ## R4 — Sidebar-aware back: sentinel history entry
 
-**Decision**: When the sidebar opens, push a sentinel history entry (state `{ sidebar: true }`). On `popstate`, if the current state's sentinel flag is set (i.e. the user pressed back while the sidebar was open), close the sidebar and do NOT change the view. When the sidebar closes by any other means (click-away, item selection), programmatically call `history.back()` to pop the sentinel so the history stack stays aligned with what the user sees. Subsequent `popstate` events then perform real view navigation.
+**Decision**: When the sidebar opens, push a sentinel history entry (state `{ view, sidebar: true }`). On `popstate`, if the sidebar is currently open (`isSidebarOpen === true`), close the sidebar and do NOT change the view, consuming the back press. This closes the drawer first; the next back press then processes the preceding real `{ view }` entry and navigates. When the sidebar closes by any other means (click-away, item selection), programmatically call `history.back()` to pop the sentinel so the history stack stays aligned with what the user sees. Forward navigation to a `{ sidebar: true }` sentinel reopens the sidebar.
 
-**Rationale**: This is the standard mobile-drawer pattern and gives the user-experience the spec mandates (FR-014): first back closes the drawer, second back navigates. Keeping the sentinel in history state (not URL) is consistent with R1's no-URL-change decision. The hook owns this logic so `Sidebar.jsx` only needs to notify the hook of open/close transitions; the hook stays the single source of truth for history.
+**Rationale**: This is the standard mobile-drawer pattern and gives the user-experience the spec mandates (FR-014): first back closes the drawer, second back navigates. Checking the current `isSidebarOpen` state ensures the close happens first, then the preceding view entry becomes the back destination. Keeping the sentinel in history state (not URL) is consistent with R1's no-URL-change decision. The hook owns this logic so `Sidebar.jsx` only needs to notify the hook of open/close transitions; the hook stays the single source of truth for history.
 
 **Alternatives considered**:
 - *Skip the sentinel and just check a sidebar-open ref on popstate*: race-prone because `popstate` firing and the ref reading are not atomic with the browser's history transition; the sentinel makes the intent explicit and reversible.
@@ -66,12 +66,12 @@ All clarifications were resolved during `/speckit-specify` grilling, so no `NEED
 
 ## R5 — Validation and error semantics for multi-currency rows
 
-**Decision**: The domain function validates each entry: `amount` must be a finite number ≥ 0 and `currency` must be a non-empty string present in `rates`. Invalid entries cause the function to return a structured result `{ ok: false, errors: [{ index, code, messageKey }] }` rather than `null`, so the view can render per-row localized errors. If at least one entry is valid, the function still computes a total from the valid entries only when the spec context allows partial computation — BUT per FR-009, if a selected currency is missing from `rates`, the whole calculation is aborted with a clear error to avoid silently showing a partial total. Therefore: any invalid row (bad amount OR missing rate) aborts the calculation and surfaces errors; the user must fix or remove the bad row. This is the safest interpretation of the Shariah-accuracy-first principle for a multi-row form.
+**Decision**: The domain function validates each entry: `amount` must be a finite number ≥ 0 and `currency` must be a non-empty string present in `rates`. Invalid entries cause the function to return a structured result `{ ok: false, errors: [{ index, code, messageKey }] }` rather than `null`, so the view can render per-row localized errors. Any invalid row (bad amount OR missing rate) aborts the calculation entirely and surfaces errors; no partial result is computed or displayed. The user must fix or remove the bad row before obtaining a result. This is the safest interpretation of the Shariah-accuracy-first principle for a multi-row form.
 
 **Rationale**: The existing single-currency `calculateMal` returns `null` on invalid input. The multi-row form needs per-row feedback to be usable, but mixing partial results with religious calculations is dangerous. Aborting on any bad row, while showing which rows are bad, balances usability with the no-silent-stale-result rule.
 
 **Alternatives considered**:
-- *Compute from valid rows only, ignore bad ones*: rejected — risks a silently incorrect total.
+- *Compute from valid rows only, ignore bad ones*: rejected — risks a silently incorrect total that could mislead the user about their religious obligation.
 - *Return `null` for the whole form on any bad row*: usable but loses per-row feedback.
 
 ## R6 — Backward compatibility and testing strategy

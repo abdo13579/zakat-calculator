@@ -60,7 +60,7 @@ Output of `calculateMalMulti`.
 | Field | Type | Notes |
 |-------|------|-------|
 | `ok` | `false` | |
-| `errors` | `Array<{ id?: string, index: number, currency: string, key: 'error-invalid-wealth' \| 'error-currency-rate' }>` | Per-row localized error keys. `index` is the row position in the submitted entries; `id` is echoed when supplied so the view can attach the error to the correct row. |
+| `errors` | `Array<{ id?: string, index: number, currency: string, key: 'error-invalid-wealth' \| 'error-currency-rate' \| 'error-api-failed' }>` | Per-row localized error keys. `index` is the row position in the submitted entries; `id` is echoed when supplied so the view can attach the error to the correct row. The `error-api-failed` key is used for invalid gold price or rates input. |
 
 **Pure-function semantics**: `calculateMalMulti` is deterministic, has no I/O, no state, no DOM, never throws for bad user input — mirrors the existing domain contract. Invalid inputs produce the failure shape; unexpected internal states (e.g. `goldPricePerGramUsd <= 0`, `rates` not an object) also produce the failure shape with a generic `'error-api-failed'` key.
 
@@ -103,10 +103,11 @@ Not an entity per se but a derived value: `currencyDisplayName(code, lang) → s
   --user navigates to 'mal'--> pushState({view:'mal'}) ; view = 'mal'
   --user navigates to 'about'--> pushState({view:'about'}) ; view = 'about'
   --user opens sidebar--> pushState({view:'about', sidebar:true}) sentinel
-  --user presses back while sidebar open--> popstate fires; state.sidebar === true → close sidebar, view unchanged
-  --user presses back again--> popstate fires; state.view = 'mal' → view = 'mal'
+  --user presses back while sidebar open--> popstate fires; isSidebarOpen === true → close sidebar first, view unchanged (sentinel consumed)
+  --user presses back again--> popstate fires; state.view = 'mal' → view = 'mal' (this is the activated entry after the close)
   --user presses back again--> popstate fires; state.view = 'landing' (or no state) → view = 'landing'
   --user presses forward--> popstate fires; state.view = 'about' → view = 'about'
+  --user presses forward again--> popstate fires; state.sidebar === true → reopen sidebar, view unchanged
   --sidebar closed manually (click-away / item select)--> history.back() to pop sentinel
 ```
 
