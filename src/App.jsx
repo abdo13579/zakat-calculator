@@ -8,6 +8,7 @@ import { LandingView } from './views/LandingView.jsx';
 import { FitrView } from './views/FitrView.jsx';
 import { MalView } from './views/MalView.jsx';
 import { ZuruView } from './views/ZuruView.jsx';
+import { AnaamView } from './views/AnaamView.jsx';
 import { AboutView } from './views/AboutView.jsx';
 import { getCurrencyRates } from './services/api.js';
 
@@ -55,6 +56,7 @@ export function App() {
                 {view === 'fitr' && <FitrView rates={rates} />}
                 {view === 'mal' && <MalView rates={rates} setRates={setRates} />}
                 {view === 'zuru' && <ZuruView />}
+                {view === 'anaam' && <AnaamView />}
                 {view === 'about' && <AboutView />}
             </main>
             <Footer />
