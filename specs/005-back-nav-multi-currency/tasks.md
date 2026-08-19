@@ -77,7 +77,7 @@ description: "Task list for Back Navigation & Multi-Currency Zakat Al-Mal"
 
 ### Implementation for User Story 2
 
-- [X] T012 [US2] Implement `useViewHistory({ views, initialView })` in `src/hooks/useViewHistory.js` per [contracts/navigation-api.md](./contracts/navigation-api.md): `navigate(toView)` calls `window.history.pushState({ view: toView }, '', '')` and updates state; a `popstate` listener sets `view` from `event.state.view` (falling back to `initialView`); expose `{ view, navigate, canGoBack }`. Guard `window`/`document` for SSR safety (mirror `I18nContext.jsx` patterns). Sidebar-related parameters are added in US4.
+- [X] T012 [US2] Implement `useViewHistory({ views, initialView })` in `src/hooks/useViewHistory.js` per [contracts/navigation-api.md](./contracts/navigation-api.md): `navigate(toView)` calls `window.history.pushState({ view: toView }, '', '')` and updates state; a `popstate` listener sets `view` from `event.state.view` (falling back to `initialView`); expose `{ view, navigate }`. Guard `window`/`document` for SSR safety (mirror `I18nContext.jsx` patterns). Sidebar-related parameters are added in US4.
 - [X] T013 [US2] Refactor `src/App.jsx` to replace local `useState('landing')` view state with `useViewHistory({ views: ['landing','fitr','mal','zuru','anaam','about'], initialView: 'landing' })`; pass `view` and `navigate` down to `Header`, `Sidebar`, and `LandingView` in place of the previous `setView`/`handleNavigate`; preserve the existing `window.scrollTo({ top: 0, behavior: 'smooth' })` on navigate
 - [X] T014 [US2] Verify Scenario G from [quickstart.md](./quickstart.md) manually: back returns to landing (not exit), forward returns to calculator, multi-step back chain lands/fitr/landing in order
 

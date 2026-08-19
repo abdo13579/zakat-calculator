@@ -20,22 +20,26 @@ export function ResultCard({ title, children, plainText, actionLabel }) {
         }
 
         // Fallback for non-secure contexts or legacy browsers
+        let successful = false;
+        let toasted = false;
+        const ta = document.createElement('textarea');
+        ta.value = plainText;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
         try {
-            const ta = document.createElement('textarea');
-            ta.value = plainText;
-            ta.style.position = 'fixed';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
             ta.select();
-            const successful = document.execCommand('copy');
-            document.body.removeChild(ta);
-            if (successful) {
-                toast.success(successMsg);
-            } else {
-                toast.error(failMsg);
-            }
+            successful = document.execCommand('copy');
         } catch (fallbackErr) {
             console.error('Copy fallback failed', fallbackErr);
+            toast.error(failMsg);
+            toasted = true;
+        } finally {
+            document.body.removeChild(ta);
+        }
+        if (successful) {
+            toast.success(successMsg);
+        } else if (!toasted) {
             toast.error(failMsg);
         }
     }

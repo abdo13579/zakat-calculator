@@ -28,9 +28,9 @@ export function FitrView({ rates, onRatesLoadFailed }) {
 
     function onSubmit(e) {
         e.preventDefault();
-        const persons = parseFloat(individuals);
-        const price = parseFloat(pricePerKg);
-        if (!Number.isInteger(persons)) {
+        const persons = /^\s*\d+\s*$/.test(individuals) ? Number(individuals.trim()) : NaN;
+        const price = /^\s*\d+(?:\.\d+)?\s*$/.test(pricePerKg) ? Number(pricePerKg.trim()) : NaN;
+        if (!Number.isInteger(persons) || isNaN(price)) {
             setError('error-invalid-input');
             setResult(null);
             return;

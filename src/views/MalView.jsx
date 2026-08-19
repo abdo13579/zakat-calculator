@@ -130,7 +130,8 @@ export function MalView({ rates, setRates }) {
         // Client-side quick check on amounts
         const errors = {};
         const entries = rows.map((r, idx) => {
-            const amountNum = parseFloat(r.amountRaw);
+            const raw = r.amountRaw;
+            const amountNum = /^\s*\d+(?:\.\d+)?\s*$/.test(raw) ? Number(raw.trim()) : NaN;
             if (isNaN(amountNum) || amountNum < 0) {
                 errors[r.id] = t('error-invalid-wealth');
             }
@@ -338,6 +339,7 @@ export function MalView({ rates, setRates }) {
                                 id="mal-cond-hawl"
                                 className={styles.checkboxInput}
                                 checked={heldForHawl}
+                                disabled={loading}
                                 onChange={(e) => {
                                     setHeldForHawl(e.target.checked);
                                     setResult(null);
@@ -352,6 +354,7 @@ export function MalView({ rates, setRates }) {
                                 id="mal-cond-surplus"
                                 className={styles.checkboxInput}
                                 checked={isSurplus}
+                                disabled={loading}
                                 onChange={(e) => {
                                     setIsSurplus(e.target.checked);
                                     setResult(null);
@@ -366,6 +369,7 @@ export function MalView({ rates, setRates }) {
                                 id="mal-cond-qualifying"
                                 className={styles.checkboxInput}
                                 checked={isQualifying}
+                                disabled={loading}
                                 onChange={(e) => {
                                     setIsQualifying(e.target.checked);
                                     setResult(null);
