@@ -24,7 +24,7 @@ export function ZuruView() {
         const weightNum = /^\s*\d+(?:\.\d+)?\s*$/.test(weight) ? Number(weight.trim()) : NaN;
         const irrigationDef = IRRIGATION.find(i => i.value === irrigation);
         const rate = irrigationDef ? irrigationDef.dataRate : 0;
-        if (isNaN(weightNum) || weightNum <= 0) {
+        if (!Number.isFinite(weightNum) || weightNum <= 0) {
             setError(t('error-invalid-input'));
             setResult(null);
             return;

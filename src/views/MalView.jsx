@@ -132,7 +132,7 @@ export function MalView({ rates, setRates }) {
         const entries = rows.map((r, idx) => {
             const raw = r.amountRaw;
             const amountNum = /^\s*\d+(?:\.\d+)?\s*$/.test(raw) ? Number(raw.trim()) : NaN;
-            if (isNaN(amountNum) || amountNum < 0) {
+            if (!Number.isFinite(amountNum) || amountNum < 0) {
                 errors[r.id] = t('error-invalid-wealth');
             }
             return {
