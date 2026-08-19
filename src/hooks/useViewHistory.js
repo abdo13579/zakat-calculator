@@ -5,16 +5,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * Contract: specs/005-back-nav-multi-currency/contracts/navigation-api.md
  */
 export function useViewHistory({
-    views = ['landing', 'fitr', 'mal', 'zuru', 'anaam', 'about'],
+    views = ['landing', 'fitr', 'mal', 'zuru', 'anaam', 'support', 'about'],
     initialView = 'landing',
     isSidebarOpen = false,
     onCloseSidebar = null,
     onOpenSidebar = null,
 } = {}) {
     const [view, setView] = useState(initialView);
-    const [historyLength, setHistoryLength] = useState(() => (
-        typeof window !== 'undefined' && window.history ? window.history.length : 1
-    ));
 
     const isSidebarOpenRef = useRef(isSidebarOpen);
     const onCloseSidebarRef = useRef(onCloseSidebar);
@@ -27,12 +24,6 @@ export function useViewHistory({
         onOpenSidebarRef.current = onOpenSidebar;
     }, [isSidebarOpen, onCloseSidebar, onOpenSidebar]);
 
-    const syncHistoryLength = useCallback(() => {
-        if (typeof window !== 'undefined' && window.history) {
-            setHistoryLength(window.history.length);
-        }
-    }, []);
-
     useEffect(() => {
         if (typeof window === 'undefined') return;
 
@@ -41,7 +32,6 @@ export function useViewHistory({
         }
 
         function handlePopState(event) {
-            syncHistoryLength();
             const state = event.state;
 
             // If the sidebar is currently open, close it first without changing the view.
@@ -76,7 +66,7 @@ export function useViewHistory({
         return () => {
             window.removeEventListener('popstate', handlePopState);
         };
-    }, [views, initialView, syncHistoryLength]);
+    }, [views, initialView]);
 
     const navigate = useCallback((toView) => {
         if (typeof window !== 'undefined' && window.history) {
@@ -92,33 +82,27 @@ export function useViewHistory({
             }
         }
         setView(toView);
-        syncHistoryLength();
         if (typeof window !== 'undefined') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-    }, [syncHistoryLength]);
+    }, []);
 
     const onSidebarOpen = useCallback(() => {
         if (typeof window !== 'undefined' && window.history) {
             window.history.pushState({ view, sidebar: true }, '', '');
-            syncHistoryLength();
         }
-    }, [view, syncHistoryLength]);
+    }, [view]);
 
     const onSidebarClosed = useCallback(() => {
         if (typeof window !== 'undefined' && window.history) {
             window.history.back();
-            syncHistoryLength();
         }
-    }, [syncHistoryLength]);
-
-    const canGoBack = historyLength > 1;
+    }, []);
 
     return {
         view,
         navigate,
         onSidebarOpen,
         onSidebarClosed,
-        canGoBack,
     };
 }

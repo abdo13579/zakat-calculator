@@ -23,8 +23,7 @@ useViewHistory({ views, initialView, isSidebarOpen, onCloseSidebar }) → {
   view: string,
   navigate(toView: string): void,
   onSidebarOpen(): void,
-  onSidebarClosed(): void,
-  canGoBack: boolean
+  onSidebarClosed(): void
 }
 ```
 
@@ -36,7 +35,6 @@ useViewHistory({ views, initialView, isSidebarOpen, onCloseSidebar }) → {
 - `navigate(toView)`: called by Header/Sidebar/Landing links instead of the current `setView`. Internally `pushState({ view: toView }, '')` and updates the returned `view`.
 - `onSidebarOpen()`: called by the sidebar toggle handler when the sidebar transitions closed→open. Internally `pushState({ view, sidebar: true }, '')` (the sentinel entry).
 - `onSidebarClosed()`: called when the sidebar is closed by any non-back means (click-away, item selection). Internally calls `history.back()` to pop the sentinel so the stack stays aligned.
-- `canGoBack`: derived from `window.history.length > 1` (advisory; the hook does not require this to function).
 
 ## popstate handling
 

@@ -2,8 +2,12 @@
 // Contract: specs/002-react-migration/contracts/calculation-api.md
 // Inputs:
 //   wealth:                 number ≥ 0 (user-selected currency)
-//   goldPricePerGramUsd:    number > 0 (already per-gram, ÷ 31.1035 applied upstream)
+//   goldPricePerGramUsd:    number > 0 (already per-gram, ÷ GRAMS_PER_TROY_OUNCE applied upstream)
 //   exchangeRate:           number > 0 (units of selected currency per 1 USD)
+
+// Grams per troy ounce — physical unit conversion (not a Shariah constant).
+// Exported so the upstream fetch layer (services/api.js) shares the same divisor.
+export const GRAMS_PER_TROY_OUNCE = 31.1035;
 
 export function calculateMal({ wealth, goldPricePerGramUsd, exchangeRate }) {
     if (

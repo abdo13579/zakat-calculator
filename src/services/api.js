@@ -2,6 +2,8 @@
 // Contracts: see specs/002-react-migration/contracts/external-apis.md
 // Both functions return `null` on any failure (null-on-failure contract).
 
+import { GRAMS_PER_TROY_OUNCE } from '../domain/mal.js';
+
 const DEFAULT_TIMEOUT_MS = 10000;
 
 async function fetchWithTimeout(url, options = {}, timeoutMs = DEFAULT_TIMEOUT_MS) {
@@ -48,7 +50,7 @@ export async function getGoldPrice() {
         if (typeof pricePerOunce !== 'number' || !Number.isFinite(pricePerOunce)) {
             return null;
         }
-        const pricePerGram = pricePerOunce / 31.1035; // ounces → grams
+        const pricePerGram = pricePerOunce / GRAMS_PER_TROY_OUNCE; // ounces → grams
         return {
             price: pricePerGram,
             timestamp: data.updatedAt ? new Date(data.updatedAt).getTime() || null : null,

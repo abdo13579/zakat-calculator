@@ -65,7 +65,11 @@ export function ToastProvider({ children }) {
         <ToastContext.Provider value={toast}>
             {children}
             {currentToast && (
-                <div className={styles.toastContainer} role="status" aria-live="polite">
+                <div
+                    className={styles.toastContainer}
+                    role={currentToast.type === 'error' ? 'alert' : 'status'}
+                    aria-live={currentToast.type === 'error' ? 'assertive' : 'polite'}
+                >
                     <div
                         className={`${styles.toast} ${styles[currentToast.type] || styles.info} ${isExiting ? styles.exiting : ''}`}
                     >

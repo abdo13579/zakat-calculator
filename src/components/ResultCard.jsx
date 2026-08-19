@@ -1,18 +1,14 @@
-import { useState } from 'react';
 import { useI18n } from '../i18n/I18nContext.jsx';
 import { useToast } from '../toast/ToastContext.jsx';
-import { formatNumber } from '../utils/format.js';
 import styles from './ResultCard.module.css';
 
 export function ResultCard({ title, children, plainText, actionLabel }) {
     const { t } = useI18n();
     const toast = useToast();
-    const [visible, setVisible] = useState(true);
-
-    if (!visible) return null;
 
     async function handleCopy() {
         const successMsg = t('copied-success');
+        const failMsg = t('copy-failed');
         try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 await navigator.clipboard.writeText(plainText);
@@ -24,20 +20,27 @@ export function ResultCard({ title, children, plainText, actionLabel }) {
         }
 
         // Fallback for non-secure contexts or legacy browsers
+        let successful = false;
+        let toasted = false;
+        const ta = document.createElement('textarea');
+        ta.value = plainText;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
         try {
-            const ta = document.createElement('textarea');
-            ta.value = plainText;
-            ta.style.position = 'fixed';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
             ta.select();
-            const successful = document.execCommand('copy');
-            document.body.removeChild(ta);
-            if (successful) {
-                toast.success(successMsg);
-            }
+            successful = document.execCommand('copy');
         } catch (fallbackErr) {
             console.error('Copy fallback failed', fallbackErr);
+            toast.error(failMsg);
+            toasted = true;
+        } finally {
+            document.body.removeChild(ta);
+        }
+        if (successful) {
+            toast.success(successMsg);
+        } else if (!toasted) {
+            toast.error(failMsg);
         }
     }
 
@@ -56,8 +59,4 @@ export function ResultCard({ title, children, plainText, actionLabel }) {
             </div>
         </div>
     );
-}
-
-export function formatResultNumber(num) {
-    return formatNumber(num);
 }

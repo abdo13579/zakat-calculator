@@ -3,6 +3,80 @@
     text-align: start;
 }
 
+.eligibilityBox {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    text-align: start;
+    box-shadow: var(--shadow-sm);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.eligibilityTitle {
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    color: var(--color-interactive);
+    margin-top: 0;
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.checkboxList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.checkboxGroup {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    cursor: pointer;
+}
+
+.checkboxInput {
+    margin-top: 0.25rem;
+    cursor: pointer;
+    accent-color: var(--color-primary-500);
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+.checkboxLabel {
+    font-size: var(--text-sm);
+    color: var(--color-on-surface);
+    line-height: 1.4;
+    cursor: pointer;
+    user-select: none;
+}
+
+.alertBox {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background-color: var(--color-info-bg);
+    border: 1px solid var(--color-info-border);
+    color: var(--color-info-text);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    animation: fade-in 0.3s ease-out;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .rowsHeader {
     display: flex;
     justify-content: space-between;

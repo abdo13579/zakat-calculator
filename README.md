@@ -2,7 +2,7 @@
 
 A modern, bilingual web application that helps Muslims calculate **Zakat Al-Fitr**, **Zakat Al-Mal** (wealth Zakat), **Zakat Al-Zuru** (agriculture Zakat), and **Zakat Al-Anaam** (livestock Zakat) accurately using real-time gold prices, currency exchange rates, and Islamic jurisprudence.
 
-**[→ Live Application](https://abdo13579.github.io/zakat-calculator/)** | **[→ Calculation Methodology & Shariah Rules](CALCULATIONS.md)**
+**[→ Live Application](https://zakacalc.pages.dev/)** | **[→ Calculation Methodology & Shariah Rules](CALCULATIONS.md)**
 
 ![ZakatCalc homepage](public/img.png)
 
@@ -109,7 +109,7 @@ The application loads the following external resources for typography and icons:
 ```text
 zakat-calculator/
 ├── index.html                  # Vite HTML entry point (fonts & icons)
-├── vite.config.js              # Vite configuration (base: '/zakat-calculator/')
+├── vite.config.js              # Vite configuration (base: '/')
 ├── package.json                # Dependencies & scripts
 ├── public/                     # Static public assets
 │   ├── favicon.svg             # App SVG icon
@@ -167,6 +167,8 @@ zakat-calculator/
 │       ├── ZuruView.jsx        # Zakat Al-Zuru calculator view
 │       ├── AnaamView.jsx       # Zakat Al-Anaam calculator view
 │       ├── AnaamView.module.css
+│       ├── SupportView.jsx     # Support us view (vote, contribute, star)
+│       ├── SupportView.module.css
 │       ├── AboutView.jsx       # Methodology & developer info view
 │       └── AboutView.module.css
 ├── specs/                      # Feature specifications and design contracts
@@ -201,7 +203,7 @@ npm install
 npm run dev
 ```
 
-The Vite dev server will start at `http://localhost:5173/zakat-calculator/` (or next free port).
+The Vite dev server will start at `http://localhost:5173/` (or next free port).
 
 ### Running Tests
 
@@ -225,28 +227,25 @@ Generates optimized static assets in the `dist/` directory ready for deployment 
 npm run preview
 ```
 
-Serves the production bundle locally at `http://localhost:4173/zakat-calculator/`.
+Serves the production bundle locally at `http://localhost:4173/`.
 
 ---
 
 ## Deployment
 
-ZakatCalc is a static Single-Page Application (SPA) with zero server dependencies. To deploy to GitHub Pages:
+ZakatCalc is a static Single-Page Application (SPA) with zero server dependencies. It deploys to **Cloudflare Pages** (`zakacalc.pages.dev`). SPA fallback (serving `index.html` for any unknown path) is handled by `public/_redirects` with the Cloudflare Pages convention `/* /index.html 200`.
 
 ```bash
-# Build the production bundle
+# Build the production bundle (outputs to dist/)
 npm run build
 
-# Commit the dist/ directory (if not already tracked)
-git add dist -f
-git commit -m "chore: build for deployment"
-
-# Ensure gh-pages branch exists (create if needed)
-git branch gh-pages 2>/dev/null || git checkout -b gh-pages && git checkout main
-
-# Push dist/ to gh-pages branch
-git subtree push --prefix dist origin gh-pages
+# Either connect the Git repository in the Cloudflare Pages dashboard
+# (build command: npm run build, output directory: dist), or deploy the
+# dist/ folder directly with Wrangler:
+npx wrangler pages deploy dist --project-name=zakacalc
 ```
+
+> The project previously targeted GitHub Pages with a `/zakat-calculator/` base path. That flow is no longer used — `vite.config.js` now sets `base: '/'`.
 
 ---
 
@@ -263,6 +262,18 @@ Contributions are welcome! This project follows a specification-driven developme
 3. Ensure all changes adhere strictly to the project constitution in [`.specify/memory/constitution.md`](.specify/memory/constitution.md).
 4. Add or update Vitest unit tests in `src/domain/__tests__/` and verify that `npm test` and `npm run build` pass with zero errors.
 5. Commit your changes and open a Pull Request.
+
+---
+
+## Support
+
+If ZakatCalc helped you fulfill the obligation of Zakat, here are three simple ways to help us reach more Muslims:
+
+1. **Vote for us on Mortakaz** — Help us reach more people by voting for this project on [mortakaz.com](https://www.mortakaz.com/projects/68dffdf65cb77a75592628f4).
+2. **Contribute on GitHub** — Developers can contribute features, fixes, or translations via pull requests at [github.com/abdo13579/zakat-calculator](https://github.com/abdo13579/zakat-calculator).
+3. **Star the repository** — Starring the [GitHub repo](https://github.com/abdo13579/zakat-calculator) boosts its visibility and helps others discover the tool.
+
+You can also reach the in-app **Support** page from the navigation bar or the bottom of any page.
 
 ---
 
