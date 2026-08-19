@@ -5,7 +5,6 @@ import {
     NISAB_THRESHOLDS,
     calculateAnaam,
 } from '../domain/anaam.js';
-import { sanitizeNumericInput } from '../utils/format.js';
 import { ResultCard } from '../components/ResultCard.jsx';
 import styles from './AnaamView.module.css';
 
@@ -23,13 +22,16 @@ export function AnaamView() {
 
     function onSubmit(e) {
         e.preventDefault();
-        const parsedCount = parseInt(count, 10);
+        const trimmed = count.trim();
+        const isValid = /^\d+$/.test(trimmed) && Number.isInteger(+count) && +count >= 0;
 
-        if (isNaN(parsedCount) || parsedCount < 0 || String(parsedCount) !== count.trim()) {
+        if (!isValid) {
             setError(t('error-invalid-input'));
             setResult(null);
             return;
         }
+
+        const parsedCount = parseInt(trimmed, 10);
 
         const conditions = { isGrazing, isNonWorking, heldForHawl };
         const calc = calculateAnaam({ species, count: parsedCount, conditions });
@@ -182,13 +184,12 @@ export function AnaamView() {
                 <div className="form-group">
                     <label htmlFor="livestock-count">{t('anaam-count-label')}</label>
                     <input
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
                         id="livestock-count"
-                        min="0"
-                        step="1"
                         value={count}
                         onChange={(e) => {
-                            setCount(sanitizeNumericInput(e.target.value));
+                            setCount(e.target.value);
                             setResult(null);
                             setError(null);
                         }}

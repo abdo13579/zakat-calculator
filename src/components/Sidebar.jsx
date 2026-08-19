@@ -8,6 +8,7 @@ const ITEMS = [
     { id: 'mal', icon: 'fa-money-bill-wave', labelKey: 'nav-zakat-mal-full' },
     { id: 'zuru', icon: 'fa-seedling', labelKey: 'nav-zakat-zuru-full' },
     { id: 'anaam', icon: 'fa-paw', labelKey: 'nav-zakat-anaam-full' },
+    { id: 'support', icon: 'fa-hand-holding-heart', labelKey: 'nav-support' },
     { id: 'about', icon: 'fa-info-circle', labelKey: 'nav-about' },
 ];
 
@@ -46,17 +47,14 @@ export function Sidebar({ isOpen, onClose, onNavigate, currentView }) {
             className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}
         >
             {ITEMS.map(item => (
-                <a
+                <button
                     key={item.id}
-                    href="#"
+                    type="button"
                     className={`${styles.navLink} ${currentView === item.id ? styles.active : ''}`}
-                    onClick={(e) => {
-                        e.preventDefault();
-                        onNavigate(item.id);
-                    }}
+                    onClick={() => onNavigate(item.id)}
                 >
                     <i className={`fas ${item.icon}`}></i> <span>{t(item.labelKey)}</span>
-                </a>
+                </button>
             ))}
         </nav>
     );

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useI18n } from '../i18n/I18nContext.jsx';
 import { calculateFitr } from '../domain/fitr.js';
 import { currenciesAvailable, detectUserCurrency, POPULAR_CURRENCIES, currencyDisplayName } from '../utils/currency.js';
-import { formatNumber, sanitizeNumericInput } from '../utils/format.js';
+import { formatNumber } from '../utils/format.js';
 import { ResultCard } from '../components/ResultCard.jsx';
 
 const FALLBACK_CURRENCIES = Array.from(new Set([...POPULAR_CURRENCIES.slice(0, 3), 'EGP', 'SAR', 'USD']));
@@ -56,12 +56,11 @@ export function FitrView({ rates, onRatesLoadFailed }) {
                     <label htmlFor="food-price">{t('fitr-food-price-label')}</label>
                     <div className="input-group">
                         <input
-                            type="number"
+                            type="text"
+                            inputMode="decimal"
                             id="food-price"
-                            step="0.01"
-                            min="0"
                             value={pricePerKg}
-                            onChange={(e) => setPricePerKg(sanitizeNumericInput(e.target.value))}
+                            onChange={(e) => setPricePerKg(e.target.value)}
                             placeholder={t('fitr-food-price-placeholder')}
                             aria-describedby="food-price-addon"
                         />
@@ -87,12 +86,11 @@ export function FitrView({ rates, onRatesLoadFailed }) {
                 <div className="form-group">
                     <label htmlFor="individuals">{t('fitr-individuals-label')}</label>
                     <input
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
                         id="individuals"
-                        min="1"
-                        step="1"
                         value={individuals}
-                        onChange={(e) => setIndividuals(sanitizeNumericInput(e.target.value))}
+                        onChange={(e) => setIndividuals(e.target.value)}
                         placeholder={t('fitr-individuals-placeholder')}
                     />
                 </div>

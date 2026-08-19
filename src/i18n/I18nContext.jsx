@@ -40,7 +40,10 @@ export function I18nProvider({ children }) {
     }, [lang]);
 
     const t = useCallback((key, params) => {
-        const raw = translations[lang]?.[key] || translations.en[key] || key;
+        const langCatalog = translations[lang];
+        const raw = (langCatalog && Object.prototype.hasOwnProperty.call(langCatalog, key))
+            ? langCatalog[key]
+            : (translations.en[key] ?? key);
         if (!params) return raw;
         return raw.replace(/\{(\w+)\}/g, (m, name) =>
             Object.prototype.hasOwnProperty.call(params, name) ? String(params[name]) : m

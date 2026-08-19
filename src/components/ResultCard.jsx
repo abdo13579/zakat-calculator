@@ -1,18 +1,14 @@
-import { useState } from 'react';
 import { useI18n } from '../i18n/I18nContext.jsx';
 import { useToast } from '../toast/ToastContext.jsx';
-import { formatNumber } from '../utils/format.js';
 import styles from './ResultCard.module.css';
 
 export function ResultCard({ title, children, plainText, actionLabel }) {
     const { t } = useI18n();
     const toast = useToast();
-    const [visible, setVisible] = useState(true);
-
-    if (!visible) return null;
 
     async function handleCopy() {
         const successMsg = t('copied-success');
+        const failMsg = t('copy-failed');
         try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 await navigator.clipboard.writeText(plainText);
@@ -35,9 +31,12 @@ export function ResultCard({ title, children, plainText, actionLabel }) {
             document.body.removeChild(ta);
             if (successful) {
                 toast.success(successMsg);
+            } else {
+                toast.error(failMsg);
             }
         } catch (fallbackErr) {
             console.error('Copy fallback failed', fallbackErr);
+            toast.error(failMsg);
         }
     }
 
@@ -56,8 +55,4 @@ export function ResultCard({ title, children, plainText, actionLabel }) {
             </div>
         </div>
     );
-}
-
-export function formatResultNumber(num) {
-    return formatNumber(num);
 }

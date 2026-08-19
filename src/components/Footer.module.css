@@ -9,3 +9,30 @@
     flex-shrink: 0;
     transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
+
+.supportPrompt {
+    margin: 0 0 var(--space-sm) 0;
+    font-size: var(--text-sm);
+}
+
+.supportLink {
+    color: var(--color-interactive);
+    font-weight: var(--weight-medium);
+    font-size: inherit;
+    font-family: inherit;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.supportLink:hover {
+    color: var(--color-interactive-hover);
+}
+
+.supportLink:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}

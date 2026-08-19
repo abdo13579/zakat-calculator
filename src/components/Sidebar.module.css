@@ -17,7 +17,11 @@
 }
 
 .navLink {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    text-align: start;
     color: var(--color-interactive);
     text-decoration: none;
     padding: var(--space-md) var(--space-lg);
@@ -25,12 +29,21 @@
     border-radius: var(--radius-md);
     font-weight: var(--weight-medium);
     font-size: var(--text-base);
+    font-family: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
     transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .navLink:hover {
     background-color: var(--color-bg);
     color: var(--color-interactive-hover);
+}
+
+.navLink:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
 .active {

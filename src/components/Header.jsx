@@ -12,6 +12,7 @@ export function Header({ onNavigate, currentView, onToggleSidebar }) {
         { id: 'mal', icon: 'fa-money-bill-wave', labelKey: 'nav-zakat-mal', fullLabelKey: 'nav-zakat-mal-full' },
         { id: 'zuru', icon: 'fa-seedling', labelKey: 'nav-zakat-zuru', fullLabelKey: 'nav-zakat-zuru-full' },
         { id: 'anaam', icon: 'fa-paw', labelKey: 'nav-zakat-anaam', fullLabelKey: 'nav-zakat-anaam-full' },
+        { id: 'support', icon: 'fa-hand-holding-heart', labelKey: 'nav-support', fullLabelKey: 'nav-support' },
         { id: 'about', icon: 'fa-info-circle', labelKey: 'nav-about', fullLabelKey: 'nav-about' },
     ];
 
@@ -21,15 +22,15 @@ export function Header({ onNavigate, currentView, onToggleSidebar }) {
                 <div className={styles.logo}>{t('app-name')}</div>
                 <nav className={styles.desktopNav}>
                     {navItems.map(item => (
-                        <a
+                        <button
                             key={item.id}
-                            href="#"
+                            type="button"
                             className={`${styles.navLink} ${currentView === item.id ? styles.active : ''}`}
-                            onClick={(e) => { e.preventDefault(); onNavigate(item.id); }}
+                            onClick={() => onNavigate(item.id)}
                             data-page={item.id}
                         >
                             <i className={`fas ${item.icon}`}></i> <span>{t(item.labelKey)}</span>
-                        </a>
+                        </button>
                     ))}
                 </nav>
                 <div className={styles.headerActions}>

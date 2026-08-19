@@ -46,7 +46,7 @@ export function LandingView({ onNavigate }) {
                         <p>{t(card.descKey)}</p>
                         <button
                             type="button"
-                            className={`cta-button ${styles.navLink}`}
+                            className="cta-button"
                             onClick={() => onNavigate(card.id)}
                             data-page={card.id}
                         >

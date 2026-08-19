@@ -10,6 +10,7 @@ import { MalView } from './views/MalView.jsx';
 import { ZuruView } from './views/ZuruView.jsx';
 import { AnaamView } from './views/AnaamView.jsx';
 import { AboutView } from './views/AboutView.jsx';
+import { SupportView } from './views/SupportView.jsx';
 import { getCurrencyRates } from './services/api.js';
 import { useViewHistory } from './hooks/useViewHistory.js';
 
@@ -33,7 +34,7 @@ export function App() {
         onSidebarOpen,
         onSidebarClosed,
     } = useViewHistory({
-        views: ['landing', 'fitr', 'mal', 'zuru', 'anaam', 'about'],
+        views: ['landing', 'fitr', 'mal', 'zuru', 'anaam', 'support', 'about'],
         initialView: 'landing',
         isSidebarOpen: sidebarOpen,
         onCloseSidebar: handleCloseSidebarFromPopstate,
@@ -97,9 +98,10 @@ export function App() {
                 {view === 'mal' && <MalView rates={rates} setRates={setRates} />}
                 {view === 'zuru' && <ZuruView />}
                 {view === 'anaam' && <AnaamView />}
+                {view === 'support' && <SupportView />}
                 {view === 'about' && <AboutView />}
             </main>
-            <Footer />
+            <Footer currentView={view} onNavigate={navigate} />
         </>
     );
 }

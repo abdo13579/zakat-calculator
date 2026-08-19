@@ -33,6 +33,9 @@ export function MalView({ rates, setRates }) {
     const [globalError, setGlobalError] = useState(null);
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [heldForHawl, setHeldForHawl] = useState(true);
+    const [isSurplus, setIsSurplus] = useState(true);
+    const [isQualifying, setIsQualifying] = useState(true);
 
     useEffect(() => {
         if (!rates) return;
@@ -99,8 +102,26 @@ export function MalView({ rates, setRates }) {
         return code;
     }
 
+    let eligibilityWarning = null;
+    if (!heldForHawl) {
+        eligibilityWarning = t('mal-ineligible-no-hawl');
+    } else if (!isSurplus) {
+        eligibilityWarning = t('mal-ineligible-not-surplus');
+    } else if (!isQualifying) {
+        eligibilityWarning = t('mal-ineligible-not-qualifying');
+    }
+
     async function onSubmit(e) {
         e.preventDefault();
+
+        if (!heldForHawl || !isSurplus || !isQualifying) {
+            setResult({ ineligible: true, message: eligibilityWarning });
+            setRowErrors({});
+            setGlobalError(null);
+            setLoading(false);
+            return;
+        }
+
         setLoading(true);
         setResult(null);
         setGlobalError(null);
@@ -204,6 +225,14 @@ export function MalView({ rates, setRates }) {
         }
 
         if (result) {
+            if (result.ineligible) {
+                const plainText = `${t('mal-result-title')}\n${result.message}`;
+                return (
+                    <ResultCard title={t('mal-result-title')} plainText={plainText}>
+                        <p className="error">{result.message}</p>
+                    </ResultCard>
+                );
+            }
             const { totalUsd, nisabUsd, eligible, zakatDueUsd, perCurrency, resultCurrency } = result;
             const resCurLabel = getOptionLabel(resultCurrency);
 
@@ -296,6 +325,63 @@ export function MalView({ rates, setRates }) {
                         {globalError}
                     </div>
                 )}
+
+                <div className={styles.eligibilityBox}>
+                    <h3 className={styles.eligibilityTitle}>
+                        <i className="fas fa-clipboard-check"></i>
+                        <span>{t('mal-eligibility-title')}</span>
+                    </h3>
+                    <div className={styles.checkboxList}>
+                        <label className={styles.checkboxGroup}>
+                            <input
+                                type="checkbox"
+                                id="mal-cond-hawl"
+                                className={styles.checkboxInput}
+                                checked={heldForHawl}
+                                onChange={(e) => {
+                                    setHeldForHawl(e.target.checked);
+                                    setResult(null);
+                                    setGlobalError(null);
+                                }}
+                            />
+                            <span className={styles.checkboxLabel}>{t('mal-cond-hawl')}</span>
+                        </label>
+                        <label className={styles.checkboxGroup}>
+                            <input
+                                type="checkbox"
+                                id="mal-cond-surplus"
+                                className={styles.checkboxInput}
+                                checked={isSurplus}
+                                onChange={(e) => {
+                                    setIsSurplus(e.target.checked);
+                                    setResult(null);
+                                    setGlobalError(null);
+                                }}
+                            />
+                            <span className={styles.checkboxLabel}>{t('mal-cond-surplus')}</span>
+                        </label>
+                        <label className={styles.checkboxGroup}>
+                            <input
+                                type="checkbox"
+                                id="mal-cond-qualifying"
+                                className={styles.checkboxInput}
+                                checked={isQualifying}
+                                onChange={(e) => {
+                                    setIsQualifying(e.target.checked);
+                                    setResult(null);
+                                    setGlobalError(null);
+                                }}
+                            />
+                            <span className={styles.checkboxLabel}>{t('mal-cond-qualifying')}</span>
+                        </label>
+                    </div>
+
+                    {eligibilityWarning && (
+                        <div className={styles.alertBox} role="alert">
+                            <i className="fas fa-info-circle"></i> {eligibilityWarning}
+                        </div>
+                    )}
+                </div>
 
                 <div className={styles.rowsContainer}>
                     <div className={styles.rowsHeader}>

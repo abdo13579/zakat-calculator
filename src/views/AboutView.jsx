@@ -7,28 +7,85 @@ export function AboutView() {
         <section id="about" className="page">
             <h2>{t('about-title')}</h2>
             <div className={styles.content}>
-                <p>{t('about-description')}</p>
+                <p className={styles.lead}>{t('about-description')}</p>
 
-                <h3>{t('about-calc-fitr-title')}</h3>
-                <p>{t('about-calc-fitr-text')}</p>
+                <div className={styles.terms}>
+                    <h3>{t('about-terms-title')}</h3>
+                    <p className={styles.subtle}>{t('about-terms-intro')}</p>
+                    <dl className={styles.termList}>
+                        <div className={styles.termRow}>
+                            <dt>{t('about-term-nisab-title')}</dt>
+                            <dd>{t('about-term-nisab-text')}</dd>
+                        </div>
+                        <div className={styles.termRow}>
+                            <dt>{t('about-term-hawl-title')}</dt>
+                            <dd>{t('about-term-hawl-text')}</dd>
+                        </div>
+                        <div className={styles.termRow}>
+                            <dt>{t('about-term-saimah-title')}</dt>
+                            <dd>{t('about-term-saimah-text')}</dd>
+                        </div>
+                    </dl>
+                </div>
 
-                <h3>{t('about-calc-mal-title')}</h3>
-                <p>{t('about-calc-mal-text')}</p>
+                <article className={styles.card}>
+                    <h3>{t('about-calc-fitr-title')}</h3>
+                    <p>{t('about-calc-fitr-text')}</p>
+                    <p className={styles.example}>
+                        <span className={styles.exampleLabel}>{t('about-example-label')}</span>
+                        {t('about-calc-fitr-example')}
+                    </p>
+                </article>
 
-                <h3>{t('about-calc-zuru-title')}</h3>
-                <p>{t('about-calc-zuru-text')}</p>
+                <article className={styles.card}>
+                    <h3>{t('about-calc-mal-title')}</h3>
+                    <p>{t('about-calc-mal-text')}</p>
+                    <p className={styles.example}>
+                        <span className={styles.exampleLabel}>{t('about-example-label')}</span>
+                        {t('about-calc-mal-example')}
+                    </p>
+                </article>
 
-                <h3>{t('about-calc-anaam-title')}</h3>
-                <p>{t('about-calc-anaam-text')}</p>
+                <article className={styles.card}>
+                    <h3>{t('about-calc-zuru-title')}</h3>
+                    <p>{t('about-calc-zuru-text')}</p>
+                    <p className={styles.example}>
+                        <span className={styles.exampleLabel}>{t('about-example-label')}</span>
+                        {t('about-calc-zuru-example')}
+                    </p>
+                </article>
 
-                <h3>{t('about-api-title')}</h3>
-                <ul>
-                    <li>{t('about-api-currency')}</li>
-                    <li>{t('about-api-gold')}</li>
-                </ul>
+                <article className={styles.card}>
+                    <h3>{t('about-calc-anaam-title')}</h3>
+                    <p>{t('about-calc-anaam-text')}</p>
+                    <p className={styles.conditions}>
+                        <strong>{t('about-calc-anaam-conditions-title')}:</strong>{' '}
+                        {t('about-calc-anaam-conditions')}
+                    </p>
+                </article>
+
+                <div className={styles.notice}>
+                    <h3>{t('about-privacy-title')}</h3>
+                    <p>{t('about-privacy-text')}</p>
+                </div>
+
+                <div className={`${styles.notice} ${styles.disclaimer}`}>
+                    <h3>{t('about-disclaimer-title')}</h3>
+                    <p>{t('about-disclaimer-text')}</p>
+                </div>
+
+                <div className={styles.api}>
+                    <h3>{t('about-api-title')}</h3>
+                    <ul>
+                        <li><code>{t('about-api-currency')}</code></li>
+                        <li><code>{t('about-api-gold')}</code></li>
+                    </ul>
+                </div>
 
                 <h3>{t('about-dev-title')}</h3>
-                <p><span>{t('about-dev-name')}</span> — <span>{t('about-dev-role')}</span></p>
+                <p className={styles.dev}>
+                    <span>{t('about-dev-name')}</span> — <span>{t('about-dev-role')}</span>
+                </p>
                 <div className={styles.social}>
                     <a href="https://github.com/abdo13579" target="_blank" rel="noopener" aria-label="GitHub">
                         <i className="fab fa-github"></i>

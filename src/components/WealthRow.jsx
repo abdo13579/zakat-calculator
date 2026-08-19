@@ -1,6 +1,4 @@
-import React from 'react';
 import styles from './WealthRow.module.css';
-import { sanitizeNumericInput } from '../utils/format.js';
 
 /**
  * WealthRow: Single cash amount and currency input row.
@@ -29,12 +27,11 @@ export function WealthRow({
                         {t('mal-wealth-amount-label')}
                     </label>
                     <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
                         id={`amount-${id}`}
-                        step="0.01"
-                        min="0"
                         value={amountRaw}
-                        onChange={(e) => onChangeAmount(id, sanitizeNumericInput(e.target.value))}
+                        onChange={(e) => onChangeAmount(id, e.target.value)}
                         placeholder={t('mal-wealth-placeholder')}
                         className={`${styles.input} ${hasError ? styles.inputError : ''}`}
                         aria-invalid={hasError}

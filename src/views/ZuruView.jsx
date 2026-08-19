@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useI18n } from '../i18n/I18nContext.jsx';
 import { calculateZuru } from '../domain/zuru.js';
-import { formatNumber, sanitizeNumericInput } from '../utils/format.js';
+import { formatNumber } from '../utils/format.js';
 import { ResultCard } from '../components/ResultCard.jsx';
 
 const ZURU_NISAAB = 600;
@@ -50,12 +50,11 @@ export function ZuruView() {
                     <label htmlFor="harvest-weight">{t('zuru-weight-label')}</label>
                     <div className="input-group">
                         <input
-                            type="number"
+                            type="text"
+                            inputMode="decimal"
                             id="harvest-weight"
-                            step="any"
-                            min="0"
                             value={weight}
-                            onChange={(e) => setWeight(sanitizeNumericInput(e.target.value))}
+                            onChange={(e) => setWeight(e.target.value)}
                             placeholder={t('zuru-weight-placeholder')}
                             aria-describedby="harvest-weight-addon"
                         />
